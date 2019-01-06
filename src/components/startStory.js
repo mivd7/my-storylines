@@ -3,6 +3,9 @@ import {Link} from 'react-router-dom'
 import { threeLines } from '../lib/openingLines'
 
 export default class startStory extends Component {
+  handleClick(){
+    window.location.reload()
+  }
 
   render() {
     return( 
@@ -15,7 +18,8 @@ export default class startStory extends Component {
           <br/>
         <p>{threeLines[2]}</p>
           <br/>
-        <Link to={`/`}><button>I don't like any of these beginnings, gimme new ones!</button></Link>
+        <button onClick={this.handleClick}>I don't like these, gimme new ones!</button>
+        <Link to={`/`}><button>Take me back</button></Link>
       </div>)
   }
 }
