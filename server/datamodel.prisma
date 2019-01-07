@@ -1,0 +1,28 @@
+type Story {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  content: String!
+  published: Boolean
+  author: User
+}
+
+type User {
+  id: ID! @unique
+  name: String
+  email: String! @unique
+  accessRole: AccessRole!
+  stories: [Story!]!
+}
+
+type Comment {
+  id: ID! @unique
+  createdAt: DateTime!
+  text: String!
+  writtenBy: User!
+}
+
+enum AccessRole {
+  USER
+  ADMIN
+}
