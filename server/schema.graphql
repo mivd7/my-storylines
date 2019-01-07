@@ -1,0 +1,25 @@
+type Query {
+  allStories: [Story!]!
+  story(storyId: ID!): Story
+  storiesByUser(userId: ID!): [Story!]!
+}
+
+type Mutation {
+  createUser(name: String!): User
+  createStory(title: String!, userId: ID!): Story
+  publish(storyId: ID!): Story
+}
+
+type User {
+  id: ID!
+  email: String
+  name: String!
+  stories: [Story!]!
+}
+
+type Story {
+  id: ID!
+  content: String!
+  published: Boolean!
+  author: User
+}
