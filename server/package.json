@@ -9,9 +9,11 @@
     "prisma-binding": "^2.2.14",
     "prisma-client-lib": "^1.23.4",
     "ts-node": "^7.0.1",
+    "ts-transform-graphql-tag": "^0.2.1",
     "typescript": "^3.2.2"
   },
   "scripts": {
     "compile": "ts-node src/index.ts"
-  }
+  },
+  "devDependencies": {}
 }
