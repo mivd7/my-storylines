@@ -2,7 +2,6 @@ type Story {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
-  title: String!
   content: String!
   published: Boolean
   author: User
