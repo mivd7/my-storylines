@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import startStory from './components/startStory'
+import storyInProgress from './components/storyInProgress'
 import Header from './layout/Header'
 import { Route } from 'react-router-dom'
 // import logo from './logo.svg';
@@ -13,11 +14,22 @@ class App extends Component {
         <header className="App-header">
          <Route exact path="/" component={Header} />
          <Route exact path="/start" component={startStory} />
+         <Route exact path="/stories/:id" component={storyInProgress} />
         </header>
+        </div>
+        <div>
+          <footer className="App-footer">
+          <iframe title="oasis" width="560" height="315" 
+                  src="https://www.youtube.com/embed/H6cyIG0CRQg" 
+                  frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen>
+          </iframe>
+          <br/>
+          © MIVD Web Development, 2019
+          </footer>
         </div>
       </div>
     );
   }
 }
 
-export default App;
+export default App
