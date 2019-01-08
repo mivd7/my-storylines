@@ -3,46 +3,32 @@ export const typeDefs = /* GraphQL */ `enum AccessRole {
   ADMIN
 }
 
-type AggregateComment {
-  count: Int!
-}
-
-type AggregateStory {
-  count: Int!
-}
-
-type AggregateUser {
-  count: Int!
-}
-
-type BatchPayload {
-  count: Long!
-}
-
-type Comment {
+type Addition {
   id: ID!
   createdAt: DateTime!
   text: String!
-  writtenBy: User!
+  story: Story!
+  writtenBy: User
 }
 
-type CommentConnection {
+type AdditionConnection {
   pageInfo: PageInfo!
-  edges: [CommentEdge]!
-  aggregate: AggregateComment!
+  edges: [AdditionEdge]!
+  aggregate: AggregateAddition!
 }
 
-input CommentCreateInput {
+input AdditionCreateInput {
   text: String!
-  writtenBy: UserCreateOneInput!
+  story: StoryCreateOneInput!
+  writtenBy: UserCreateOneInput
 }
 
-type CommentEdge {
-  node: Comment!
+type AdditionEdge {
+  node: Addition!
   cursor: String!
 }
 
-enum CommentOrderByInput {
+enum AdditionOrderByInput {
   id_ASC
   id_DESC
   createdAt_ASC
@@ -53,40 +39,41 @@ enum CommentOrderByInput {
   updatedAt_DESC
 }
 
-type CommentPreviousValues {
+type AdditionPreviousValues {
   id: ID!
   createdAt: DateTime!
   text: String!
 }
 
-type CommentSubscriptionPayload {
+type AdditionSubscriptionPayload {
   mutation: MutationType!
-  node: Comment
+  node: Addition
   updatedFields: [String!]
-  previousValues: CommentPreviousValues
+  previousValues: AdditionPreviousValues
 }
 
-input CommentSubscriptionWhereInput {
+input AdditionSubscriptionWhereInput {
   mutation_in: [MutationType!]
   updatedFields_contains: String
   updatedFields_contains_every: [String!]
   updatedFields_contains_some: [String!]
-  node: CommentWhereInput
-  AND: [CommentSubscriptionWhereInput!]
-  OR: [CommentSubscriptionWhereInput!]
-  NOT: [CommentSubscriptionWhereInput!]
+  node: AdditionWhereInput
+  AND: [AdditionSubscriptionWhereInput!]
+  OR: [AdditionSubscriptionWhereInput!]
+  NOT: [AdditionSubscriptionWhereInput!]
 }
 
-input CommentUpdateInput {
+input AdditionUpdateInput {
   text: String
-  writtenBy: UserUpdateOneRequiredInput
+  story: StoryUpdateOneRequiredInput
+  writtenBy: UserUpdateOneInput
 }
 
-input CommentUpdateManyMutationInput {
+input AdditionUpdateManyMutationInput {
   text: String
 }
 
-input CommentWhereInput {
+input AdditionWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -123,14 +110,31 @@ input CommentWhereInput {
   text_not_starts_with: String
   text_ends_with: String
   text_not_ends_with: String
+  story: StoryWhereInput
   writtenBy: UserWhereInput
-  AND: [CommentWhereInput!]
-  OR: [CommentWhereInput!]
-  NOT: [CommentWhereInput!]
+  AND: [AdditionWhereInput!]
+  OR: [AdditionWhereInput!]
+  NOT: [AdditionWhereInput!]
 }
 
-input CommentWhereUniqueInput {
+input AdditionWhereUniqueInput {
   id: ID
+}
+
+type AggregateAddition {
+  count: Int!
+}
+
+type AggregateStory {
+  count: Int!
+}
+
+type AggregateUser {
+  count: Int!
+}
+
+type BatchPayload {
+  count: Long!
 }
 
 scalar DateTime
@@ -138,12 +142,12 @@ scalar DateTime
 scalar Long
 
 type Mutation {
-  createComment(data: CommentCreateInput!): Comment!
-  updateComment(data: CommentUpdateInput!, where: CommentWhereUniqueInput!): Comment
-  updateManyComments(data: CommentUpdateManyMutationInput!, where: CommentWhereInput): BatchPayload!
-  upsertComment(where: CommentWhereUniqueInput!, create: CommentCreateInput!, update: CommentUpdateInput!): Comment!
-  deleteComment(where: CommentWhereUniqueInput!): Comment
-  deleteManyComments(where: CommentWhereInput): BatchPayload!
+  createAddition(data: AdditionCreateInput!): Addition!
+  updateAddition(data: AdditionUpdateInput!, where: AdditionWhereUniqueInput!): Addition
+  updateManyAdditions(data: AdditionUpdateManyMutationInput!, where: AdditionWhereInput): BatchPayload!
+  upsertAddition(where: AdditionWhereUniqueInput!, create: AdditionCreateInput!, update: AdditionUpdateInput!): Addition!
+  deleteAddition(where: AdditionWhereUniqueInput!): Addition
+  deleteManyAdditions(where: AdditionWhereInput): BatchPayload!
   createStory(data: StoryCreateInput!): Story!
   updateStory(data: StoryUpdateInput!, where: StoryWhereUniqueInput!): Story
   updateManyStories(data: StoryUpdateManyMutationInput!, where: StoryWhereInput): BatchPayload!
@@ -176,9 +180,9 @@ type PageInfo {
 }
 
 type Query {
-  comment(where: CommentWhereUniqueInput!): Comment
-  comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
-  commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
+  addition(where: AdditionWhereUniqueInput!): Addition
+  additions(where: AdditionWhereInput, orderBy: AdditionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Addition]!
+  additionsConnection(where: AdditionWhereInput, orderBy: AdditionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AdditionConnection!
   story(where: StoryWhereUniqueInput!): Story
   stories(where: StoryWhereInput, orderBy: StoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Story]!
   storiesConnection(where: StoryWhereInput, orderBy: StoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StoryConnection!
@@ -193,6 +197,7 @@ type Story {
   createdAt: DateTime!
   updatedAt: DateTime!
   content: String!
+  additions: String
   published: Boolean
   author: User
 }
@@ -205,6 +210,7 @@ type StoryConnection {
 
 input StoryCreateInput {
   content: String!
+  additions: String
   published: Boolean
   author: UserCreateOneWithoutStoriesInput
 }
@@ -214,8 +220,14 @@ input StoryCreateManyWithoutAuthorInput {
   connect: [StoryWhereUniqueInput!]
 }
 
+input StoryCreateOneInput {
+  create: StoryCreateInput
+  connect: StoryWhereUniqueInput
+}
+
 input StoryCreateWithoutAuthorInput {
   content: String!
+  additions: String
   published: Boolean
 }
 
@@ -233,6 +245,8 @@ enum StoryOrderByInput {
   updatedAt_DESC
   content_ASC
   content_DESC
+  additions_ASC
+  additions_DESC
   published_ASC
   published_DESC
 }
@@ -242,6 +256,7 @@ type StoryPreviousValues {
   createdAt: DateTime!
   updatedAt: DateTime!
   content: String!
+  additions: String
   published: Boolean
 }
 
@@ -290,6 +305,20 @@ input StoryScalarWhereInput {
   content_not_starts_with: String
   content_ends_with: String
   content_not_ends_with: String
+  additions: String
+  additions_not: String
+  additions_in: [String!]
+  additions_not_in: [String!]
+  additions_lt: String
+  additions_lte: String
+  additions_gt: String
+  additions_gte: String
+  additions_contains: String
+  additions_not_contains: String
+  additions_starts_with: String
+  additions_not_starts_with: String
+  additions_ends_with: String
+  additions_not_ends_with: String
   published: Boolean
   published_not: Boolean
   AND: [StoryScalarWhereInput!]
@@ -315,19 +344,29 @@ input StorySubscriptionWhereInput {
   NOT: [StorySubscriptionWhereInput!]
 }
 
+input StoryUpdateDataInput {
+  content: String
+  additions: String
+  published: Boolean
+  author: UserUpdateOneWithoutStoriesInput
+}
+
 input StoryUpdateInput {
   content: String
+  additions: String
   published: Boolean
   author: UserUpdateOneWithoutStoriesInput
 }
 
 input StoryUpdateManyDataInput {
   content: String
+  additions: String
   published: Boolean
 }
 
 input StoryUpdateManyMutationInput {
   content: String
+  additions: String
   published: Boolean
 }
 
@@ -347,14 +386,27 @@ input StoryUpdateManyWithWhereNestedInput {
   data: StoryUpdateManyDataInput!
 }
 
+input StoryUpdateOneRequiredInput {
+  create: StoryCreateInput
+  update: StoryUpdateDataInput
+  upsert: StoryUpsertNestedInput
+  connect: StoryWhereUniqueInput
+}
+
 input StoryUpdateWithoutAuthorDataInput {
   content: String
+  additions: String
   published: Boolean
 }
 
 input StoryUpdateWithWhereUniqueWithoutAuthorInput {
   where: StoryWhereUniqueInput!
   data: StoryUpdateWithoutAuthorDataInput!
+}
+
+input StoryUpsertNestedInput {
+  update: StoryUpdateDataInput!
+  create: StoryCreateInput!
 }
 
 input StoryUpsertWithWhereUniqueWithoutAuthorInput {
@@ -408,6 +460,20 @@ input StoryWhereInput {
   content_not_starts_with: String
   content_ends_with: String
   content_not_ends_with: String
+  additions: String
+  additions_not: String
+  additions_in: [String!]
+  additions_not_in: [String!]
+  additions_lt: String
+  additions_lte: String
+  additions_gt: String
+  additions_gte: String
+  additions_contains: String
+  additions_not_contains: String
+  additions_starts_with: String
+  additions_not_starts_with: String
+  additions_ends_with: String
+  additions_not_ends_with: String
   published: Boolean
   published_not: Boolean
   author: UserWhereInput
@@ -421,7 +487,7 @@ input StoryWhereUniqueInput {
 }
 
 type Subscription {
-  comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
+  addition(where: AdditionSubscriptionWhereInput): AdditionSubscriptionPayload
   story(where: StorySubscriptionWhereInput): StorySubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
@@ -528,10 +594,12 @@ input UserUpdateManyMutationInput {
   accessRole: AccessRole
 }
 
-input UserUpdateOneRequiredInput {
+input UserUpdateOneInput {
   create: UserCreateInput
   update: UserUpdateDataInput
   upsert: UserUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
   connect: UserWhereUniqueInput
 }
 

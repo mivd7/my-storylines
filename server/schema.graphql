@@ -1,12 +1,15 @@
 type Query {
   allStories: [Story!]!
+  allUsers: [User!]!
+  allAdditions: [Addition!]!
   story(storyId: ID!): Story
   storiesByUser(userId: ID!): [Story!]!
 }
 
 type Mutation {
   createUser(name: String!): User
-  createStory(title: String!, userId: ID!): Story
+  createStory(content: String!, userId: ID!): Story
+  addToStory(storyId: ID!, text: String!): Addition
   publish(storyId: ID!): Story
 }
 
@@ -22,4 +25,16 @@ type Story {
   content: String!
   published: Boolean!
   author: User
+  additions: [Addition]!
 }
+
+type Addition {
+  id: ID!
+  createdAt: DateTime!
+  text: String!
+  story: Story!
+  writtenBy: User
+}
+
+scalar DateTime
+# add new type additions with many-to-one for stories and 
