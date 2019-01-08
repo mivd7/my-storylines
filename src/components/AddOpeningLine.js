@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
+import {Link} from 'react-router-dom'
+
 import { Mutation } from "react-apollo"
-import { STORY_MUTATION } from '../actions/mutations'
+import { CREATE_STORY } from '../actions/mutations'
 
 export default class AddOpeningLine extends Component {
   state = {
-    content: '',
+    content: ''
   }
 
   render() {
@@ -12,20 +14,19 @@ export default class AddOpeningLine extends Component {
     const dummyUser = "cjqm99khm002l0738jlaqzylo"
     return (
       <div>
-        <div className="flex flex-column mt3">
+        <div className="flex flex-column">
+        <p>Don't like these? Create your own below:</p>
           <input
-            className="mb2"
             value={content}
             onChange={e => this.setState({ content: e.target.value })}
             type="text"
-            placeholder="Add your own opening line"
           />
         </div>
-          <Mutation mutation={STORY_MUTATION}
+          <Mutation mutation={CREATE_STORY}
                     variables={{ content, userId: `${dummyUser}` }} >
-            {storyMutation => <button onClick={storyMutation}>Submit</button>}
+            {storyMutation => <div><button onClick={storyMutation}>Submit</button>
+            <Link to={`/stories/${storyMutation}`}><p>{this.state.content}</p></Link></div>}
           </Mutation>
-          <p>{this.state.content}</p>
       </div>
     )
   }

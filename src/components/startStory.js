@@ -1,20 +1,10 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
+import { Query } from "react-apollo"
 
 import {getRandomLines} from '../lib/randomLines'
+import {GET_STORIES} from '../actions/queries'
 import AddOpeningLine from './AddOpeningLine'
-
-import gql from "graphql-tag";
-import { Query } from "react-apollo";
-
-const GET_STORIES = gql`
-  {
-    allStories {
-      id
-      content
-    }
-  }
-`;
 
 const startStory = () => (
   <Query query={GET_STORIES}>

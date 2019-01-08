@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-export const STORY_MUTATION = gql
+export const CREATE_STORY = gql
   `mutation Story($content: String!, $userId: ID!) {
     createStory(content: $content, userId: $userId) {
       id
@@ -8,3 +8,4 @@ export const STORY_MUTATION = gql
     }
   }
 `
+

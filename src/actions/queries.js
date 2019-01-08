@@ -6,3 +6,12 @@ export const STORY_QUERY = gql
       content
     }
 }`
+
+export const GET_STORIES = gql
+  `{
+    allStories {
+      id
+      content
+    }
+  }
+`;
