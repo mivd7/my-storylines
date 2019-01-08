@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
 
 import {getRandomLines} from '../lib/randomLines'
+import AddOpeningLine from './AddOpeningLine'
 
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
@@ -31,6 +32,7 @@ const startStory = () => (
           <ul>{storiesToRender.map(story => 
           <li><Link to={`/stories/${story.id}`}>{story.content}</Link></li>)}
           </ul>
+          <AddOpeningLine />
         </div>
       )
     }}

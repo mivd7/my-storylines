@@ -1,12 +1,13 @@
 type Query {
   allStories: [Story!]!
+  allUsers: [User!]!
   story(storyId: ID!): Story
   storiesByUser(userId: ID!): [Story!]!
 }
 
 type Mutation {
   createUser(name: String!): User
-  createStory(title: String!, userId: ID!): Story
+  createStory(content: String!, userId: ID!): Story
   publish(storyId: ID!): Story
 }
 

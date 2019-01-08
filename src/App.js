@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import startStory from './components/startStory'
-import storyInProgress from './components/storyInProgress'
+import startStory from './components/StartStory'
+import StoryInProgress from './components/StoryInProgress'
 import Header from './layout/Header'
 import { Route } from 'react-router-dom'
 // import logo from './logo.svg';
@@ -14,7 +14,7 @@ class App extends Component {
         <header className="App-header">
          <Route exact path="/" component={Header} />
          <Route exact path="/start" component={startStory} />
-         <Route exact path="/stories/:id" component={storyInProgress} />
+         <Route exact path="/stories/:id" component={StoryInProgress} />
         </header>
         </div>
         <div>
