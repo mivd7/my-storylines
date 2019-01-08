@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
+
 import {getRandomLines} from '../lib/randomLines'
 
 import gql from "graphql-tag";
@@ -23,7 +24,6 @@ const startStory = () => (
 
       const stories = data.allStories
       const storiesToRender = getRandomLines(stories, 3)
-
       return (
         <div>
           <h2>CHOOSE AN OPENING LINE</h2>
