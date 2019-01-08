@@ -7,9 +7,6 @@ const resolvers = {
     allStories(root, args, context) {
       return context.prisma.stories()
     },
-    allAdditions(root, args, context) {
-      return context.prisma.additions({story: args.storyId})
-    },
     story(root, args, context) {
       return context.prisma.story({ id: args.storyId })
     },

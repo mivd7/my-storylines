@@ -25,7 +25,7 @@ type Story {
   content: String!
   published: Boolean!
   author: User
-  additions: [Addition]!
+  additions: [Addition]
 }
 
 type Addition {

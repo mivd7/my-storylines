@@ -3,7 +3,7 @@ type Story {
   createdAt: DateTime!
   updatedAt: DateTime!
   content: String!
-  additions: String
+  additions: [Addition]
   published: Boolean
   author: User
 }

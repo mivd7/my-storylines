@@ -19,7 +19,17 @@ type AdditionConnection {
 
 input AdditionCreateInput {
   text: String!
-  story: StoryCreateOneInput!
+  story: StoryCreateOneWithoutAdditionsInput!
+  writtenBy: UserCreateOneInput
+}
+
+input AdditionCreateManyWithoutStoryInput {
+  create: [AdditionCreateWithoutStoryInput!]
+  connect: [AdditionWhereUniqueInput!]
+}
+
+input AdditionCreateWithoutStoryInput {
+  text: String!
   writtenBy: UserCreateOneInput
 }
 
@@ -45,6 +55,48 @@ type AdditionPreviousValues {
   text: String!
 }
 
+input AdditionScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  text: String
+  text_not: String
+  text_in: [String!]
+  text_not_in: [String!]
+  text_lt: String
+  text_lte: String
+  text_gt: String
+  text_gte: String
+  text_contains: String
+  text_not_contains: String
+  text_starts_with: String
+  text_not_starts_with: String
+  text_ends_with: String
+  text_not_ends_with: String
+  AND: [AdditionScalarWhereInput!]
+  OR: [AdditionScalarWhereInput!]
+  NOT: [AdditionScalarWhereInput!]
+}
+
 type AdditionSubscriptionPayload {
   mutation: MutationType!
   node: Addition
@@ -65,12 +117,48 @@ input AdditionSubscriptionWhereInput {
 
 input AdditionUpdateInput {
   text: String
-  story: StoryUpdateOneRequiredInput
+  story: StoryUpdateOneRequiredWithoutAdditionsInput
   writtenBy: UserUpdateOneInput
+}
+
+input AdditionUpdateManyDataInput {
+  text: String
 }
 
 input AdditionUpdateManyMutationInput {
   text: String
+}
+
+input AdditionUpdateManyWithoutStoryInput {
+  create: [AdditionCreateWithoutStoryInput!]
+  delete: [AdditionWhereUniqueInput!]
+  connect: [AdditionWhereUniqueInput!]
+  disconnect: [AdditionWhereUniqueInput!]
+  update: [AdditionUpdateWithWhereUniqueWithoutStoryInput!]
+  upsert: [AdditionUpsertWithWhereUniqueWithoutStoryInput!]
+  deleteMany: [AdditionScalarWhereInput!]
+  updateMany: [AdditionUpdateManyWithWhereNestedInput!]
+}
+
+input AdditionUpdateManyWithWhereNestedInput {
+  where: AdditionScalarWhereInput!
+  data: AdditionUpdateManyDataInput!
+}
+
+input AdditionUpdateWithoutStoryDataInput {
+  text: String
+  writtenBy: UserUpdateOneInput
+}
+
+input AdditionUpdateWithWhereUniqueWithoutStoryInput {
+  where: AdditionWhereUniqueInput!
+  data: AdditionUpdateWithoutStoryDataInput!
+}
+
+input AdditionUpsertWithWhereUniqueWithoutStoryInput {
+  where: AdditionWhereUniqueInput!
+  update: AdditionUpdateWithoutStoryDataInput!
+  create: AdditionCreateWithoutStoryInput!
 }
 
 input AdditionWhereInput {
@@ -197,7 +285,7 @@ type Story {
   createdAt: DateTime!
   updatedAt: DateTime!
   content: String!
-  additions: String
+  additions(where: AdditionWhereInput, orderBy: AdditionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Addition!]
   published: Boolean
   author: User
 }
@@ -210,7 +298,7 @@ type StoryConnection {
 
 input StoryCreateInput {
   content: String!
-  additions: String
+  additions: AdditionCreateManyWithoutStoryInput
   published: Boolean
   author: UserCreateOneWithoutStoriesInput
 }
@@ -220,14 +308,20 @@ input StoryCreateManyWithoutAuthorInput {
   connect: [StoryWhereUniqueInput!]
 }
 
-input StoryCreateOneInput {
-  create: StoryCreateInput
+input StoryCreateOneWithoutAdditionsInput {
+  create: StoryCreateWithoutAdditionsInput
   connect: StoryWhereUniqueInput
+}
+
+input StoryCreateWithoutAdditionsInput {
+  content: String!
+  published: Boolean
+  author: UserCreateOneWithoutStoriesInput
 }
 
 input StoryCreateWithoutAuthorInput {
   content: String!
-  additions: String
+  additions: AdditionCreateManyWithoutStoryInput
   published: Boolean
 }
 
@@ -245,8 +339,6 @@ enum StoryOrderByInput {
   updatedAt_DESC
   content_ASC
   content_DESC
-  additions_ASC
-  additions_DESC
   published_ASC
   published_DESC
 }
@@ -256,7 +348,6 @@ type StoryPreviousValues {
   createdAt: DateTime!
   updatedAt: DateTime!
   content: String!
-  additions: String
   published: Boolean
 }
 
@@ -305,20 +396,6 @@ input StoryScalarWhereInput {
   content_not_starts_with: String
   content_ends_with: String
   content_not_ends_with: String
-  additions: String
-  additions_not: String
-  additions_in: [String!]
-  additions_not_in: [String!]
-  additions_lt: String
-  additions_lte: String
-  additions_gt: String
-  additions_gte: String
-  additions_contains: String
-  additions_not_contains: String
-  additions_starts_with: String
-  additions_not_starts_with: String
-  additions_ends_with: String
-  additions_not_ends_with: String
   published: Boolean
   published_not: Boolean
   AND: [StoryScalarWhereInput!]
@@ -344,29 +421,20 @@ input StorySubscriptionWhereInput {
   NOT: [StorySubscriptionWhereInput!]
 }
 
-input StoryUpdateDataInput {
-  content: String
-  additions: String
-  published: Boolean
-  author: UserUpdateOneWithoutStoriesInput
-}
-
 input StoryUpdateInput {
   content: String
-  additions: String
+  additions: AdditionUpdateManyWithoutStoryInput
   published: Boolean
   author: UserUpdateOneWithoutStoriesInput
 }
 
 input StoryUpdateManyDataInput {
   content: String
-  additions: String
   published: Boolean
 }
 
 input StoryUpdateManyMutationInput {
   content: String
-  additions: String
   published: Boolean
 }
 
@@ -386,16 +454,22 @@ input StoryUpdateManyWithWhereNestedInput {
   data: StoryUpdateManyDataInput!
 }
 
-input StoryUpdateOneRequiredInput {
-  create: StoryCreateInput
-  update: StoryUpdateDataInput
-  upsert: StoryUpsertNestedInput
+input StoryUpdateOneRequiredWithoutAdditionsInput {
+  create: StoryCreateWithoutAdditionsInput
+  update: StoryUpdateWithoutAdditionsDataInput
+  upsert: StoryUpsertWithoutAdditionsInput
   connect: StoryWhereUniqueInput
+}
+
+input StoryUpdateWithoutAdditionsDataInput {
+  content: String
+  published: Boolean
+  author: UserUpdateOneWithoutStoriesInput
 }
 
 input StoryUpdateWithoutAuthorDataInput {
   content: String
-  additions: String
+  additions: AdditionUpdateManyWithoutStoryInput
   published: Boolean
 }
 
@@ -404,9 +478,9 @@ input StoryUpdateWithWhereUniqueWithoutAuthorInput {
   data: StoryUpdateWithoutAuthorDataInput!
 }
 
-input StoryUpsertNestedInput {
-  update: StoryUpdateDataInput!
-  create: StoryCreateInput!
+input StoryUpsertWithoutAdditionsInput {
+  update: StoryUpdateWithoutAdditionsDataInput!
+  create: StoryCreateWithoutAdditionsInput!
 }
 
 input StoryUpsertWithWhereUniqueWithoutAuthorInput {
@@ -460,20 +534,9 @@ input StoryWhereInput {
   content_not_starts_with: String
   content_ends_with: String
   content_not_ends_with: String
-  additions: String
-  additions_not: String
-  additions_in: [String!]
-  additions_not_in: [String!]
-  additions_lt: String
-  additions_lte: String
-  additions_gt: String
-  additions_gte: String
-  additions_contains: String
-  additions_not_contains: String
-  additions_starts_with: String
-  additions_not_starts_with: String
-  additions_ends_with: String
-  additions_not_ends_with: String
+  additions_every: AdditionWhereInput
+  additions_some: AdditionWhereInput
+  additions_none: AdditionWhereInput
   published: Boolean
   published_not: Boolean
   author: UserWhereInput

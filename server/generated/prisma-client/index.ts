@@ -191,20 +191,6 @@ export interface ClientConstructor<T> {
 
 export type AccessRole = "USER" | "ADMIN";
 
-export type StoryOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC"
-  | "content_ASC"
-  | "content_DESC"
-  | "additions_ASC"
-  | "additions_DESC"
-  | "published_ASC"
-  | "published_DESC";
-
 export type AdditionOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -214,6 +200,18 @@ export type AdditionOrderByInput =
   | "text_DESC"
   | "updatedAt_ASC"
   | "updatedAt_DESC";
+
+export type StoryOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "content_ASC"
+  | "content_DESC"
+  | "published_ASC"
+  | "published_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -234,6 +232,50 @@ export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 export type AdditionWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
+
+export interface AdditionWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  text?: String;
+  text_not?: String;
+  text_in?: String[] | String;
+  text_not_in?: String[] | String;
+  text_lt?: String;
+  text_lte?: String;
+  text_gt?: String;
+  text_gte?: String;
+  text_contains?: String;
+  text_not_contains?: String;
+  text_starts_with?: String;
+  text_not_starts_with?: String;
+  text_ends_with?: String;
+  text_not_ends_with?: String;
+  story?: StoryWhereInput;
+  writtenBy?: UserWhereInput;
+  AND?: AdditionWhereInput[] | AdditionWhereInput;
+  OR?: AdditionWhereInput[] | AdditionWhereInput;
+  NOT?: AdditionWhereInput[] | AdditionWhereInput;
+}
 
 export interface StoryWhereInput {
   id?: ID_Input;
@@ -280,20 +322,9 @@ export interface StoryWhereInput {
   content_not_starts_with?: String;
   content_ends_with?: String;
   content_not_ends_with?: String;
-  additions?: String;
-  additions_not?: String;
-  additions_in?: String[] | String;
-  additions_not_in?: String[] | String;
-  additions_lt?: String;
-  additions_lte?: String;
-  additions_gt?: String;
-  additions_gte?: String;
-  additions_contains?: String;
-  additions_not_contains?: String;
-  additions_starts_with?: String;
-  additions_not_starts_with?: String;
-  additions_ends_with?: String;
-  additions_not_ends_with?: String;
+  additions_every?: AdditionWhereInput;
+  additions_some?: AdditionWhereInput;
+  additions_none?: AdditionWhereInput;
   published?: Boolean;
   published_not?: Boolean;
   author?: UserWhereInput;
@@ -357,50 +388,6 @@ export interface UserWhereInput {
   NOT?: UserWhereInput[] | UserWhereInput;
 }
 
-export interface AdditionWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  createdAt?: DateTimeInput;
-  createdAt_not?: DateTimeInput;
-  createdAt_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_lt?: DateTimeInput;
-  createdAt_lte?: DateTimeInput;
-  createdAt_gt?: DateTimeInput;
-  createdAt_gte?: DateTimeInput;
-  text?: String;
-  text_not?: String;
-  text_in?: String[] | String;
-  text_not_in?: String[] | String;
-  text_lt?: String;
-  text_lte?: String;
-  text_gt?: String;
-  text_gte?: String;
-  text_contains?: String;
-  text_not_contains?: String;
-  text_starts_with?: String;
-  text_not_starts_with?: String;
-  text_ends_with?: String;
-  text_not_ends_with?: String;
-  story?: StoryWhereInput;
-  writtenBy?: UserWhereInput;
-  AND?: AdditionWhereInput[] | AdditionWhereInput;
-  OR?: AdditionWhereInput[] | AdditionWhereInput;
-  NOT?: AdditionWhereInput[] | AdditionWhereInput;
-}
-
 export type StoryWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
@@ -412,18 +399,17 @@ export type UserWhereUniqueInput = AtLeastOne<{
 
 export interface AdditionCreateInput {
   text: String;
-  story: StoryCreateOneInput;
+  story: StoryCreateOneWithoutAdditionsInput;
   writtenBy?: UserCreateOneInput;
 }
 
-export interface StoryCreateOneInput {
-  create?: StoryCreateInput;
+export interface StoryCreateOneWithoutAdditionsInput {
+  create?: StoryCreateWithoutAdditionsInput;
   connect?: StoryWhereUniqueInput;
 }
 
-export interface StoryCreateInput {
+export interface StoryCreateWithoutAdditionsInput {
   content: String;
-  additions?: String;
   published?: Boolean;
   author?: UserCreateOneWithoutStoriesInput;
 }
@@ -458,26 +444,35 @@ export interface StoryCreateManyWithoutAuthorInput {
 
 export interface StoryCreateWithoutAuthorInput {
   content: String;
-  additions?: String;
+  additions?: AdditionCreateManyWithoutStoryInput;
   published?: Boolean;
+}
+
+export interface AdditionCreateManyWithoutStoryInput {
+  create?: AdditionCreateWithoutStoryInput[] | AdditionCreateWithoutStoryInput;
+  connect?: AdditionWhereUniqueInput[] | AdditionWhereUniqueInput;
+}
+
+export interface AdditionCreateWithoutStoryInput {
+  text: String;
+  writtenBy?: UserCreateOneInput;
 }
 
 export interface AdditionUpdateInput {
   text?: String;
-  story?: StoryUpdateOneRequiredInput;
+  story?: StoryUpdateOneRequiredWithoutAdditionsInput;
   writtenBy?: UserUpdateOneInput;
 }
 
-export interface StoryUpdateOneRequiredInput {
-  create?: StoryCreateInput;
-  update?: StoryUpdateDataInput;
-  upsert?: StoryUpsertNestedInput;
+export interface StoryUpdateOneRequiredWithoutAdditionsInput {
+  create?: StoryCreateWithoutAdditionsInput;
+  update?: StoryUpdateWithoutAdditionsDataInput;
+  upsert?: StoryUpsertWithoutAdditionsInput;
   connect?: StoryWhereUniqueInput;
 }
 
-export interface StoryUpdateDataInput {
+export interface StoryUpdateWithoutAdditionsDataInput {
   content?: String;
-  additions?: String;
   published?: Boolean;
   author?: UserUpdateOneWithoutStoriesInput;
 }
@@ -502,9 +497,9 @@ export interface UserUpsertWithoutStoriesInput {
   create: UserCreateWithoutStoriesInput;
 }
 
-export interface StoryUpsertNestedInput {
-  update: StoryUpdateDataInput;
-  create: StoryCreateInput;
+export interface StoryUpsertWithoutAdditionsInput {
+  update: StoryUpdateWithoutAdditionsDataInput;
+  create: StoryCreateWithoutAdditionsInput;
 }
 
 export interface UserUpdateOneInput {
@@ -547,8 +542,92 @@ export interface StoryUpdateWithWhereUniqueWithoutAuthorInput {
 
 export interface StoryUpdateWithoutAuthorDataInput {
   content?: String;
-  additions?: String;
+  additions?: AdditionUpdateManyWithoutStoryInput;
   published?: Boolean;
+}
+
+export interface AdditionUpdateManyWithoutStoryInput {
+  create?: AdditionCreateWithoutStoryInput[] | AdditionCreateWithoutStoryInput;
+  delete?: AdditionWhereUniqueInput[] | AdditionWhereUniqueInput;
+  connect?: AdditionWhereUniqueInput[] | AdditionWhereUniqueInput;
+  disconnect?: AdditionWhereUniqueInput[] | AdditionWhereUniqueInput;
+  update?:
+    | AdditionUpdateWithWhereUniqueWithoutStoryInput[]
+    | AdditionUpdateWithWhereUniqueWithoutStoryInput;
+  upsert?:
+    | AdditionUpsertWithWhereUniqueWithoutStoryInput[]
+    | AdditionUpsertWithWhereUniqueWithoutStoryInput;
+  deleteMany?: AdditionScalarWhereInput[] | AdditionScalarWhereInput;
+  updateMany?:
+    | AdditionUpdateManyWithWhereNestedInput[]
+    | AdditionUpdateManyWithWhereNestedInput;
+}
+
+export interface AdditionUpdateWithWhereUniqueWithoutStoryInput {
+  where: AdditionWhereUniqueInput;
+  data: AdditionUpdateWithoutStoryDataInput;
+}
+
+export interface AdditionUpdateWithoutStoryDataInput {
+  text?: String;
+  writtenBy?: UserUpdateOneInput;
+}
+
+export interface AdditionUpsertWithWhereUniqueWithoutStoryInput {
+  where: AdditionWhereUniqueInput;
+  update: AdditionUpdateWithoutStoryDataInput;
+  create: AdditionCreateWithoutStoryInput;
+}
+
+export interface AdditionScalarWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  text?: String;
+  text_not?: String;
+  text_in?: String[] | String;
+  text_not_in?: String[] | String;
+  text_lt?: String;
+  text_lte?: String;
+  text_gt?: String;
+  text_gte?: String;
+  text_contains?: String;
+  text_not_contains?: String;
+  text_starts_with?: String;
+  text_not_starts_with?: String;
+  text_ends_with?: String;
+  text_not_ends_with?: String;
+  AND?: AdditionScalarWhereInput[] | AdditionScalarWhereInput;
+  OR?: AdditionScalarWhereInput[] | AdditionScalarWhereInput;
+  NOT?: AdditionScalarWhereInput[] | AdditionScalarWhereInput;
+}
+
+export interface AdditionUpdateManyWithWhereNestedInput {
+  where: AdditionScalarWhereInput;
+  data: AdditionUpdateManyDataInput;
+}
+
+export interface AdditionUpdateManyDataInput {
+  text?: String;
 }
 
 export interface StoryUpsertWithWhereUniqueWithoutAuthorInput {
@@ -602,20 +681,6 @@ export interface StoryScalarWhereInput {
   content_not_starts_with?: String;
   content_ends_with?: String;
   content_not_ends_with?: String;
-  additions?: String;
-  additions_not?: String;
-  additions_in?: String[] | String;
-  additions_not_in?: String[] | String;
-  additions_lt?: String;
-  additions_lte?: String;
-  additions_gt?: String;
-  additions_gte?: String;
-  additions_contains?: String;
-  additions_not_contains?: String;
-  additions_starts_with?: String;
-  additions_not_starts_with?: String;
-  additions_ends_with?: String;
-  additions_not_ends_with?: String;
   published?: Boolean;
   published_not?: Boolean;
   AND?: StoryScalarWhereInput[] | StoryScalarWhereInput;
@@ -630,7 +695,6 @@ export interface StoryUpdateManyWithWhereNestedInput {
 
 export interface StoryUpdateManyDataInput {
   content?: String;
-  additions?: String;
   published?: Boolean;
 }
 
@@ -643,16 +707,22 @@ export interface AdditionUpdateManyMutationInput {
   text?: String;
 }
 
+export interface StoryCreateInput {
+  content: String;
+  additions?: AdditionCreateManyWithoutStoryInput;
+  published?: Boolean;
+  author?: UserCreateOneWithoutStoriesInput;
+}
+
 export interface StoryUpdateInput {
   content?: String;
-  additions?: String;
+  additions?: AdditionUpdateManyWithoutStoryInput;
   published?: Boolean;
   author?: UserUpdateOneWithoutStoriesInput;
 }
 
 export interface StoryUpdateManyMutationInput {
   content?: String;
-  additions?: String;
   published?: Boolean;
 }
 
@@ -735,7 +805,6 @@ export interface Story {
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
   content: String;
-  additions?: String;
   published?: Boolean;
 }
 
@@ -744,7 +813,17 @@ export interface StoryPromise extends Promise<Story>, Fragmentable {
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
   content: () => Promise<String>;
-  additions: () => Promise<String>;
+  additions: <T = FragmentableArray<Addition>>(
+    args?: {
+      where?: AdditionWhereInput;
+      orderBy?: AdditionOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
   published: () => Promise<Boolean>;
   author: <T = UserPromise>() => T;
 }
@@ -756,7 +835,17 @@ export interface StorySubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   content: () => Promise<AsyncIterator<String>>;
-  additions: () => Promise<AsyncIterator<String>>;
+  additions: <T = Promise<AsyncIterator<AdditionSubscription>>>(
+    args?: {
+      where?: AdditionWhereInput;
+      orderBy?: AdditionOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
   published: () => Promise<AsyncIterator<Boolean>>;
   author: <T = UserSubscription>() => T;
 }
@@ -1086,7 +1175,6 @@ export interface StoryPreviousValues {
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
   content: String;
-  additions?: String;
   published?: Boolean;
 }
 
@@ -1097,7 +1185,6 @@ export interface StoryPreviousValuesPromise
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
   content: () => Promise<String>;
-  additions: () => Promise<String>;
   published: () => Promise<Boolean>;
 }
 
@@ -1108,7 +1195,6 @@ export interface StoryPreviousValuesSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   content: () => Promise<AsyncIterator<String>>;
-  additions: () => Promise<AsyncIterator<String>>;
   published: () => Promise<AsyncIterator<Boolean>>;
 }
 
