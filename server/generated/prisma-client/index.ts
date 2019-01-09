@@ -14,7 +14,7 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
   U[keyof U];
 
 export interface Exists {
-  comment: (where?: CommentWhereInput) => Promise<boolean>;
+  addition: (where?: AdditionWhereInput) => Promise<boolean>;
   story: (where?: StoryWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
@@ -38,29 +38,29 @@ export interface Prisma {
    * Queries
    */
 
-  comment: (where: CommentWhereUniqueInput) => CommentPromise;
-  comments: (
+  addition: (where: AdditionWhereUniqueInput) => AdditionPromise;
+  additions: (
     args?: {
-      where?: CommentWhereInput;
-      orderBy?: CommentOrderByInput;
+      where?: AdditionWhereInput;
+      orderBy?: AdditionOrderByInput;
       skip?: Int;
       after?: String;
       before?: String;
       first?: Int;
       last?: Int;
     }
-  ) => FragmentableArray<Comment>;
-  commentsConnection: (
+  ) => FragmentableArray<Addition>;
+  additionsConnection: (
     args?: {
-      where?: CommentWhereInput;
-      orderBy?: CommentOrderByInput;
+      where?: AdditionWhereInput;
+      orderBy?: AdditionOrderByInput;
       skip?: Int;
       after?: String;
       before?: String;
       first?: Int;
       last?: Int;
     }
-  ) => CommentConnectionPromise;
+  ) => AdditionConnectionPromise;
   story: (where: StoryWhereUniqueInput) => StoryPromise;
   stories: (
     args?: {
@@ -113,22 +113,22 @@ export interface Prisma {
    * Mutations
    */
 
-  createComment: (data: CommentCreateInput) => CommentPromise;
-  updateComment: (
-    args: { data: CommentUpdateInput; where: CommentWhereUniqueInput }
-  ) => CommentPromise;
-  updateManyComments: (
-    args: { data: CommentUpdateManyMutationInput; where?: CommentWhereInput }
+  createAddition: (data: AdditionCreateInput) => AdditionPromise;
+  updateAddition: (
+    args: { data: AdditionUpdateInput; where: AdditionWhereUniqueInput }
+  ) => AdditionPromise;
+  updateManyAdditions: (
+    args: { data: AdditionUpdateManyMutationInput; where?: AdditionWhereInput }
   ) => BatchPayloadPromise;
-  upsertComment: (
+  upsertAddition: (
     args: {
-      where: CommentWhereUniqueInput;
-      create: CommentCreateInput;
-      update: CommentUpdateInput;
+      where: AdditionWhereUniqueInput;
+      create: AdditionCreateInput;
+      update: AdditionUpdateInput;
     }
-  ) => CommentPromise;
-  deleteComment: (where: CommentWhereUniqueInput) => CommentPromise;
-  deleteManyComments: (where?: CommentWhereInput) => BatchPayloadPromise;
+  ) => AdditionPromise;
+  deleteAddition: (where: AdditionWhereUniqueInput) => AdditionPromise;
+  deleteManyAdditions: (where?: AdditionWhereInput) => BatchPayloadPromise;
   createStory: (data: StoryCreateInput) => StoryPromise;
   updateStory: (
     args: { data: StoryUpdateInput; where: StoryWhereUniqueInput }
@@ -170,9 +170,9 @@ export interface Prisma {
 }
 
 export interface Subscription {
-  comment: (
-    where?: CommentSubscriptionWhereInput
-  ) => CommentSubscriptionPayloadSubscription;
+  addition: (
+    where?: AdditionSubscriptionWhereInput
+  ) => AdditionSubscriptionPayloadSubscription;
   story: (
     where?: StorySubscriptionWhereInput
   ) => StorySubscriptionPayloadSubscription;
@@ -191,6 +191,16 @@ export interface ClientConstructor<T> {
 
 export type AccessRole = "USER" | "ADMIN";
 
+export type AdditionOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "text_ASC"
+  | "text_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
+
 export type StoryOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -202,16 +212,6 @@ export type StoryOrderByInput =
   | "content_DESC"
   | "published_ASC"
   | "published_DESC";
-
-export type CommentOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "text_ASC"
-  | "text_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -229,9 +229,53 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export type CommentWhereUniqueInput = AtLeastOne<{
+export type AdditionWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
+
+export interface AdditionWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  text?: String;
+  text_not?: String;
+  text_in?: String[] | String;
+  text_not_in?: String[] | String;
+  text_lt?: String;
+  text_lte?: String;
+  text_gt?: String;
+  text_gte?: String;
+  text_contains?: String;
+  text_not_contains?: String;
+  text_starts_with?: String;
+  text_not_starts_with?: String;
+  text_ends_with?: String;
+  text_not_ends_with?: String;
+  story?: StoryWhereInput;
+  writtenBy?: UserWhereInput;
+  AND?: AdditionWhereInput[] | AdditionWhereInput;
+  OR?: AdditionWhereInput[] | AdditionWhereInput;
+  NOT?: AdditionWhereInput[] | AdditionWhereInput;
+}
 
 export interface StoryWhereInput {
   id?: ID_Input;
@@ -278,6 +322,9 @@ export interface StoryWhereInput {
   content_not_starts_with?: String;
   content_ends_with?: String;
   content_not_ends_with?: String;
+  additions_every?: AdditionWhereInput;
+  additions_some?: AdditionWhereInput;
+  additions_none?: AdditionWhereInput;
   published?: Boolean;
   published_not?: Boolean;
   author?: UserWhereInput;
@@ -341,7 +388,198 @@ export interface UserWhereInput {
   NOT?: UserWhereInput[] | UserWhereInput;
 }
 
-export interface CommentWhereInput {
+export type StoryWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+  email?: String;
+}>;
+
+export interface AdditionCreateInput {
+  text: String;
+  story: StoryCreateOneWithoutAdditionsInput;
+  writtenBy?: UserCreateOneInput;
+}
+
+export interface StoryCreateOneWithoutAdditionsInput {
+  create?: StoryCreateWithoutAdditionsInput;
+  connect?: StoryWhereUniqueInput;
+}
+
+export interface StoryCreateWithoutAdditionsInput {
+  content: String;
+  published?: Boolean;
+  author?: UserCreateOneWithoutStoriesInput;
+}
+
+export interface UserCreateOneWithoutStoriesInput {
+  create?: UserCreateWithoutStoriesInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface UserCreateWithoutStoriesInput {
+  name?: String;
+  email: String;
+  accessRole: AccessRole;
+}
+
+export interface UserCreateOneInput {
+  create?: UserCreateInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface UserCreateInput {
+  name?: String;
+  email: String;
+  accessRole: AccessRole;
+  stories?: StoryCreateManyWithoutAuthorInput;
+}
+
+export interface StoryCreateManyWithoutAuthorInput {
+  create?: StoryCreateWithoutAuthorInput[] | StoryCreateWithoutAuthorInput;
+  connect?: StoryWhereUniqueInput[] | StoryWhereUniqueInput;
+}
+
+export interface StoryCreateWithoutAuthorInput {
+  content: String;
+  additions?: AdditionCreateManyWithoutStoryInput;
+  published?: Boolean;
+}
+
+export interface AdditionCreateManyWithoutStoryInput {
+  create?: AdditionCreateWithoutStoryInput[] | AdditionCreateWithoutStoryInput;
+  connect?: AdditionWhereUniqueInput[] | AdditionWhereUniqueInput;
+}
+
+export interface AdditionCreateWithoutStoryInput {
+  text: String;
+  writtenBy?: UserCreateOneInput;
+}
+
+export interface AdditionUpdateInput {
+  text?: String;
+  story?: StoryUpdateOneRequiredWithoutAdditionsInput;
+  writtenBy?: UserUpdateOneInput;
+}
+
+export interface StoryUpdateOneRequiredWithoutAdditionsInput {
+  create?: StoryCreateWithoutAdditionsInput;
+  update?: StoryUpdateWithoutAdditionsDataInput;
+  upsert?: StoryUpsertWithoutAdditionsInput;
+  connect?: StoryWhereUniqueInput;
+}
+
+export interface StoryUpdateWithoutAdditionsDataInput {
+  content?: String;
+  published?: Boolean;
+  author?: UserUpdateOneWithoutStoriesInput;
+}
+
+export interface UserUpdateOneWithoutStoriesInput {
+  create?: UserCreateWithoutStoriesInput;
+  update?: UserUpdateWithoutStoriesDataInput;
+  upsert?: UserUpsertWithoutStoriesInput;
+  delete?: Boolean;
+  disconnect?: Boolean;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface UserUpdateWithoutStoriesDataInput {
+  name?: String;
+  email?: String;
+  accessRole?: AccessRole;
+}
+
+export interface UserUpsertWithoutStoriesInput {
+  update: UserUpdateWithoutStoriesDataInput;
+  create: UserCreateWithoutStoriesInput;
+}
+
+export interface StoryUpsertWithoutAdditionsInput {
+  update: StoryUpdateWithoutAdditionsDataInput;
+  create: StoryCreateWithoutAdditionsInput;
+}
+
+export interface UserUpdateOneInput {
+  create?: UserCreateInput;
+  update?: UserUpdateDataInput;
+  upsert?: UserUpsertNestedInput;
+  delete?: Boolean;
+  disconnect?: Boolean;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface UserUpdateDataInput {
+  name?: String;
+  email?: String;
+  accessRole?: AccessRole;
+  stories?: StoryUpdateManyWithoutAuthorInput;
+}
+
+export interface StoryUpdateManyWithoutAuthorInput {
+  create?: StoryCreateWithoutAuthorInput[] | StoryCreateWithoutAuthorInput;
+  delete?: StoryWhereUniqueInput[] | StoryWhereUniqueInput;
+  connect?: StoryWhereUniqueInput[] | StoryWhereUniqueInput;
+  disconnect?: StoryWhereUniqueInput[] | StoryWhereUniqueInput;
+  update?:
+    | StoryUpdateWithWhereUniqueWithoutAuthorInput[]
+    | StoryUpdateWithWhereUniqueWithoutAuthorInput;
+  upsert?:
+    | StoryUpsertWithWhereUniqueWithoutAuthorInput[]
+    | StoryUpsertWithWhereUniqueWithoutAuthorInput;
+  deleteMany?: StoryScalarWhereInput[] | StoryScalarWhereInput;
+  updateMany?:
+    | StoryUpdateManyWithWhereNestedInput[]
+    | StoryUpdateManyWithWhereNestedInput;
+}
+
+export interface StoryUpdateWithWhereUniqueWithoutAuthorInput {
+  where: StoryWhereUniqueInput;
+  data: StoryUpdateWithoutAuthorDataInput;
+}
+
+export interface StoryUpdateWithoutAuthorDataInput {
+  content?: String;
+  additions?: AdditionUpdateManyWithoutStoryInput;
+  published?: Boolean;
+}
+
+export interface AdditionUpdateManyWithoutStoryInput {
+  create?: AdditionCreateWithoutStoryInput[] | AdditionCreateWithoutStoryInput;
+  delete?: AdditionWhereUniqueInput[] | AdditionWhereUniqueInput;
+  connect?: AdditionWhereUniqueInput[] | AdditionWhereUniqueInput;
+  disconnect?: AdditionWhereUniqueInput[] | AdditionWhereUniqueInput;
+  update?:
+    | AdditionUpdateWithWhereUniqueWithoutStoryInput[]
+    | AdditionUpdateWithWhereUniqueWithoutStoryInput;
+  upsert?:
+    | AdditionUpsertWithWhereUniqueWithoutStoryInput[]
+    | AdditionUpsertWithWhereUniqueWithoutStoryInput;
+  deleteMany?: AdditionScalarWhereInput[] | AdditionScalarWhereInput;
+  updateMany?:
+    | AdditionUpdateManyWithWhereNestedInput[]
+    | AdditionUpdateManyWithWhereNestedInput;
+}
+
+export interface AdditionUpdateWithWhereUniqueWithoutStoryInput {
+  where: AdditionWhereUniqueInput;
+  data: AdditionUpdateWithoutStoryDataInput;
+}
+
+export interface AdditionUpdateWithoutStoryDataInput {
+  text?: String;
+  writtenBy?: UserUpdateOneInput;
+}
+
+export interface AdditionUpsertWithWhereUniqueWithoutStoryInput {
+  where: AdditionWhereUniqueInput;
+  update: AdditionUpdateWithoutStoryDataInput;
+  create: AdditionCreateWithoutStoryInput;
+}
+
+export interface AdditionScalarWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
   id_in?: ID_Input[] | ID_Input;
@@ -378,92 +616,18 @@ export interface CommentWhereInput {
   text_not_starts_with?: String;
   text_ends_with?: String;
   text_not_ends_with?: String;
-  writtenBy?: UserWhereInput;
-  AND?: CommentWhereInput[] | CommentWhereInput;
-  OR?: CommentWhereInput[] | CommentWhereInput;
-  NOT?: CommentWhereInput[] | CommentWhereInput;
+  AND?: AdditionScalarWhereInput[] | AdditionScalarWhereInput;
+  OR?: AdditionScalarWhereInput[] | AdditionScalarWhereInput;
+  NOT?: AdditionScalarWhereInput[] | AdditionScalarWhereInput;
 }
 
-export type StoryWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
-
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-  email?: String;
-}>;
-
-export interface CommentCreateInput {
-  text: String;
-  writtenBy: UserCreateOneInput;
+export interface AdditionUpdateManyWithWhereNestedInput {
+  where: AdditionScalarWhereInput;
+  data: AdditionUpdateManyDataInput;
 }
 
-export interface UserCreateOneInput {
-  create?: UserCreateInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface UserCreateInput {
-  name?: String;
-  email: String;
-  accessRole: AccessRole;
-  stories?: StoryCreateManyWithoutAuthorInput;
-}
-
-export interface StoryCreateManyWithoutAuthorInput {
-  create?: StoryCreateWithoutAuthorInput[] | StoryCreateWithoutAuthorInput;
-  connect?: StoryWhereUniqueInput[] | StoryWhereUniqueInput;
-}
-
-export interface StoryCreateWithoutAuthorInput {
-  content: String;
-  published?: Boolean;
-}
-
-export interface CommentUpdateInput {
+export interface AdditionUpdateManyDataInput {
   text?: String;
-  writtenBy?: UserUpdateOneRequiredInput;
-}
-
-export interface UserUpdateOneRequiredInput {
-  create?: UserCreateInput;
-  update?: UserUpdateDataInput;
-  upsert?: UserUpsertNestedInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface UserUpdateDataInput {
-  name?: String;
-  email?: String;
-  accessRole?: AccessRole;
-  stories?: StoryUpdateManyWithoutAuthorInput;
-}
-
-export interface StoryUpdateManyWithoutAuthorInput {
-  create?: StoryCreateWithoutAuthorInput[] | StoryCreateWithoutAuthorInput;
-  delete?: StoryWhereUniqueInput[] | StoryWhereUniqueInput;
-  connect?: StoryWhereUniqueInput[] | StoryWhereUniqueInput;
-  disconnect?: StoryWhereUniqueInput[] | StoryWhereUniqueInput;
-  update?:
-    | StoryUpdateWithWhereUniqueWithoutAuthorInput[]
-    | StoryUpdateWithWhereUniqueWithoutAuthorInput;
-  upsert?:
-    | StoryUpsertWithWhereUniqueWithoutAuthorInput[]
-    | StoryUpsertWithWhereUniqueWithoutAuthorInput;
-  deleteMany?: StoryScalarWhereInput[] | StoryScalarWhereInput;
-  updateMany?:
-    | StoryUpdateManyWithWhereNestedInput[]
-    | StoryUpdateManyWithWhereNestedInput;
-}
-
-export interface StoryUpdateWithWhereUniqueWithoutAuthorInput {
-  where: StoryWhereUniqueInput;
-  data: StoryUpdateWithoutAuthorDataInput;
-}
-
-export interface StoryUpdateWithoutAuthorDataInput {
-  content?: String;
-  published?: Boolean;
 }
 
 export interface StoryUpsertWithWhereUniqueWithoutAuthorInput {
@@ -539,51 +703,22 @@ export interface UserUpsertNestedInput {
   create: UserCreateInput;
 }
 
-export interface CommentUpdateManyMutationInput {
+export interface AdditionUpdateManyMutationInput {
   text?: String;
 }
 
 export interface StoryCreateInput {
   content: String;
+  additions?: AdditionCreateManyWithoutStoryInput;
   published?: Boolean;
   author?: UserCreateOneWithoutStoriesInput;
 }
 
-export interface UserCreateOneWithoutStoriesInput {
-  create?: UserCreateWithoutStoriesInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface UserCreateWithoutStoriesInput {
-  name?: String;
-  email: String;
-  accessRole: AccessRole;
-}
-
 export interface StoryUpdateInput {
   content?: String;
+  additions?: AdditionUpdateManyWithoutStoryInput;
   published?: Boolean;
   author?: UserUpdateOneWithoutStoriesInput;
-}
-
-export interface UserUpdateOneWithoutStoriesInput {
-  create?: UserCreateWithoutStoriesInput;
-  update?: UserUpdateWithoutStoriesDataInput;
-  upsert?: UserUpsertWithoutStoriesInput;
-  delete?: Boolean;
-  disconnect?: Boolean;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface UserUpdateWithoutStoriesDataInput {
-  name?: String;
-  email?: String;
-  accessRole?: AccessRole;
-}
-
-export interface UserUpsertWithoutStoriesInput {
-  update: UserUpdateWithoutStoriesDataInput;
-  create: UserCreateWithoutStoriesInput;
 }
 
 export interface StoryUpdateManyMutationInput {
@@ -604,15 +739,15 @@ export interface UserUpdateManyMutationInput {
   accessRole?: AccessRole;
 }
 
-export interface CommentSubscriptionWhereInput {
+export interface AdditionSubscriptionWhereInput {
   mutation_in?: MutationType[] | MutationType;
   updatedFields_contains?: String;
   updatedFields_contains_every?: String[] | String;
   updatedFields_contains_some?: String[] | String;
-  node?: CommentWhereInput;
-  AND?: CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput;
-  OR?: CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput;
-  NOT?: CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput;
+  node?: AdditionWhereInput;
+  AND?: AdditionSubscriptionWhereInput[] | AdditionSubscriptionWhereInput;
+  OR?: AdditionSubscriptionWhereInput[] | AdditionSubscriptionWhereInput;
+  NOT?: AdditionSubscriptionWhereInput[] | AdditionSubscriptionWhereInput;
 }
 
 export interface StorySubscriptionWhereInput {
@@ -641,26 +776,78 @@ export interface NodeNode {
   id: ID_Output;
 }
 
-export interface Comment {
+export interface Addition {
   id: ID_Output;
   createdAt: DateTimeOutput;
   text: String;
 }
 
-export interface CommentPromise extends Promise<Comment>, Fragmentable {
+export interface AdditionPromise extends Promise<Addition>, Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   text: () => Promise<String>;
+  story: <T = StoryPromise>() => T;
   writtenBy: <T = UserPromise>() => T;
 }
 
-export interface CommentSubscription
-  extends Promise<AsyncIterator<Comment>>,
+export interface AdditionSubscription
+  extends Promise<AsyncIterator<Addition>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   text: () => Promise<AsyncIterator<String>>;
+  story: <T = StorySubscription>() => T;
   writtenBy: <T = UserSubscription>() => T;
+}
+
+export interface Story {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  content: String;
+  published?: Boolean;
+}
+
+export interface StoryPromise extends Promise<Story>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  content: () => Promise<String>;
+  additions: <T = FragmentableArray<Addition>>(
+    args?: {
+      where?: AdditionWhereInput;
+      orderBy?: AdditionOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  published: () => Promise<Boolean>;
+  author: <T = UserPromise>() => T;
+}
+
+export interface StorySubscription
+  extends Promise<AsyncIterator<Story>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  content: () => Promise<AsyncIterator<String>>;
+  additions: <T = Promise<AsyncIterator<AdditionSubscription>>>(
+    args?: {
+      where?: AdditionWhereInput;
+      orderBy?: AdditionOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  published: () => Promise<AsyncIterator<Boolean>>;
+  author: <T = UserSubscription>() => T;
 }
 
 export interface User {
@@ -708,53 +895,25 @@ export interface UserSubscription
   ) => T;
 }
 
-export interface Story {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  content: String;
-  published?: Boolean;
-}
-
-export interface StoryPromise extends Promise<Story>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  content: () => Promise<String>;
-  published: () => Promise<Boolean>;
-  author: <T = UserPromise>() => T;
-}
-
-export interface StorySubscription
-  extends Promise<AsyncIterator<Story>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  content: () => Promise<AsyncIterator<String>>;
-  published: () => Promise<AsyncIterator<Boolean>>;
-  author: <T = UserSubscription>() => T;
-}
-
-export interface CommentConnection {
+export interface AdditionConnection {
   pageInfo: PageInfo;
-  edges: CommentEdge[];
+  edges: AdditionEdge[];
 }
 
-export interface CommentConnectionPromise
-  extends Promise<CommentConnection>,
+export interface AdditionConnectionPromise
+  extends Promise<AdditionConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<CommentEdge>>() => T;
-  aggregate: <T = AggregateCommentPromise>() => T;
+  edges: <T = FragmentableArray<AdditionEdge>>() => T;
+  aggregate: <T = AggregateAdditionPromise>() => T;
 }
 
-export interface CommentConnectionSubscription
-  extends Promise<AsyncIterator<CommentConnection>>,
+export interface AdditionConnectionSubscription
+  extends Promise<AsyncIterator<AdditionConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<CommentEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateCommentSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<AdditionEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateAdditionSubscription>() => T;
 }
 
 export interface PageInfo {
@@ -780,35 +939,37 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface CommentEdge {
-  node: Comment;
+export interface AdditionEdge {
+  node: Addition;
   cursor: String;
 }
 
-export interface CommentEdgePromise extends Promise<CommentEdge>, Fragmentable {
-  node: <T = CommentPromise>() => T;
+export interface AdditionEdgePromise
+  extends Promise<AdditionEdge>,
+    Fragmentable {
+  node: <T = AdditionPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface CommentEdgeSubscription
-  extends Promise<AsyncIterator<CommentEdge>>,
+export interface AdditionEdgeSubscription
+  extends Promise<AsyncIterator<AdditionEdge>>,
     Fragmentable {
-  node: <T = CommentSubscription>() => T;
+  node: <T = AdditionSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateComment {
+export interface AggregateAddition {
   count: Int;
 }
 
-export interface AggregateCommentPromise
-  extends Promise<AggregateComment>,
+export interface AggregateAdditionPromise
+  extends Promise<AggregateAddition>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateCommentSubscription
-  extends Promise<AsyncIterator<AggregateComment>>,
+export interface AggregateAdditionSubscription
+  extends Promise<AsyncIterator<AggregateAddition>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -937,47 +1098,47 @@ export interface BatchPayloadSubscription
   count: () => Promise<AsyncIterator<Long>>;
 }
 
-export interface CommentSubscriptionPayload {
+export interface AdditionSubscriptionPayload {
   mutation: MutationType;
-  node: Comment;
+  node: Addition;
   updatedFields: String[];
-  previousValues: CommentPreviousValues;
+  previousValues: AdditionPreviousValues;
 }
 
-export interface CommentSubscriptionPayloadPromise
-  extends Promise<CommentSubscriptionPayload>,
+export interface AdditionSubscriptionPayloadPromise
+  extends Promise<AdditionSubscriptionPayload>,
     Fragmentable {
   mutation: () => Promise<MutationType>;
-  node: <T = CommentPromise>() => T;
+  node: <T = AdditionPromise>() => T;
   updatedFields: () => Promise<String[]>;
-  previousValues: <T = CommentPreviousValuesPromise>() => T;
+  previousValues: <T = AdditionPreviousValuesPromise>() => T;
 }
 
-export interface CommentSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<CommentSubscriptionPayload>>,
+export interface AdditionSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<AdditionSubscriptionPayload>>,
     Fragmentable {
   mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = CommentSubscription>() => T;
+  node: <T = AdditionSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = CommentPreviousValuesSubscription>() => T;
+  previousValues: <T = AdditionPreviousValuesSubscription>() => T;
 }
 
-export interface CommentPreviousValues {
+export interface AdditionPreviousValues {
   id: ID_Output;
   createdAt: DateTimeOutput;
   text: String;
 }
 
-export interface CommentPreviousValuesPromise
-  extends Promise<CommentPreviousValues>,
+export interface AdditionPreviousValuesPromise
+  extends Promise<AdditionPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   text: () => Promise<String>;
 }
 
-export interface CommentPreviousValuesSubscription
-  extends Promise<AsyncIterator<CommentPreviousValues>>,
+export interface AdditionPreviousValuesSubscription
+  extends Promise<AsyncIterator<AdditionPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
@@ -1130,7 +1291,7 @@ export const models: Model[] = [
     embedded: false
   },
   {
-    name: "Comment",
+    name: "Addition",
     embedded: false
   },
   {

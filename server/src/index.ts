@@ -28,6 +28,18 @@ const resolvers = {
 
       )
     },
+
+    addToStory(root, args, context) {
+      return context.prisma.createAddition(
+        {
+          text: args.text,
+          story: {
+            connect: {id: args.storyId}
+          }
+        },
+      )
+    },
+
     publish(root, args, context) {
       return context.prisma.updateStory(
         {
@@ -55,6 +67,18 @@ const resolvers = {
       return context.prisma.story({
         id: root.id
       }).author()
+    },
+    additions(root, args, context) {
+      return context.prisma.story({
+        id: root.id
+      }).additions()
+    }
+  },
+  Addition: {
+    story(root, args, context) {
+      return context.prisma.addition({
+        id: root.id
+      }).story()
     }
   }
 }

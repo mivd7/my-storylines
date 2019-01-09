@@ -1,6 +1,10 @@
 type Query {
   allStories: [Story!]!
   allUsers: [User!]!
+<<<<<<< HEAD
+  allAdditions: [Addition!]!
+=======
+>>>>>>> master
   story(storyId: ID!): Story
   storiesByUser(userId: ID!): [Story!]!
 }
@@ -8,6 +12,10 @@ type Query {
 type Mutation {
   createUser(name: String!): User
   createStory(content: String!, userId: ID!): Story
+<<<<<<< HEAD
+  addToStory(storyId: ID!, text: String!): Addition
+=======
+>>>>>>> master
   publish(storyId: ID!): Story
 }
 
@@ -23,4 +31,16 @@ type Story {
   content: String!
   published: Boolean!
   author: User
+  additions: [Addition]
 }
+
+type Addition {
+  id: ID!
+  createdAt: DateTime!
+  text: String!
+  story: Story!
+  writtenBy: User
+}
+
+scalar DateTime
+# add new type additions with many-to-one for stories and 

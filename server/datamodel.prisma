@@ -3,6 +3,7 @@ type Story {
   createdAt: DateTime!
   updatedAt: DateTime!
   content: String!
+  additions: [Addition]
   published: Boolean
   author: User
 }
@@ -15,11 +16,12 @@ type User {
   stories: [Story!]!
 }
 
-type Comment {
+type Addition {
   id: ID! @unique
   createdAt: DateTime!
   text: String!
-  writtenBy: User!
+  story: Story!
+  writtenBy: User
 }
 
 enum AccessRole {
