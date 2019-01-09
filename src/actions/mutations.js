@@ -7,4 +7,13 @@ export const CREATE_STORY = gql`mutation Story($content: String!, $userId: ID!) 
     }
   }
 `
-
+export const ADD_TO_STORY = gql`mutation Addition($text: String!, $storyId: ID!) {
+  addToStory(text: $text, storyId: $storyId) {
+    id
+    text
+    story {
+      id
+      content
+    }
+  }
+}`
