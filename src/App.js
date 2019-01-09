@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import StartStory from './components/StartStory'
-import StoryInProgress from './components/StoryInProgress'
+import StartStory from './components/StartStory';
+import StoryInProgress from './components/StoryInProgress';
 import Header from './layout/Header'
 import { Route } from 'react-router-dom'
 // import logo from './logo.svg';
