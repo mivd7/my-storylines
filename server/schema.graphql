@@ -1,10 +1,7 @@
 type Query {
   allStories: [Story!]!
   allUsers: [User!]!
-<<<<<<< HEAD
   allAdditions: [Addition!]!
-=======
->>>>>>> master
   story(storyId: ID!): Story
   storiesByUser(userId: ID!): [Story!]!
 }
@@ -12,10 +9,7 @@ type Query {
 type Mutation {
   createUser(name: String!): User
   createStory(content: String!, userId: ID!): Story
-<<<<<<< HEAD
   addToStory(storyId: ID!, text: String!): Addition
-=======
->>>>>>> master
   publish(storyId: ID!): Story
 }
 
