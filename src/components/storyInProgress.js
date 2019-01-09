@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ApolloConsumer } from 'react-apollo';
 import {Link} from 'react-router-dom'
-import {STORY_QUERY} from '../actions/queries'
+import {GET_STORY_ADDITIONS} from '../actions/queries'
 
 export default class StoryInProgress extends Component {
   state = { story: null };
@@ -17,11 +17,14 @@ export default class StoryInProgress extends Component {
           <div>
             {this.state.story === null && <h1>Once upon a time...</h1>}
             {this.state.story && <div><h1>Once upon a time...</h1>
-                                      <p>{this.state.story.content}</p></div>}
+                                      <p>{this.state.story.content}</p>
+                              {this.state.story.additions.map(addition => (<div>
+                              <p key={addition.id}>{addition.text}</p></div>))}
+                              </div>}
             <button
               onClick={async () => {
                 const { data } = await client.query({
-                  query: STORY_QUERY,
+                  query: GET_STORY_ADDITIONS,
                   variables: { id: `${storyId}` }
                 });
                 this.storyFetched(data.story);
