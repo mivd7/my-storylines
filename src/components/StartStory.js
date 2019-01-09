@@ -15,6 +15,7 @@ const startStory = () => (
 
       const stories = data.allStories
       const storiesToRender = getRandomLines(stories, 3)
+      
       return (
         <div>
           <h2>CHOOSE AN OPENING LINE</h2>

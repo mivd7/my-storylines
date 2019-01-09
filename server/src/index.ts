@@ -25,10 +25,8 @@ const resolvers = {
             connect: { id: args.userId }
           }
         },
-
       )
     },
-
     addToStory(root, args, context) {
       return context.prisma.createAddition(
         {
@@ -39,7 +37,6 @@ const resolvers = {
         },
       )
     },
-
     publish(root, args, context) {
       return context.prisma.updateStory(
         {
