@@ -1,18 +1,10 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
+import { Query } from "react-apollo"
+
 import {getRandomLines} from '../lib/randomLines'
-
-import gql from "graphql-tag";
-import { Query } from "react-apollo";
-
-const GET_STORIES = gql`
-  {
-    allStories {
-      id
-      content
-    }
-  }
-`;
+import {GET_STORIES} from '../actions/queries'
+import AddOpeningLine from './AddOpeningLine'
 
 const startStory = () => (
   <Query query={GET_STORIES}>
@@ -23,7 +15,6 @@ const startStory = () => (
 
       const stories = data.allStories
       const storiesToRender = getRandomLines(stories, 3)
-
       return (
         <div>
           <h2>CHOOSE AN OPENING LINE</h2>
@@ -31,6 +22,7 @@ const startStory = () => (
           <ul>{storiesToRender.map(story => 
           <li><Link to={`/stories/${story.id}`}>{story.content}</Link></li>)}
           </ul>
+          <AddOpeningLine />
         </div>
       )
     }}
