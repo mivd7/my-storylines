@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router-dom'
-
 import { Mutation } from "react-apollo"
 import { ADD_TO_STORY } from '../actions/mutations'
 
@@ -8,6 +6,7 @@ export default class AddOpeningLine extends Component {
   state = {
     text: ''
   }
+
   render() {
     const { text } = this.state
     return (

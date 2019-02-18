@@ -1,5 +1,7 @@
 import gql from 'graphql-tag';
 
+export const SET_ADDITION = 'SET_ADDITION' 
+
 export const STORY_QUERY = gql`query Story ($id: ID!){
     story(storyId: $id) {
       content
@@ -25,3 +27,9 @@ export const GET_STORIES = gql`{
   }
 `;
 
+export function setAdditions(addition) {
+  return {
+    type: SET_ADDITION,
+    payload: addition
+  }
+}

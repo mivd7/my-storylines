@@ -23,7 +23,7 @@ async function main() {
   //ADDS NEW USER 'JOEP' WITH STORIES BASED ON OPENINGLINES ARRAY
   const newUserWithStory = await prisma.createUser({
     name: 'Joep', 
-    email:'joep.meloen@euronet.nl', 
+    email:'joep.meloen@euronet.nl',
     accessRole: 'USER',
     stories: {
       create: content
