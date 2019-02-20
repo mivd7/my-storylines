@@ -20,7 +20,7 @@ type AdditionConnection {
 input AdditionCreateInput {
   text: String!
   story: StoryCreateOneWithoutAdditionsInput!
-  writtenBy: UserCreateOneInput
+  writtenBy: UserCreateOneWithoutAdditionsInput
 }
 
 input AdditionCreateManyWithoutStoryInput {
@@ -28,9 +28,19 @@ input AdditionCreateManyWithoutStoryInput {
   connect: [AdditionWhereUniqueInput!]
 }
 
+input AdditionCreateManyWithoutWrittenByInput {
+  create: [AdditionCreateWithoutWrittenByInput!]
+  connect: [AdditionWhereUniqueInput!]
+}
+
 input AdditionCreateWithoutStoryInput {
   text: String!
-  writtenBy: UserCreateOneInput
+  writtenBy: UserCreateOneWithoutAdditionsInput
+}
+
+input AdditionCreateWithoutWrittenByInput {
+  text: String!
+  story: StoryCreateOneWithoutAdditionsInput!
 }
 
 type AdditionEdge {
@@ -118,7 +128,7 @@ input AdditionSubscriptionWhereInput {
 input AdditionUpdateInput {
   text: String
   story: StoryUpdateOneRequiredWithoutAdditionsInput
-  writtenBy: UserUpdateOneInput
+  writtenBy: UserUpdateOneWithoutAdditionsInput
 }
 
 input AdditionUpdateManyDataInput {
@@ -141,6 +151,18 @@ input AdditionUpdateManyWithoutStoryInput {
   updateMany: [AdditionUpdateManyWithWhereNestedInput!]
 }
 
+input AdditionUpdateManyWithoutWrittenByInput {
+  create: [AdditionCreateWithoutWrittenByInput!]
+  delete: [AdditionWhereUniqueInput!]
+  connect: [AdditionWhereUniqueInput!]
+  set: [AdditionWhereUniqueInput!]
+  disconnect: [AdditionWhereUniqueInput!]
+  update: [AdditionUpdateWithWhereUniqueWithoutWrittenByInput!]
+  upsert: [AdditionUpsertWithWhereUniqueWithoutWrittenByInput!]
+  deleteMany: [AdditionScalarWhereInput!]
+  updateMany: [AdditionUpdateManyWithWhereNestedInput!]
+}
+
 input AdditionUpdateManyWithWhereNestedInput {
   where: AdditionScalarWhereInput!
   data: AdditionUpdateManyDataInput!
@@ -148,7 +170,12 @@ input AdditionUpdateManyWithWhereNestedInput {
 
 input AdditionUpdateWithoutStoryDataInput {
   text: String
-  writtenBy: UserUpdateOneInput
+  writtenBy: UserUpdateOneWithoutAdditionsInput
+}
+
+input AdditionUpdateWithoutWrittenByDataInput {
+  text: String
+  story: StoryUpdateOneRequiredWithoutAdditionsInput
 }
 
 input AdditionUpdateWithWhereUniqueWithoutStoryInput {
@@ -156,10 +183,21 @@ input AdditionUpdateWithWhereUniqueWithoutStoryInput {
   data: AdditionUpdateWithoutStoryDataInput!
 }
 
+input AdditionUpdateWithWhereUniqueWithoutWrittenByInput {
+  where: AdditionWhereUniqueInput!
+  data: AdditionUpdateWithoutWrittenByDataInput!
+}
+
 input AdditionUpsertWithWhereUniqueWithoutStoryInput {
   where: AdditionWhereUniqueInput!
   update: AdditionUpdateWithoutStoryDataInput!
   create: AdditionCreateWithoutStoryInput!
+}
+
+input AdditionUpsertWithWhereUniqueWithoutWrittenByInput {
+  where: AdditionWhereUniqueInput!
+  update: AdditionUpdateWithoutWrittenByDataInput!
+  create: AdditionCreateWithoutWrittenByInput!
 }
 
 input AdditionWhereInput {
@@ -563,6 +601,7 @@ type User {
   email: String!
   accessRole: AccessRole!
   stories(where: StoryWhereInput, orderBy: StoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Story!]
+  additions(where: AdditionWhereInput, orderBy: AdditionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Addition!]
 }
 
 type UserConnection {
@@ -576,10 +615,11 @@ input UserCreateInput {
   email: String!
   accessRole: AccessRole!
   stories: StoryCreateManyWithoutAuthorInput
+  additions: AdditionCreateManyWithoutWrittenByInput
 }
 
-input UserCreateOneInput {
-  create: UserCreateInput
+input UserCreateOneWithoutAdditionsInput {
+  create: UserCreateWithoutAdditionsInput
   connect: UserWhereUniqueInput
 }
 
@@ -588,10 +628,18 @@ input UserCreateOneWithoutStoriesInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateWithoutAdditionsInput {
+  name: String
+  email: String!
+  accessRole: AccessRole!
+  stories: StoryCreateManyWithoutAuthorInput
+}
+
 input UserCreateWithoutStoriesInput {
   name: String
   email: String!
   accessRole: AccessRole!
+  additions: AdditionCreateManyWithoutWrittenByInput
 }
 
 type UserEdge {
@@ -639,18 +687,12 @@ input UserSubscriptionWhereInput {
   NOT: [UserSubscriptionWhereInput!]
 }
 
-input UserUpdateDataInput {
-  name: String
-  email: String
-  accessRole: AccessRole
-  stories: StoryUpdateManyWithoutAuthorInput
-}
-
 input UserUpdateInput {
   name: String
   email: String
   accessRole: AccessRole
   stories: StoryUpdateManyWithoutAuthorInput
+  additions: AdditionUpdateManyWithoutWrittenByInput
 }
 
 input UserUpdateManyMutationInput {
@@ -659,10 +701,10 @@ input UserUpdateManyMutationInput {
   accessRole: AccessRole
 }
 
-input UserUpdateOneInput {
-  create: UserCreateInput
-  update: UserUpdateDataInput
-  upsert: UserUpsertNestedInput
+input UserUpdateOneWithoutAdditionsInput {
+  create: UserCreateWithoutAdditionsInput
+  update: UserUpdateWithoutAdditionsDataInput
+  upsert: UserUpsertWithoutAdditionsInput
   delete: Boolean
   disconnect: Boolean
   connect: UserWhereUniqueInput
@@ -677,15 +719,23 @@ input UserUpdateOneWithoutStoriesInput {
   connect: UserWhereUniqueInput
 }
 
+input UserUpdateWithoutAdditionsDataInput {
+  name: String
+  email: String
+  accessRole: AccessRole
+  stories: StoryUpdateManyWithoutAuthorInput
+}
+
 input UserUpdateWithoutStoriesDataInput {
   name: String
   email: String
   accessRole: AccessRole
+  additions: AdditionUpdateManyWithoutWrittenByInput
 }
 
-input UserUpsertNestedInput {
-  update: UserUpdateDataInput!
-  create: UserCreateInput!
+input UserUpsertWithoutAdditionsInput {
+  update: UserUpdateWithoutAdditionsDataInput!
+  create: UserCreateWithoutAdditionsInput!
 }
 
 input UserUpsertWithoutStoriesInput {
@@ -743,6 +793,9 @@ input UserWhereInput {
   stories_every: StoryWhereInput
   stories_some: StoryWhereInput
   stories_none: StoryWhereInput
+  additions_every: AdditionWhereInput
+  additions_some: AdditionWhereInput
+  additions_none: AdditionWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
