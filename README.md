@@ -2,10 +2,10 @@ This is a small app where you can start a story, write one line and then ask a f
 
 Bootstrapped with Create-React-App.
 
-#HOW TO RUN CLIENT <br>
+# HOW TO RUN CLIENT <br>
 Clone this repo, run $ yarn install and $ yarn start <br>
 
-#HOW TO RUN SERVER <br>
+# HOW TO RUN SERVER <br>
 CD into server directory and run '$yarn install' <br>
 Make sure you have Prisma installed globally (more info & docs: http://prisma.io/) <br>
 Make sure you have Docker installed and running <br><br>
