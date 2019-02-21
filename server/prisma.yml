@@ -10,4 +10,4 @@ hooks:
   post-deploy:
     - prisma generate
 
-secret: ${env:APP_SECRET}
+secret: ${env:PRISMA_SECRET}
