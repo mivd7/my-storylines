@@ -197,15 +197,15 @@ export type StoryOrderByInput =
   | "updatedAt_ASC"
   | "updatedAt_DESC"
   | "content_ASC"
-  | "content_DESC"
-  | "published_ASC"
-  | "published_DESC";
+  | "content_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "name_ASC"
   | "name_DESC"
+  | "password_ASC"
+  | "password_DESC"
   | "email_ASC"
   | "email_DESC"
   | "accessRole_ASC"
@@ -313,8 +313,6 @@ export interface StoryWhereInput {
   additions_every?: AdditionWhereInput;
   additions_some?: AdditionWhereInput;
   additions_none?: AdditionWhereInput;
-  published?: Boolean;
-  published_not?: Boolean;
   author?: UserWhereInput;
   AND?: StoryWhereInput[] | StoryWhereInput;
   OR?: StoryWhereInput[] | StoryWhereInput;
@@ -350,6 +348,20 @@ export interface UserWhereInput {
   name_not_starts_with?: String;
   name_ends_with?: String;
   name_not_ends_with?: String;
+  password?: String;
+  password_not?: String;
+  password_in?: String[] | String;
+  password_not_in?: String[] | String;
+  password_lt?: String;
+  password_lte?: String;
+  password_gt?: String;
+  password_gte?: String;
+  password_contains?: String;
+  password_not_contains?: String;
+  password_starts_with?: String;
+  password_not_starts_with?: String;
+  password_ends_with?: String;
+  password_not_ends_with?: String;
   email?: String;
   email_not?: String;
   email_in?: String[] | String;
@@ -385,7 +397,6 @@ export type StoryWhereUniqueInput = AtLeastOne<{
 
 export type UserWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
-  email?: String;
 }>;
 
 export interface AdditionCreateInput {
@@ -401,7 +412,6 @@ export interface StoryCreateOneWithoutAdditionsInput {
 
 export interface StoryCreateWithoutAdditionsInput {
   content: String;
-  published?: Boolean;
   author?: UserCreateOneWithoutStoriesInput;
 }
 
@@ -412,6 +422,7 @@ export interface UserCreateOneWithoutStoriesInput {
 
 export interface UserCreateWithoutStoriesInput {
   name?: String;
+  password?: String;
   email: String;
   accessRole: AccessRole;
   additions?: AdditionCreateManyWithoutWrittenByInput;
@@ -436,6 +447,7 @@ export interface UserCreateOneWithoutAdditionsInput {
 
 export interface UserCreateWithoutAdditionsInput {
   name?: String;
+  password?: String;
   email: String;
   accessRole: AccessRole;
   stories?: StoryCreateManyWithoutAuthorInput;
@@ -449,7 +461,6 @@ export interface StoryCreateManyWithoutAuthorInput {
 export interface StoryCreateWithoutAuthorInput {
   content: String;
   additions?: AdditionCreateManyWithoutStoryInput;
-  published?: Boolean;
 }
 
 export interface AdditionCreateManyWithoutStoryInput {
@@ -477,7 +488,6 @@ export interface StoryUpdateOneRequiredWithoutAdditionsInput {
 
 export interface StoryUpdateWithoutAdditionsDataInput {
   content?: String;
-  published?: Boolean;
   author?: UserUpdateOneWithoutStoriesInput;
 }
 
@@ -492,6 +502,7 @@ export interface UserUpdateOneWithoutStoriesInput {
 
 export interface UserUpdateWithoutStoriesDataInput {
   name?: String;
+  password?: String;
   email?: String;
   accessRole?: AccessRole;
   additions?: AdditionUpdateManyWithoutWrittenByInput;
@@ -605,6 +616,7 @@ export interface UserUpdateOneWithoutAdditionsInput {
 
 export interface UserUpdateWithoutAdditionsDataInput {
   name?: String;
+  password?: String;
   email?: String;
   accessRole?: AccessRole;
   stories?: StoryUpdateManyWithoutAuthorInput;
@@ -636,7 +648,6 @@ export interface StoryUpdateWithWhereUniqueWithoutAuthorInput {
 export interface StoryUpdateWithoutAuthorDataInput {
   content?: String;
   additions?: AdditionUpdateManyWithoutStoryInput;
-  published?: Boolean;
 }
 
 export interface AdditionUpdateManyWithoutStoryInput {
@@ -724,8 +735,6 @@ export interface StoryScalarWhereInput {
   content_not_starts_with?: String;
   content_ends_with?: String;
   content_not_ends_with?: String;
-  published?: Boolean;
-  published_not?: Boolean;
   AND?: StoryScalarWhereInput[] | StoryScalarWhereInput;
   OR?: StoryScalarWhereInput[] | StoryScalarWhereInput;
   NOT?: StoryScalarWhereInput[] | StoryScalarWhereInput;
@@ -738,7 +747,6 @@ export interface StoryUpdateManyWithWhereNestedInput {
 
 export interface StoryUpdateManyDataInput {
   content?: String;
-  published?: Boolean;
 }
 
 export interface UserUpsertWithoutAdditionsInput {
@@ -753,24 +761,22 @@ export interface AdditionUpdateManyMutationInput {
 export interface StoryCreateInput {
   content: String;
   additions?: AdditionCreateManyWithoutStoryInput;
-  published?: Boolean;
   author?: UserCreateOneWithoutStoriesInput;
 }
 
 export interface StoryUpdateInput {
   content?: String;
   additions?: AdditionUpdateManyWithoutStoryInput;
-  published?: Boolean;
   author?: UserUpdateOneWithoutStoriesInput;
 }
 
 export interface StoryUpdateManyMutationInput {
   content?: String;
-  published?: Boolean;
 }
 
 export interface UserCreateInput {
   name?: String;
+  password?: String;
   email: String;
   accessRole: AccessRole;
   stories?: StoryCreateManyWithoutAuthorInput;
@@ -779,6 +785,7 @@ export interface UserCreateInput {
 
 export interface UserUpdateInput {
   name?: String;
+  password?: String;
   email?: String;
   accessRole?: AccessRole;
   stories?: StoryUpdateManyWithoutAuthorInput;
@@ -787,6 +794,7 @@ export interface UserUpdateInput {
 
 export interface UserUpdateManyMutationInput {
   name?: String;
+  password?: String;
   email?: String;
   accessRole?: AccessRole;
 }
@@ -857,7 +865,6 @@ export interface Story {
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
   content: String;
-  published?: Boolean;
 }
 
 export interface StoryPromise extends Promise<Story>, Fragmentable {
@@ -874,7 +881,6 @@ export interface StoryPromise extends Promise<Story>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
-  published: () => Promise<Boolean>;
   author: <T = UserPromise>() => T;
 }
 
@@ -894,13 +900,13 @@ export interface StorySubscription
     first?: Int;
     last?: Int;
   }) => T;
-  published: () => Promise<AsyncIterator<Boolean>>;
   author: <T = UserSubscription>() => T;
 }
 
 export interface User {
   id: ID_Output;
   name?: String;
+  password?: String;
   email: String;
   accessRole: AccessRole;
 }
@@ -908,6 +914,7 @@ export interface User {
 export interface UserPromise extends Promise<User>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
+  password: () => Promise<String>;
   email: () => Promise<String>;
   accessRole: () => Promise<AccessRole>;
   stories: <T = FragmentableArray<Story>>(args?: {
@@ -935,6 +942,7 @@ export interface UserSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   accessRole: () => Promise<AsyncIterator<AccessRole>>;
   stories: <T = Promise<AsyncIterator<StorySubscription>>>(args?: {
@@ -1237,7 +1245,6 @@ export interface StoryPreviousValues {
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
   content: String;
-  published?: Boolean;
 }
 
 export interface StoryPreviousValuesPromise
@@ -1247,7 +1254,6 @@ export interface StoryPreviousValuesPromise
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
   content: () => Promise<String>;
-  published: () => Promise<Boolean>;
 }
 
 export interface StoryPreviousValuesSubscription
@@ -1257,7 +1263,6 @@ export interface StoryPreviousValuesSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   content: () => Promise<AsyncIterator<String>>;
-  published: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface UserSubscriptionPayload {
@@ -1288,6 +1293,7 @@ export interface UserSubscriptionPayloadSubscription
 export interface UserPreviousValues {
   id: ID_Output;
   name?: String;
+  password?: String;
   email: String;
   accessRole: AccessRole;
 }
@@ -1297,6 +1303,7 @@ export interface UserPreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
+  password: () => Promise<String>;
   email: () => Promise<String>;
   accessRole: () => Promise<AccessRole>;
 }
@@ -1306,6 +1313,7 @@ export interface UserPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   accessRole: () => Promise<AsyncIterator<AccessRole>>;
 }
@@ -1332,14 +1340,14 @@ The `String` scalar type represents textual data, represented as UTF-8 character
 export type String = string;
 
 /*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean;
-
-/*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
 */
 export type Int = number;
+
+/*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
 
 export type Long = string;
 

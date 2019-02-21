@@ -4,14 +4,14 @@ type Story {
   updatedAt: DateTime!
   content: String!
   additions: [Addition]
-  published: Boolean
   author: User
 }
 
 type User {
   id: ID! @unique
   name: String
-  email: String! @unique
+  password: String
+  email: String!
   accessRole: AccessRole!
   stories: [Story!]!
   additions: [Addition!]

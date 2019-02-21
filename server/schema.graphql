@@ -1,4 +1,6 @@
 type Query {
+  feed: [Story!]!
+  me: User
   allStories: [Story!]!
   allUsers: [User!]!
   allAdditions: [Addition!]!
@@ -7,12 +9,15 @@ type Query {
 }
 
 type Mutation {
-  createUser(name: String!): User
-  createStory(content: String!, userId: ID!): Story
-  addToStory(storyId: ID!, text: String!): Addition
+  createStory(content: String!, userId: ID!, published: Boolean!): Story
+  createAddition(storyId: ID!, text: String!, userId: ID!): Addition
   publish(storyId: ID!): Story
-  signup(email: String!, password: String!, name: String!): AuthPayload
+  signup(email: String!, password: String!, name: String!, accessRole: AccessRole!): AuthPayload
   login(email: String!, password: String!): AuthPayload
+}
+
+type Subscription {
+  feedSubscription: Story
 }
 
 type AuthPayload {
@@ -22,16 +27,17 @@ type AuthPayload {
 
 type User {
   id: ID!
-  email: String
-  name: String!
+  email: String!
+  password: String!
+  name: String
   stories: [Story!]
   additions: [Addition!]
+  accessRole: AccessRole!
 }
 
 type Story {
   id: ID!
   content: String!
-  published: Boolean!
   author: User
   additions: [Addition]
 }
@@ -46,3 +52,8 @@ type Addition {
 
 scalar DateTime
 # add new type additions with many-to-one for stories and 
+
+enum AccessRole {
+  USER
+  ADMIN
+}

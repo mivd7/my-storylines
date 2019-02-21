@@ -21,16 +21,16 @@ const content = openingLines.map((line) => {
 
 async function main() {
   //ADDS NEW USER 'JOEP' WITH STORIES BASED ON OPENINGLINES ARRAY
-  const newUserWithStory = await prisma.createUser({
+  const userWithStory = await prisma.createUser({
     name: 'Joep', 
     email:'joep.meloen@euronet.nl',
     accessRole: 'USER',
     stories: {
-      create: content
+      create: content,
     }
   })
 
-  console.log(`Created new user with stories: ${newUserWithStory.name} (ID: ${newUserWithStory.id})`) 
+  console.log(`Created new user with stories: ${userWithStory.name} (ID: ${userWithStory.id})`) 
 
   const allStories = await prisma.stories()
   console.log(allStories)

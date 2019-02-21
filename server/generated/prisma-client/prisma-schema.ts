@@ -325,7 +325,6 @@ type Story {
   updatedAt: DateTime!
   content: String!
   additions(where: AdditionWhereInput, orderBy: AdditionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Addition!]
-  published: Boolean
   author: User
 }
 
@@ -338,7 +337,6 @@ type StoryConnection {
 input StoryCreateInput {
   content: String!
   additions: AdditionCreateManyWithoutStoryInput
-  published: Boolean
   author: UserCreateOneWithoutStoriesInput
 }
 
@@ -354,14 +352,12 @@ input StoryCreateOneWithoutAdditionsInput {
 
 input StoryCreateWithoutAdditionsInput {
   content: String!
-  published: Boolean
   author: UserCreateOneWithoutStoriesInput
 }
 
 input StoryCreateWithoutAuthorInput {
   content: String!
   additions: AdditionCreateManyWithoutStoryInput
-  published: Boolean
 }
 
 type StoryEdge {
@@ -378,8 +374,6 @@ enum StoryOrderByInput {
   updatedAt_DESC
   content_ASC
   content_DESC
-  published_ASC
-  published_DESC
 }
 
 type StoryPreviousValues {
@@ -387,7 +381,6 @@ type StoryPreviousValues {
   createdAt: DateTime!
   updatedAt: DateTime!
   content: String!
-  published: Boolean
 }
 
 input StoryScalarWhereInput {
@@ -435,8 +428,6 @@ input StoryScalarWhereInput {
   content_not_starts_with: String
   content_ends_with: String
   content_not_ends_with: String
-  published: Boolean
-  published_not: Boolean
   AND: [StoryScalarWhereInput!]
   OR: [StoryScalarWhereInput!]
   NOT: [StoryScalarWhereInput!]
@@ -463,18 +454,15 @@ input StorySubscriptionWhereInput {
 input StoryUpdateInput {
   content: String
   additions: AdditionUpdateManyWithoutStoryInput
-  published: Boolean
   author: UserUpdateOneWithoutStoriesInput
 }
 
 input StoryUpdateManyDataInput {
   content: String
-  published: Boolean
 }
 
 input StoryUpdateManyMutationInput {
   content: String
-  published: Boolean
 }
 
 input StoryUpdateManyWithoutAuthorInput {
@@ -503,14 +491,12 @@ input StoryUpdateOneRequiredWithoutAdditionsInput {
 
 input StoryUpdateWithoutAdditionsDataInput {
   content: String
-  published: Boolean
   author: UserUpdateOneWithoutStoriesInput
 }
 
 input StoryUpdateWithoutAuthorDataInput {
   content: String
   additions: AdditionUpdateManyWithoutStoryInput
-  published: Boolean
 }
 
 input StoryUpdateWithWhereUniqueWithoutAuthorInput {
@@ -577,8 +563,6 @@ input StoryWhereInput {
   additions_every: AdditionWhereInput
   additions_some: AdditionWhereInput
   additions_none: AdditionWhereInput
-  published: Boolean
-  published_not: Boolean
   author: UserWhereInput
   AND: [StoryWhereInput!]
   OR: [StoryWhereInput!]
@@ -598,6 +582,7 @@ type Subscription {
 type User {
   id: ID!
   name: String
+  password: String
   email: String!
   accessRole: AccessRole!
   stories(where: StoryWhereInput, orderBy: StoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Story!]
@@ -612,6 +597,7 @@ type UserConnection {
 
 input UserCreateInput {
   name: String
+  password: String
   email: String!
   accessRole: AccessRole!
   stories: StoryCreateManyWithoutAuthorInput
@@ -630,6 +616,7 @@ input UserCreateOneWithoutStoriesInput {
 
 input UserCreateWithoutAdditionsInput {
   name: String
+  password: String
   email: String!
   accessRole: AccessRole!
   stories: StoryCreateManyWithoutAuthorInput
@@ -637,6 +624,7 @@ input UserCreateWithoutAdditionsInput {
 
 input UserCreateWithoutStoriesInput {
   name: String
+  password: String
   email: String!
   accessRole: AccessRole!
   additions: AdditionCreateManyWithoutWrittenByInput
@@ -652,6 +640,8 @@ enum UserOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  password_ASC
+  password_DESC
   email_ASC
   email_DESC
   accessRole_ASC
@@ -665,6 +655,7 @@ enum UserOrderByInput {
 type UserPreviousValues {
   id: ID!
   name: String
+  password: String
   email: String!
   accessRole: AccessRole!
 }
@@ -689,6 +680,7 @@ input UserSubscriptionWhereInput {
 
 input UserUpdateInput {
   name: String
+  password: String
   email: String
   accessRole: AccessRole
   stories: StoryUpdateManyWithoutAuthorInput
@@ -697,6 +689,7 @@ input UserUpdateInput {
 
 input UserUpdateManyMutationInput {
   name: String
+  password: String
   email: String
   accessRole: AccessRole
 }
@@ -721,6 +714,7 @@ input UserUpdateOneWithoutStoriesInput {
 
 input UserUpdateWithoutAdditionsDataInput {
   name: String
+  password: String
   email: String
   accessRole: AccessRole
   stories: StoryUpdateManyWithoutAuthorInput
@@ -728,6 +722,7 @@ input UserUpdateWithoutAdditionsDataInput {
 
 input UserUpdateWithoutStoriesDataInput {
   name: String
+  password: String
   email: String
   accessRole: AccessRole
   additions: AdditionUpdateManyWithoutWrittenByInput
@@ -772,6 +767,20 @@ input UserWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  password: String
+  password_not: String
+  password_in: [String!]
+  password_not_in: [String!]
+  password_lt: String
+  password_lte: String
+  password_gt: String
+  password_gte: String
+  password_contains: String
+  password_not_contains: String
+  password_starts_with: String
+  password_not_starts_with: String
+  password_ends_with: String
+  password_not_ends_with: String
   email: String
   email_not: String
   email_in: [String!]
@@ -803,6 +812,5 @@ input UserWhereInput {
 
 input UserWhereUniqueInput {
   id: ID
-  email: String
 }
 `

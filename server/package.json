@@ -4,16 +4,20 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "graphql-yoga": "^1.16.9",
-    "nodemon": "^1.18.9",
-    "prisma-binding": "^2.2.14",
-    "prisma-client-lib": "^1.23.4",
-    "ts-node": "^7.0.1",
+    "graphql-yoga": "^1.17.4",
+    "jsonwebtoken": "^8.5.0",
+    "nodemon": "^1.18.10",
+    "prisma-binding": "^2.3.3",
+    "prisma-client-lib": "^1.26.6",
+    "ts-node": "^8.0.2",
     "ts-transform-graphql-tag": "^0.2.1",
     "typescript": "^3.2.2"
   },
   "scripts": {
-    "compile": "ts-node src/index.ts"
+    "start": "dotenv -- nodemon -e ts,graphql -x ts-node src/index.ts",
+    "dev": "ts-node src/index.ts -w",
+    "debug": "dotenv -- nodemon -e ts,graphql -x ts-node --inspect src/index.ts",
+    "build": "rimraf dist && tsc"
   },
   "devDependencies": {}
 }
