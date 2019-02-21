@@ -5,6 +5,11 @@ export const Query = {
     return ctx.prisma.stories()
   },
 
+  // feedUsers(parent, args, ctx: Context) {
+  //   console.log(ctx.prisma)
+  //   return ctx.prisma.users()
+  // },
+  
   // drafts(parent, args, ctx: Context) {
   //   const id = getUserId(ctx)
 
@@ -29,6 +34,10 @@ export const Query = {
 
   allStories(root, args, context) {
     return context.prisma.stories()
+  },
+
+  allUsers(root, args, context) {
+    return context.prisma.users()
   },
 
   storiesByUser({ id }, args, ctx: Context) {
