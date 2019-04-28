@@ -10,8 +10,9 @@ type Story {
 
 type User {
   id: ID! @unique
-  name: String
+  name: String! @unique
   email: String! @unique
+  password: String! @unique
   accessRole: AccessRole!
   stories: [Story!]!
   additions: [Addition!]

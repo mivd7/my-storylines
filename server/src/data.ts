@@ -24,6 +24,7 @@ async function main() {
   const newUserWithStory = await prisma.createUser({
     name: 'Joep', 
     email:'joep.meloen@euronet.nl',
+    password: 'joepie',
     accessRole: 'USER',
     stories: {
       create: content

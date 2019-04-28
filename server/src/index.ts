@@ -46,9 +46,11 @@ const resolvers = {
 
       )
     },
-    createUser(root, args, context) {
+    signup(root, args, context) {
       return context.prisma.createUser(
-        { name: args.name },
+        { name: args.name,
+          email: args.email,
+          stories: args.stories },
       )
     }
   },
@@ -57,6 +59,7 @@ const resolvers = {
       return context.prisma.user({
         id: root.id
       }).stories()
+    
     }
   },
   Story: {
