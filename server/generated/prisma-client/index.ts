@@ -210,8 +210,8 @@ export type StoryOrderByInput =
   | "updatedAt_DESC"
   | "title_ASC"
   | "title_DESC"
-  | "content_ASC"
-  | "content_DESC";
+  | "openingLine_ASC"
+  | "openingLine_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -324,20 +324,20 @@ export interface StoryWhereInput {
   title_not_starts_with?: String;
   title_ends_with?: String;
   title_not_ends_with?: String;
-  content?: String;
-  content_not?: String;
-  content_in?: String[] | String;
-  content_not_in?: String[] | String;
-  content_lt?: String;
-  content_lte?: String;
-  content_gt?: String;
-  content_gte?: String;
-  content_contains?: String;
-  content_not_contains?: String;
-  content_starts_with?: String;
-  content_not_starts_with?: String;
-  content_ends_with?: String;
-  content_not_ends_with?: String;
+  openingLine?: String;
+  openingLine_not?: String;
+  openingLine_in?: String[] | String;
+  openingLine_not_in?: String[] | String;
+  openingLine_lt?: String;
+  openingLine_lte?: String;
+  openingLine_gt?: String;
+  openingLine_gte?: String;
+  openingLine_contains?: String;
+  openingLine_not_contains?: String;
+  openingLine_starts_with?: String;
+  openingLine_not_starts_with?: String;
+  openingLine_ends_with?: String;
+  openingLine_not_ends_with?: String;
   additions_every?: AdditionWhereInput;
   additions_some?: AdditionWhereInput;
   additions_none?: AdditionWhereInput;
@@ -443,7 +443,7 @@ export interface StoryCreateOneWithoutAdditionsInput {
 
 export interface StoryCreateWithoutAdditionsInput {
   title?: String;
-  content: String;
+  openingLine: String;
   author?: UserCreateOneWithoutStoriesInput;
 }
 
@@ -492,7 +492,7 @@ export interface StoryCreateManyWithoutAuthorInput {
 
 export interface StoryCreateWithoutAuthorInput {
   title?: String;
-  content: String;
+  openingLine: String;
   additions?: AdditionCreateManyWithoutStoryInput;
 }
 
@@ -521,7 +521,7 @@ export interface StoryUpdateOneRequiredWithoutAdditionsInput {
 
 export interface StoryUpdateWithoutAdditionsDataInput {
   title?: String;
-  content?: String;
+  openingLine?: String;
   author?: UserUpdateOneWithoutStoriesInput;
 }
 
@@ -681,7 +681,7 @@ export interface StoryUpdateWithWhereUniqueWithoutAuthorInput {
 
 export interface StoryUpdateWithoutAuthorDataInput {
   title?: String;
-  content?: String;
+  openingLine?: String;
   additions?: AdditionUpdateManyWithoutStoryInput;
 }
 
@@ -770,20 +770,20 @@ export interface StoryScalarWhereInput {
   title_not_starts_with?: String;
   title_ends_with?: String;
   title_not_ends_with?: String;
-  content?: String;
-  content_not?: String;
-  content_in?: String[] | String;
-  content_not_in?: String[] | String;
-  content_lt?: String;
-  content_lte?: String;
-  content_gt?: String;
-  content_gte?: String;
-  content_contains?: String;
-  content_not_contains?: String;
-  content_starts_with?: String;
-  content_not_starts_with?: String;
-  content_ends_with?: String;
-  content_not_ends_with?: String;
+  openingLine?: String;
+  openingLine_not?: String;
+  openingLine_in?: String[] | String;
+  openingLine_not_in?: String[] | String;
+  openingLine_lt?: String;
+  openingLine_lte?: String;
+  openingLine_gt?: String;
+  openingLine_gte?: String;
+  openingLine_contains?: String;
+  openingLine_not_contains?: String;
+  openingLine_starts_with?: String;
+  openingLine_not_starts_with?: String;
+  openingLine_ends_with?: String;
+  openingLine_not_ends_with?: String;
   AND?: StoryScalarWhereInput[] | StoryScalarWhereInput;
   OR?: StoryScalarWhereInput[] | StoryScalarWhereInput;
   NOT?: StoryScalarWhereInput[] | StoryScalarWhereInput;
@@ -796,7 +796,7 @@ export interface StoryUpdateManyWithWhereNestedInput {
 
 export interface StoryUpdateManyDataInput {
   title?: String;
-  content?: String;
+  openingLine?: String;
 }
 
 export interface UserUpsertWithoutAdditionsInput {
@@ -810,21 +810,21 @@ export interface AdditionUpdateManyMutationInput {
 
 export interface StoryCreateInput {
   title?: String;
-  content: String;
+  openingLine: String;
   additions?: AdditionCreateManyWithoutStoryInput;
   author?: UserCreateOneWithoutStoriesInput;
 }
 
 export interface StoryUpdateInput {
   title?: String;
-  content?: String;
+  openingLine?: String;
   additions?: AdditionUpdateManyWithoutStoryInput;
   author?: UserUpdateOneWithoutStoriesInput;
 }
 
 export interface StoryUpdateManyMutationInput {
   title?: String;
-  content?: String;
+  openingLine?: String;
 }
 
 export interface UserCreateInput {
@@ -918,7 +918,7 @@ export interface Story {
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
   title?: String;
-  content: String;
+  openingLine: String;
 }
 
 export interface StoryPromise extends Promise<Story>, Fragmentable {
@@ -926,7 +926,7 @@ export interface StoryPromise extends Promise<Story>, Fragmentable {
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
   title: () => Promise<String>;
-  content: () => Promise<String>;
+  openingLine: () => Promise<String>;
   additions: <T = FragmentableArray<Addition>>(
     args?: {
       where?: AdditionWhereInput;
@@ -948,7 +948,7 @@ export interface StorySubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   title: () => Promise<AsyncIterator<String>>;
-  content: () => Promise<AsyncIterator<String>>;
+  openingLine: () => Promise<AsyncIterator<String>>;
   additions: <T = Promise<AsyncIterator<AdditionSubscription>>>(
     args?: {
       where?: AdditionWhereInput;
@@ -1313,7 +1313,7 @@ export interface StoryPreviousValues {
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
   title?: String;
-  content: String;
+  openingLine: String;
 }
 
 export interface StoryPreviousValuesPromise
@@ -1323,7 +1323,7 @@ export interface StoryPreviousValuesPromise
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
   title: () => Promise<String>;
-  content: () => Promise<String>;
+  openingLine: () => Promise<String>;
 }
 
 export interface StoryPreviousValuesSubscription
@@ -1333,7 +1333,7 @@ export interface StoryPreviousValuesSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   title: () => Promise<AsyncIterator<String>>;
-  content: () => Promise<AsyncIterator<String>>;
+  openingLine: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserSubscriptionPayload {

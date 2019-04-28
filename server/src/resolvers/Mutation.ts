@@ -50,7 +50,8 @@ async function createStory(root, args, context) {
       title: args.title,
       content: args.content,
       author: {
-        connect: { id: args.userId }
+        //later null weghalen
+        connect: { id: args.userId || null }
       }
     }
   )

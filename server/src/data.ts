@@ -13,9 +13,9 @@ const openingLines = ['It is a truth universally acknowledged, that a single man
 `The Man in Black fled across the desert, and the Gunslinger followed.`,`In my younger and more vulnerable years my father gave me some advice that I've been turning over in my mind ever since...`,"I lost an arm on my last trip home. My left arm.",
 "As I awoke one morning from uneasy dreams I found myself transformed in bed into an enormous insect." ]
 
-const content = openingLines.map((line) => { 
+const openingLine = openingLines.map((line) => { 
   return { 
-    content: line
+    openingLine: line
   }; 
 });
 
@@ -27,7 +27,7 @@ async function generateData() {
     password: 'joepie',
     accessRole: 'USER',
     stories: {
-      create: content
+      create: openingLine
     }
   })
 

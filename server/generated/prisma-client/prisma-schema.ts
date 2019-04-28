@@ -328,7 +328,7 @@ type Story {
   createdAt: DateTime!
   updatedAt: DateTime!
   title: String
-  content: String!
+  openingLine: String!
   additions(where: AdditionWhereInput, orderBy: AdditionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Addition!]
   author: User
 }
@@ -341,7 +341,7 @@ type StoryConnection {
 
 input StoryCreateInput {
   title: String
-  content: String!
+  openingLine: String!
   additions: AdditionCreateManyWithoutStoryInput
   author: UserCreateOneWithoutStoriesInput
 }
@@ -358,13 +358,13 @@ input StoryCreateOneWithoutAdditionsInput {
 
 input StoryCreateWithoutAdditionsInput {
   title: String
-  content: String!
+  openingLine: String!
   author: UserCreateOneWithoutStoriesInput
 }
 
 input StoryCreateWithoutAuthorInput {
   title: String
-  content: String!
+  openingLine: String!
   additions: AdditionCreateManyWithoutStoryInput
 }
 
@@ -382,8 +382,8 @@ enum StoryOrderByInput {
   updatedAt_DESC
   title_ASC
   title_DESC
-  content_ASC
-  content_DESC
+  openingLine_ASC
+  openingLine_DESC
 }
 
 type StoryPreviousValues {
@@ -391,7 +391,7 @@ type StoryPreviousValues {
   createdAt: DateTime!
   updatedAt: DateTime!
   title: String
-  content: String!
+  openingLine: String!
 }
 
 input StoryScalarWhereInput {
@@ -439,20 +439,20 @@ input StoryScalarWhereInput {
   title_not_starts_with: String
   title_ends_with: String
   title_not_ends_with: String
-  content: String
-  content_not: String
-  content_in: [String!]
-  content_not_in: [String!]
-  content_lt: String
-  content_lte: String
-  content_gt: String
-  content_gte: String
-  content_contains: String
-  content_not_contains: String
-  content_starts_with: String
-  content_not_starts_with: String
-  content_ends_with: String
-  content_not_ends_with: String
+  openingLine: String
+  openingLine_not: String
+  openingLine_in: [String!]
+  openingLine_not_in: [String!]
+  openingLine_lt: String
+  openingLine_lte: String
+  openingLine_gt: String
+  openingLine_gte: String
+  openingLine_contains: String
+  openingLine_not_contains: String
+  openingLine_starts_with: String
+  openingLine_not_starts_with: String
+  openingLine_ends_with: String
+  openingLine_not_ends_with: String
   AND: [StoryScalarWhereInput!]
   OR: [StoryScalarWhereInput!]
   NOT: [StoryScalarWhereInput!]
@@ -478,19 +478,19 @@ input StorySubscriptionWhereInput {
 
 input StoryUpdateInput {
   title: String
-  content: String
+  openingLine: String
   additions: AdditionUpdateManyWithoutStoryInput
   author: UserUpdateOneWithoutStoriesInput
 }
 
 input StoryUpdateManyDataInput {
   title: String
-  content: String
+  openingLine: String
 }
 
 input StoryUpdateManyMutationInput {
   title: String
-  content: String
+  openingLine: String
 }
 
 input StoryUpdateManyWithoutAuthorInput {
@@ -519,13 +519,13 @@ input StoryUpdateOneRequiredWithoutAdditionsInput {
 
 input StoryUpdateWithoutAdditionsDataInput {
   title: String
-  content: String
+  openingLine: String
   author: UserUpdateOneWithoutStoriesInput
 }
 
 input StoryUpdateWithoutAuthorDataInput {
   title: String
-  content: String
+  openingLine: String
   additions: AdditionUpdateManyWithoutStoryInput
 }
 
@@ -590,20 +590,20 @@ input StoryWhereInput {
   title_not_starts_with: String
   title_ends_with: String
   title_not_ends_with: String
-  content: String
-  content_not: String
-  content_in: [String!]
-  content_not_in: [String!]
-  content_lt: String
-  content_lte: String
-  content_gt: String
-  content_gte: String
-  content_contains: String
-  content_not_contains: String
-  content_starts_with: String
-  content_not_starts_with: String
-  content_ends_with: String
-  content_not_ends_with: String
+  openingLine: String
+  openingLine_not: String
+  openingLine_in: [String!]
+  openingLine_not_in: [String!]
+  openingLine_lt: String
+  openingLine_lte: String
+  openingLine_gt: String
+  openingLine_gte: String
+  openingLine_contains: String
+  openingLine_not_contains: String
+  openingLine_starts_with: String
+  openingLine_not_starts_with: String
+  openingLine_ends_with: String
+  openingLine_not_ends_with: String
   additions_every: AdditionWhereInput
   additions_some: AdditionWhereInput
   additions_none: AdditionWhereInput
