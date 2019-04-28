@@ -10,6 +10,7 @@ const storyInProgress = (props) => {
     story: GET_STORY_ADDITIONS,
     variables: { id: `${storyId}`}
   }
+  
   return (
     <Query query={query.story} variables={query.variables}>
       {({ loading, error, data }) => {
