@@ -12,5 +12,6 @@
 <br>
 Congratulations, the server is now running on localhost:4466 and can be accessed through the prisma playground <br>
 <br>
-## START WITH DUMMY DATA
+
+How to start with generated set of dummy data: <br>
 Again inside the server folder, run '$ yarn generate' to start the story app with a hard-coded set of 20 opening lines by a dummy user 'Joep Meloen'.
