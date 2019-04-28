@@ -11,12 +11,13 @@ const startStory = () => (
     {({ loading, error, data }) => {
       console.log(data)
       if (loading) return "Loading...";
-      if (error) return `Error! ${error.message}`;
+      if (error) return `Error! ${error}`;
 
       const stories = data.allStories
       const storiesToRender = getRandomLines(stories, 3)
       
       return (
+        
         <div>
           <h2>CHOOSE AN OPENING LINE</h2>
           <iframe title="7dwarfs" src="https://giphy.com/embed/AOqKdtVvmMAI8" width="360" height="200" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>

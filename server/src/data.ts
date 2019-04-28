@@ -19,7 +19,7 @@ const content = openingLines.map((line) => {
   }; 
 });
 
-async function main() {
+async function generateData() {
   //ADDS NEW USER 'JOEP' WITH STORIES BASED ON OPENINGLINES ARRAY
   const newUserWithStory = await prisma.createUser({
     name: 'Joep', 
@@ -32,12 +32,6 @@ async function main() {
   })
 
   console.log(`Created new user with stories: ${newUserWithStory.name} (ID: ${newUserWithStory.id})`) 
-
-  const allStories = await prisma.stories()
-  console.log(allStories)
-
-  const allUsers = await prisma.users()
-  console.log(allUsers)
 }
 
-main().catch(e => console.error(e))
+generateData().catch(e => console.error(e))

@@ -3,8 +3,6 @@ import StartStory from './components/StartStory';
 import StoryInProgress from './components/StoryInProgress';
 import Header from './layout/Header'
 import { Route } from 'react-router-dom'
-import {Provider} from 'react-redux'
-// import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {

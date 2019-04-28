@@ -7,7 +7,8 @@ type Query {
 }
 
 type Mutation {
-  createUser(name: String!): User
+  createUser(name: String!, email: String!, password: String!): User
+  createAdmin(name: String!, email: String!, password: String!): User
   createStory(content: String!, userId: ID!): Story
   addToStory(storyId: ID!, text: String!): Addition
   publish(storyId: ID!): Story

@@ -1,45 +1,32 @@
-import React, { Component } from 'react';
-import { ApolloConsumer } from 'react-apollo';
+import React, { useState } from 'react';
+import { Query } from 'react-apollo';
 import {Link} from 'react-router-dom'
 import {GET_STORY_ADDITIONS} from '../actions/queries';
 import StoryInputForm from './StoryInputForm'
 
-export default class StoryInProgress extends Component {
-  state = { story: null };
+const storyInProgress = (props) => {
+  const storyId = props.match.params.id
 
-  storyFetched = story => this.setState(() => ({ story }));
-
-  render() {
-    console.log(this.state)
-    const storyId = this.props.match.params.id
-    return (
-      <ApolloConsumer>
-        {client => (
-          <div>
-            {this.state.story === null && <div><h1>Once upon a time...</h1>
-                                          <button
-                                          onClick={async () => {
-                                            const { data } = await client.query({
-                                              query: GET_STORY_ADDITIONS,
-                                              variables: { id: `${storyId}` }
-                                            });
-                                            this.storyFetched(data.story);
-                                          }}
-                                        >
-                                          Click to start the story!
-                                        </button></div>}
-            {this.state.story && <div><h1>Once upon a time...</h1>
-                                      <p>{this.state.story.content}</p>
-                              {this.state.story.additions.map(addition => (<div>
-                              <p key={addition.id}>{addition.text}</p></div>))}
-                              <StoryInputForm storyId={this.state.story.id}/>
-                              </div>}
-            <br/>
-            <Link to={'/'}><p>Go back home</p></Link>
-            <Link to={'/start'}><p>Pick a different opening line</p></Link>
-          </div>
-        )}
-      </ApolloConsumer>
-    );
+  const query = {
+    story: GET_STORY_ADDITIONS,
+    variables: { id: `${storyId}`}
   }
-}
+  return (
+    <Query query={query.story} variables={query.variables}>
+      {({ loading, error, data }) => {
+        console.log(data)
+        const story = data.story
+        if (loading) return "Loading...";
+        if (error) return `Error! ${error}`;
+        
+        return (
+          <div>
+            {story.content}
+            <StoryInputForm/>
+          </div>
+        )
+      }}
+  </Query>
+)}
+
+export default storyInProgress

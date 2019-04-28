@@ -19,7 +19,7 @@ export const GET_STORY_ADDITIONS = gql`query Story ($id: ID!){
     }
 }`
 
-export const GET_STORIES = gql`{
+export const GET_STORIES = gql`query Story {
     allStories {
       id
       content
