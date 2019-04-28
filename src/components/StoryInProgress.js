@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Query } from 'react-apollo';
-import {Link} from 'react-router-dom'
 import {GET_STORY_ADDITIONS} from '../actions/queries';
 import StoryInputForm from './StoryInputForm'
 
@@ -21,8 +20,9 @@ const storyInProgress = (props) => {
         
         return (
           <div>
-            {story.content}
-            <StoryInputForm/>
+            <h4>{story.content}</h4>
+            {story.additions.map(addition => <p><br/>{addition.text}</p> )}
+            <StoryInputForm storyId={storyId}/>
           </div>
         )
       }}
