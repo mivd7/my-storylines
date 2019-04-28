@@ -44,16 +44,17 @@ async function signup(parent, args, context: Context, info) {
   return { token, user }
 }
 
-function createStory(root, args, context) {
-  const userId = getUserId(context)
-  return context.prisma.createStory(
+async function createStory(root, args, context) {
+  const story = await context.prisma.createStory(
     {
+      title: args.title,
       content: args.content,
       author: {
-        connect: { id: userId }
+        connect: { id: args.userId }
       }
-    },
+    }
   )
+  return story
 }
 
 function addToStory(root, args, context) {

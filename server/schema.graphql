@@ -32,8 +32,8 @@ type User {
 
 type Story {
   id: ID!
-  content: String!
-  published: Boolean!
+  title: String
+  openingLine: String!
   author: User
   additions: [Addition]
 }

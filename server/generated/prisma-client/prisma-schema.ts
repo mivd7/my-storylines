@@ -327,9 +327,9 @@ type Story {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
+  title: String
   content: String!
   additions(where: AdditionWhereInput, orderBy: AdditionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Addition!]
-  published: Boolean
   author: User
 }
 
@@ -340,9 +340,9 @@ type StoryConnection {
 }
 
 input StoryCreateInput {
+  title: String
   content: String!
   additions: AdditionCreateManyWithoutStoryInput
-  published: Boolean
   author: UserCreateOneWithoutStoriesInput
 }
 
@@ -357,15 +357,15 @@ input StoryCreateOneWithoutAdditionsInput {
 }
 
 input StoryCreateWithoutAdditionsInput {
+  title: String
   content: String!
-  published: Boolean
   author: UserCreateOneWithoutStoriesInput
 }
 
 input StoryCreateWithoutAuthorInput {
+  title: String
   content: String!
   additions: AdditionCreateManyWithoutStoryInput
-  published: Boolean
 }
 
 type StoryEdge {
@@ -380,18 +380,18 @@ enum StoryOrderByInput {
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
+  title_ASC
+  title_DESC
   content_ASC
   content_DESC
-  published_ASC
-  published_DESC
 }
 
 type StoryPreviousValues {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
+  title: String
   content: String!
-  published: Boolean
 }
 
 input StoryScalarWhereInput {
@@ -425,6 +425,20 @@ input StoryScalarWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
   content: String
   content_not: String
   content_in: [String!]
@@ -439,8 +453,6 @@ input StoryScalarWhereInput {
   content_not_starts_with: String
   content_ends_with: String
   content_not_ends_with: String
-  published: Boolean
-  published_not: Boolean
   AND: [StoryScalarWhereInput!]
   OR: [StoryScalarWhereInput!]
   NOT: [StoryScalarWhereInput!]
@@ -465,20 +477,20 @@ input StorySubscriptionWhereInput {
 }
 
 input StoryUpdateInput {
+  title: String
   content: String
   additions: AdditionUpdateManyWithoutStoryInput
-  published: Boolean
   author: UserUpdateOneWithoutStoriesInput
 }
 
 input StoryUpdateManyDataInput {
+  title: String
   content: String
-  published: Boolean
 }
 
 input StoryUpdateManyMutationInput {
+  title: String
   content: String
-  published: Boolean
 }
 
 input StoryUpdateManyWithoutAuthorInput {
@@ -506,15 +518,15 @@ input StoryUpdateOneRequiredWithoutAdditionsInput {
 }
 
 input StoryUpdateWithoutAdditionsDataInput {
+  title: String
   content: String
-  published: Boolean
   author: UserUpdateOneWithoutStoriesInput
 }
 
 input StoryUpdateWithoutAuthorDataInput {
+  title: String
   content: String
   additions: AdditionUpdateManyWithoutStoryInput
-  published: Boolean
 }
 
 input StoryUpdateWithWhereUniqueWithoutAuthorInput {
@@ -564,6 +576,20 @@ input StoryWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
   content: String
   content_not: String
   content_in: [String!]
@@ -581,8 +607,6 @@ input StoryWhereInput {
   additions_every: AdditionWhereInput
   additions_some: AdditionWhereInput
   additions_none: AdditionWhereInput
-  published: Boolean
-  published_not: Boolean
   author: UserWhereInput
   AND: [StoryWhereInput!]
   OR: [StoryWhereInput!]

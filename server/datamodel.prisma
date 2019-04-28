@@ -2,9 +2,9 @@ type Story {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
-  content: String!
+  title: String
+  openingLine: String!
   additions: [Addition]
-  published: Boolean
   author: User
 }
 
@@ -30,3 +30,5 @@ enum AccessRole {
   USER
   ADMIN
 }
+
+scalar DateTime
