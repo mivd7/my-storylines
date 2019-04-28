@@ -12,8 +12,25 @@ export default {
   createAdmin,
 }
 
-/*****  user functionalities  *****/
+//user mutations
+function createUser(root, args, context) {
+  return context.prisma.createUser(
+    { name: args.name,
+      email: args.email,
+      password: args.password,
+      accessRole: "USER" },
+  )
+}
+function createAdmin(root, args, context) {
+  return context.prisma.createUser(
+    { name: args.name,
+      email: args.email,
+      password: args.password,
+      accessRole: "ADMIN" },
+  )
+}
 
+//user functions
 async function login(parent, { email, password }, context: Context, info) {
   const user = await context.db.user({ email, password })
   if (!user) {
@@ -44,6 +61,7 @@ async function signup(parent, args, context: Context, info) {
   return { token, user }
 }
 
+// story mutations
 async function createStory(root, args, context) {
   const story = await context.prisma.createStory(
     {
@@ -58,6 +76,7 @@ async function createStory(root, args, context) {
   return story
 }
 
+// addition mutations
 function addToStory(root, args, context) {
   return context.prisma.createAddition(
     {
@@ -69,19 +88,3 @@ function addToStory(root, args, context) {
   )
 }
 
-function createUser(root, args, context) {
-  return context.prisma.createUser(
-    { name: args.name,
-      email: args.email,
-      password: args.password,
-      accessRole: "USER" },
-  )
-}
-function createAdmin(root, args, context) {
-  return context.prisma.createUser(
-    { name: args.name,
-      email: args.email,
-      password: args.password,
-      accessRole: "ADMIN" },
-  )
-}
