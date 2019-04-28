@@ -5,6 +5,7 @@
   -> if not: http://docs.docker.com
 
 - Navigate to server folder inside project folder: $ cd server<br>
+- Install the dependencies: $ yarn install
 - Run $ docker-compose up -d <br>
   -> starts the necessary docker containers based on 'docker-compose.yml' file <br>
 - Run $ prisma deploy <br>
