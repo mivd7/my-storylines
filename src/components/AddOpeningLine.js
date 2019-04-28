@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router-dom'
-
+// import {Link} from 'react-router-dom'
 import { Mutation } from "react-apollo"
 import { CREATE_STORY } from '../actions/mutations'
 
@@ -11,7 +10,7 @@ export default class AddOpeningLine extends Component {
 
   render() {
     const { content } = this.state
-    const dummyUser = "cjqm99khm002l0738jlaqzylo"
+    const dummyUser = "cjv11rs7k00180798hpglqlj9"
     return (
       <div>
         <div className="flex flex-column">
@@ -23,9 +22,8 @@ export default class AddOpeningLine extends Component {
           />
         </div>
           <Mutation mutation={CREATE_STORY}
-                    variables={{ content, userId: `${dummyUser}` }} >
-            {storyMutation => <div><button onClick={storyMutation}>Submit</button>
-            <Link to={`/stories/${storyMutation}`}><p>{this.state.content}</p></Link></div>}
+                    variables={{ content, userId: `${dummyUser}`, }} >
+            {storyMutation => <div><button onClick={storyMutation}>Submit</button></div>}
           </Mutation>
       </div>
     )

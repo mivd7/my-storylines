@@ -14,16 +14,17 @@ const storyInProgress = (props) => {
   return (
     <Query query={query.story} variables={query.variables}>
       {({ loading, error, data }) => {
+        const noTitle = 'Untitled'
         console.log(data)
-        const story = data.story
         if (loading) return "Loading...";
         if (error) return `Error! ${error}`;
         
         return (
           <div>
-            <h4>{story.content}</h4>
-            {story.additions.map(addition => <p><br/>{addition.text}</p> )}
-            <StoryInputForm storyId={storyId}/>
+            <h1>{data.story.title || noTitle}</h1>
+            <h4>{data.story.openingLine}</h4>
+            {data.story.additions.map(addition => <p><br/>{addition.text}</p> )}
+            <StoryInputForm storyId={storyId} />
           </div>
         )
       }}

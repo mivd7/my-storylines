@@ -2,27 +2,37 @@ import gql from 'graphql-tag';
 
 export const SET_ADDITION = 'SET_ADDITION' 
 
-export const STORY_QUERY = gql`query Story ($id: ID!){
-    story(storyId: $id) {
-      content
-    }
+export const GET_STORY = gql`query Story ($id: ID!){
+  story(where: {id: $id}) {
+      id
+      openingLine
+      createdAt
+      author {
+        name
+      }
+  }
 }`
 
 export const GET_STORY_ADDITIONS = gql`query Story ($id: ID!){
-    story(storyId: $id) {
-      id
-      content
-      additions {
-        id  
-        text  
-      }
+    story(where: {id: $id}) {
+        id
+        openingLine
+        additions {
+          id
+          createdAt
+        }
     }
 }`
 
 export const GET_STORIES = gql`query Story {
-    allStories {
+    stories {
       id
-      content
+      title
+      openingLine
+      createdAt
+      author {
+        name
+      }
     }
   }
 `;
