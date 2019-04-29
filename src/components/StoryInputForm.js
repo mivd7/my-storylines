@@ -12,7 +12,7 @@ export default class StoryInputForm extends Component {
 
   render() {
     const { text, isWriting } = this.state
-    console.log(this.props)
+    console.log(isWriting)
     return (
       <div>
         <div className="flex flex-column">
@@ -25,7 +25,8 @@ export default class StoryInputForm extends Component {
           />
         </div>
           <Mutation mutation={ADD_TO_STORY}
-                    variables={{ text, storyId: this.props.storyId }} >
+                    variables={{ text, storyId: this.props.storyId }} 
+                    onCompleted={() => this.setState({text: '', isWriting: checkSubmitStatus(isWriting)})}>
             {addMutation => <div><button onClick={addMutation}><Link to={`/stories/${this.props.storyId}`}>Submit</Link></button></div>}
           </Mutation>
       </div>
