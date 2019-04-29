@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import { Query } from "react-apollo"
 
 import {getRandomLines} from '../lib/randomLines'
+import {formatDate} from '../lib/dateFormats'
 import {GET_STORIES} from '../actions/queries'
 import AddOpeningLine from './AddOpeningLine'
 
@@ -23,7 +24,7 @@ const startStory = () => (
           <iframe title="7dwarfs" src="https://giphy.com/embed/AOqKdtVvmMAI8" width="360" height="200" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
           <ul>{storiesToRender.map(story => <div>
           <li><Link to={`/stories/${story.id}`} >{story.openingLine}</Link></li>
-          <p>Started by {story.author.name}</p></div>)}
+          <p>Started by {story.author.name} on {formatDate(story.createdAt)} </p></div>)}
           </ul>
           <AddOpeningLine />
         </div>

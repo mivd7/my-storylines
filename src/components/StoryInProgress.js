@@ -24,7 +24,7 @@ const storyInProgress = (props) => {
             <h1>{data.story.title || noTitle}</h1>
             <h4>{data.story.openingLine}</h4>
             {data.story.additions.map(addition => <p><br/>{addition.text}</p> )}
-            <StoryInputForm storyId={storyId} />
+            <StoryInputForm storyId={storyId} additions={data.story.additions} />
           </div>
         )
       }}

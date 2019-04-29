@@ -7,13 +7,14 @@ export const CREATE_STORY = gql`mutation Story($openingLine: String!, $userId: I
     }
   }
 `
-export const ADD_TO_STORY = gql`mutation Addition($text: String!, $storyId: ID!) {
-  addToStory(text: $text, storyId: $storyId) {
-    id
-    text
-    story {
-      id
-      openingLine
-    }
-  }
+export const ADD_TO_STORY = gql`mutation Addition($text: String!, $storyId:ID!) {
+ createAddition(data: {text: $text, story: {connect: {id: $storyId}}}) {
+   id
+   createdAt
+   text
+   story {
+     id
+     openingLine
+   }
+ }
 }`

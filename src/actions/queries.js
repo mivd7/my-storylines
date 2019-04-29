@@ -17,6 +17,7 @@ export const GET_STORY_ADDITIONS = gql`query Story ($id: ID!){
         openingLine
         additions {
           id
+          text
           createdAt
         }
     }
@@ -32,5 +33,4 @@ export const GET_STORIES = gql`query Story {
         name
       }
     }
-  }
-`;
+  }`;

@@ -7,7 +7,7 @@ export default {
   login,
   signup,
   createStory,
-  addToStory,
+  createAddition,
   createUser,
   createAdmin,
 }
@@ -77,14 +77,15 @@ async function createStory(root, args, context) {
 }
 
 // addition mutations
-function addToStory(root, args, context) {
-  return context.prisma.createAddition(
+async function createAddition(root, args, context) {
+  const addition = await context.prisma.createAddition(
     {
       text: args.text,
       story: {
         connect: {id: args.storyId}
       }
-    },
+    }
   )
+  return addition
 }
 
