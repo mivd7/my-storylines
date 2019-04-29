@@ -9,8 +9,8 @@ type Query {
 type Mutation {
   createUser(name: String!, email: String!, password: String!): User
   createAdmin(name: String!, email: String!, password: String!): User
-  createStory(content: String!, userId: ID!): Story
-  addToStory(storyId: ID!, text: String!): Addition
+  createStory(openingLine: String!, userId: ID!): Story
+  createAddition(storyId: ID!, text: String!): Addition
   publish(storyId: ID!): Story
   signup(email: String!, password: String!, name: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload

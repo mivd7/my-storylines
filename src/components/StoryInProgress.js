@@ -17,7 +17,7 @@ const storyInProgress = (props) => {
         const noTitle = 'Untitled'
         console.log(data)
         if (loading) return "Loading...";
-        if (error) return `Error! ${error}`;
+        if (error) return "An error occured while loading story..." + console.log(error.message);
         
         return (
           <div>
@@ -29,6 +29,7 @@ const storyInProgress = (props) => {
         )
       }}
   </Query>
-)}
+  )
+}
 
 export default storyInProgress

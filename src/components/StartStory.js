@@ -15,14 +15,14 @@ const startStory = () => (
       if (error) return `Error! ${error}`;
 
       const {stories} = data
-      const storiesToRender = getRandomLines(stories, 3)
+      const threeStories = getRandomLines(stories, 3)
       
       return (
         <div>
           {!stories && <div>wait for it...</div>}
           <h2>CHOOSE AN OPENING LINE</h2>
           <iframe title="7dwarfs" src="https://giphy.com/embed/AOqKdtVvmMAI8" width="360" height="200" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
-          <ul>{storiesToRender.map(story => <div>
+          <ul>{threeStories.map(story => <div>
           <li><Link to={`/stories/${story.id}`} >{story.openingLine}</Link></li>
           <p>Started by {story.author.name} on {formatDate(story.createdAt)} </p></div>)}
           </ul>
