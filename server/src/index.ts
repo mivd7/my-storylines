@@ -6,7 +6,7 @@ const server = new GraphQLServer({
   typeDefs: './schema.graphql',
   resolvers,
   context: {
-    prisma
+    db: prisma
   },
 })
 

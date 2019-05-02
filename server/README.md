@@ -1,5 +1,5 @@
 ## GIT THIS THANG RUNNING
-- Make sure to have prisma installed.<br> 
+- Make sure to have Prisma-CLI installed.<br> 
   -> if not: $ npm i -g prisma (info & docs: http://prisma.io/docs)
 - Make sure to have Docker installed.<br>
   -> if not: http://docs.docker.com
@@ -10,8 +10,11 @@
   -> starts the necessary docker containers based on 'docker-compose.yml' file <br>
 - Run $ prisma deploy <br>
   -> deploys the prisma service and generates schema based on 'datamodel.prisma' file <br>
+- Run $ yarn server <br>
+  -> starts your local development server, by default on port :4000
+
 <br>
-Congratulations, the server is now running on localhost:4466 and can be accessed through the prisma playground. Start up the frontend to access it through the UI. <br>
+Congratulations, the server is now running on localhost:4000 and can be accessed through the prisma playground. Start up the frontend to access it through the UI. <br>
 <br>
 
 # Generate dummy data (optional)

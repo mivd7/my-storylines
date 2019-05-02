@@ -8,5 +8,4 @@ generate:
 hooks:
   post-deploy:
     - prisma generate
-    - graphql get-schema --project database
-    - graphql codegen
+    - npx nexus-prisma-generate --client ./src/generated/prisma-client --output ./src/generated/nexus-prisma # Runs the codegen tool from nexus-prisma.

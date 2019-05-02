@@ -3,7 +3,7 @@ export default {
 }
 
 function story(root, args, context) {
-  return context.prisma.addition({
+  return context.db.addition({
     id: root.id
   }).story()
 }

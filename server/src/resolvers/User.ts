@@ -3,7 +3,7 @@ export default {
 }
 
 function stories(root, args, context) {
-  return context.prisma.user({
+  return context.db.user({
     id: root.id
   }).stories()
 }

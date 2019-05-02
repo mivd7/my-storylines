@@ -4,13 +4,13 @@ export default {
 }
 
 function author(root, args, context) {
-  return context.prisma.story({
+  return context.db.story({
     id: root.id
   }).author()
 }
 
 function additions(root, args, context) {
-  return context.prisma.story({
+  return context.db.story({
     id: root.id
   }).additions()
 }

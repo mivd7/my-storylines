@@ -254,12 +254,89 @@ type AggregateAddition {
   count: Int!
 }
 
+type AggregateAuthPayload {
+  count: Int!
+}
+
 type AggregateStory {
   count: Int!
 }
 
 type AggregateUser {
   count: Int!
+}
+
+type AuthPayload {
+  token: String
+  user: User
+}
+
+type AuthPayloadConnection {
+  pageInfo: PageInfo!
+  edges: [AuthPayloadEdge]!
+  aggregate: AggregateAuthPayload!
+}
+
+input AuthPayloadCreateInput {
+  token: String
+  user: UserCreateOneInput
+}
+
+type AuthPayloadEdge {
+  node: AuthPayload!
+  cursor: String!
+}
+
+enum AuthPayloadOrderByInput {
+  token_ASC
+  token_DESC
+}
+
+type AuthPayloadPreviousValues {
+  token: String
+}
+
+type AuthPayloadSubscriptionPayload {
+  mutation: MutationType!
+  node: AuthPayload
+  updatedFields: [String!]
+  previousValues: AuthPayloadPreviousValues
+}
+
+input AuthPayloadSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: AuthPayloadWhereInput
+  AND: [AuthPayloadSubscriptionWhereInput!]
+  OR: [AuthPayloadSubscriptionWhereInput!]
+  NOT: [AuthPayloadSubscriptionWhereInput!]
+}
+
+input AuthPayloadUpdateManyMutationInput {
+  token: String
+}
+
+input AuthPayloadWhereInput {
+  token: String
+  token_not: String
+  token_in: [String!]
+  token_not_in: [String!]
+  token_lt: String
+  token_lte: String
+  token_gt: String
+  token_gte: String
+  token_contains: String
+  token_not_contains: String
+  token_starts_with: String
+  token_not_starts_with: String
+  token_ends_with: String
+  token_not_ends_with: String
+  user: UserWhereInput
+  AND: [AuthPayloadWhereInput!]
+  OR: [AuthPayloadWhereInput!]
+  NOT: [AuthPayloadWhereInput!]
 }
 
 type BatchPayload {
@@ -277,6 +354,9 @@ type Mutation {
   upsertAddition(where: AdditionWhereUniqueInput!, create: AdditionCreateInput!, update: AdditionUpdateInput!): Addition!
   deleteAddition(where: AdditionWhereUniqueInput!): Addition
   deleteManyAdditions(where: AdditionWhereInput): BatchPayload!
+  createAuthPayload(data: AuthPayloadCreateInput!): AuthPayload!
+  updateManyAuthPayloads(data: AuthPayloadUpdateManyMutationInput!, where: AuthPayloadWhereInput): BatchPayload!
+  deleteManyAuthPayloads(where: AuthPayloadWhereInput): BatchPayload!
   createStory(data: StoryCreateInput!): Story!
   updateStory(data: StoryUpdateInput!, where: StoryWhereUniqueInput!): Story
   updateManyStories(data: StoryUpdateManyMutationInput!, where: StoryWhereInput): BatchPayload!
@@ -312,6 +392,8 @@ type Query {
   addition(where: AdditionWhereUniqueInput!): Addition
   additions(where: AdditionWhereInput, orderBy: AdditionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Addition]!
   additionsConnection(where: AdditionWhereInput, orderBy: AdditionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AdditionConnection!
+  authPayloads(where: AuthPayloadWhereInput, orderBy: AuthPayloadOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AuthPayload]!
+  authPayloadsConnection(where: AuthPayloadWhereInput, orderBy: AuthPayloadOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AuthPayloadConnection!
   story(where: StoryWhereUniqueInput!): Story
   stories(where: StoryWhereInput, orderBy: StoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Story]!
   storiesConnection(where: StoryWhereInput, orderBy: StoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StoryConnection!
@@ -617,6 +699,7 @@ input StoryWhereUniqueInput {
 
 type Subscription {
   addition(where: AdditionSubscriptionWhereInput): AdditionSubscriptionPayload
+  authPayload(where: AuthPayloadSubscriptionWhereInput): AuthPayloadSubscriptionPayload
   story(where: StorySubscriptionWhereInput): StorySubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
@@ -644,6 +727,11 @@ input UserCreateInput {
   accessRole: AccessRole!
   stories: StoryCreateManyWithoutAuthorInput
   additions: AdditionCreateManyWithoutWrittenByInput
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutAdditionsInput {

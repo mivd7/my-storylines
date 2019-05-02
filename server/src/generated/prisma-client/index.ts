@@ -17,6 +17,7 @@ export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
   addition: (where?: AdditionWhereInput) => Promise<boolean>;
+  authPayload: (where?: AuthPayloadWhereInput) => Promise<boolean>;
   story: (where?: StoryWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
@@ -59,6 +60,24 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => AdditionConnectionPromise;
+  authPayloads: (args?: {
+    where?: AuthPayloadWhereInput;
+    orderBy?: AuthPayloadOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<AuthPayload>;
+  authPayloadsConnection: (args?: {
+    where?: AuthPayloadWhereInput;
+    orderBy?: AuthPayloadOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => AuthPayloadConnectionPromise;
   story: (where: StoryWhereUniqueInput) => StoryNullablePromise;
   stories: (args?: {
     where?: StoryWhereInput;
@@ -119,6 +138,14 @@ export interface Prisma {
   }) => AdditionPromise;
   deleteAddition: (where: AdditionWhereUniqueInput) => AdditionPromise;
   deleteManyAdditions: (where?: AdditionWhereInput) => BatchPayloadPromise;
+  createAuthPayload: (data: AuthPayloadCreateInput) => AuthPayloadPromise;
+  updateManyAuthPayloads: (args: {
+    data: AuthPayloadUpdateManyMutationInput;
+    where?: AuthPayloadWhereInput;
+  }) => BatchPayloadPromise;
+  deleteManyAuthPayloads: (
+    where?: AuthPayloadWhereInput
+  ) => BatchPayloadPromise;
   createStory: (data: StoryCreateInput) => StoryPromise;
   updateStory: (args: {
     data: StoryUpdateInput;
@@ -163,6 +190,9 @@ export interface Subscription {
   addition: (
     where?: AdditionSubscriptionWhereInput
   ) => AdditionSubscriptionPayloadSubscription;
+  authPayload: (
+    where?: AuthPayloadSubscriptionWhereInput
+  ) => AuthPayloadSubscriptionPayloadSubscription;
   story: (
     where?: StorySubscriptionWhereInput
   ) => StorySubscriptionPayloadSubscription;
@@ -200,6 +230,8 @@ export type StoryOrderByInput =
   | "title_DESC"
   | "openingLine_ASC"
   | "openingLine_DESC";
+
+export type AuthPayloadOrderByInput = "token_ASC" | "token_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -401,6 +433,27 @@ export interface UserWhereInput {
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
   OR?: Maybe<UserWhereInput[] | UserWhereInput>;
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
+}
+
+export interface AuthPayloadWhereInput {
+  token?: Maybe<String>;
+  token_not?: Maybe<String>;
+  token_in?: Maybe<String[] | String>;
+  token_not_in?: Maybe<String[] | String>;
+  token_lt?: Maybe<String>;
+  token_lte?: Maybe<String>;
+  token_gt?: Maybe<String>;
+  token_gte?: Maybe<String>;
+  token_contains?: Maybe<String>;
+  token_not_contains?: Maybe<String>;
+  token_starts_with?: Maybe<String>;
+  token_not_starts_with?: Maybe<String>;
+  token_ends_with?: Maybe<String>;
+  token_not_ends_with?: Maybe<String>;
+  user?: Maybe<UserWhereInput>;
+  AND?: Maybe<AuthPayloadWhereInput[] | AuthPayloadWhereInput>;
+  OR?: Maybe<AuthPayloadWhereInput[] | AuthPayloadWhereInput>;
+  NOT?: Maybe<AuthPayloadWhereInput[] | AuthPayloadWhereInput>;
 }
 
 export type StoryWhereUniqueInput = AtLeastOne<{
@@ -808,6 +861,29 @@ export interface AdditionUpdateManyMutationInput {
   text?: Maybe<String>;
 }
 
+export interface AuthPayloadCreateInput {
+  token?: Maybe<String>;
+  user?: Maybe<UserCreateOneInput>;
+}
+
+export interface UserCreateOneInput {
+  create?: Maybe<UserCreateInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserCreateInput {
+  name: String;
+  email: String;
+  password: String;
+  accessRole: AccessRole;
+  stories?: Maybe<StoryCreateManyWithoutAuthorInput>;
+  additions?: Maybe<AdditionCreateManyWithoutWrittenByInput>;
+}
+
+export interface AuthPayloadUpdateManyMutationInput {
+  token?: Maybe<String>;
+}
+
 export interface StoryCreateInput {
   title?: Maybe<String>;
   openingLine: String;
@@ -825,15 +901,6 @@ export interface StoryUpdateInput {
 export interface StoryUpdateManyMutationInput {
   title?: Maybe<String>;
   openingLine?: Maybe<String>;
-}
-
-export interface UserCreateInput {
-  name: String;
-  email: String;
-  password: String;
-  accessRole: AccessRole;
-  stories?: Maybe<StoryCreateManyWithoutAuthorInput>;
-  additions?: Maybe<AdditionCreateManyWithoutWrittenByInput>;
 }
 
 export interface UserUpdateInput {
@@ -864,6 +931,23 @@ export interface AdditionSubscriptionWhereInput {
   OR?: Maybe<AdditionSubscriptionWhereInput[] | AdditionSubscriptionWhereInput>;
   NOT?: Maybe<
     AdditionSubscriptionWhereInput[] | AdditionSubscriptionWhereInput
+  >;
+}
+
+export interface AuthPayloadSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<AuthPayloadWhereInput>;
+  AND?: Maybe<
+    AuthPayloadSubscriptionWhereInput[] | AuthPayloadSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    AuthPayloadSubscriptionWhereInput[] | AuthPayloadSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    AuthPayloadSubscriptionWhereInput[] | AuthPayloadSubscriptionWhereInput
   >;
 }
 
@@ -1162,6 +1246,85 @@ export interface AggregateAdditionSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
+export interface AuthPayload {
+  token?: String;
+}
+
+export interface AuthPayloadPromise extends Promise<AuthPayload>, Fragmentable {
+  token: () => Promise<String>;
+  user: <T = UserPromise>() => T;
+}
+
+export interface AuthPayloadSubscription
+  extends Promise<AsyncIterator<AuthPayload>>,
+    Fragmentable {
+  token: () => Promise<AsyncIterator<String>>;
+  user: <T = UserSubscription>() => T;
+}
+
+export interface AuthPayloadNullablePromise
+  extends Promise<AuthPayload | null>,
+    Fragmentable {
+  token: () => Promise<String>;
+  user: <T = UserPromise>() => T;
+}
+
+export interface AuthPayloadConnection {
+  pageInfo: PageInfo;
+  edges: AuthPayloadEdge[];
+}
+
+export interface AuthPayloadConnectionPromise
+  extends Promise<AuthPayloadConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<AuthPayloadEdge>>() => T;
+  aggregate: <T = AggregateAuthPayloadPromise>() => T;
+}
+
+export interface AuthPayloadConnectionSubscription
+  extends Promise<AsyncIterator<AuthPayloadConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<AuthPayloadEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateAuthPayloadSubscription>() => T;
+}
+
+export interface AuthPayloadEdge {
+  node: AuthPayload;
+  cursor: String;
+}
+
+export interface AuthPayloadEdgePromise
+  extends Promise<AuthPayloadEdge>,
+    Fragmentable {
+  node: <T = AuthPayloadPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface AuthPayloadEdgeSubscription
+  extends Promise<AsyncIterator<AuthPayloadEdge>>,
+    Fragmentable {
+  node: <T = AuthPayloadSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateAuthPayload {
+  count: Int;
+}
+
+export interface AggregateAuthPayloadPromise
+  extends Promise<AggregateAuthPayload>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateAuthPayloadSubscription
+  extends Promise<AsyncIterator<AggregateAuthPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
 export interface StoryConnection {
   pageInfo: PageInfo;
   edges: StoryEdge[];
@@ -1333,6 +1496,47 @@ export interface AdditionPreviousValuesSubscription
   text: () => Promise<AsyncIterator<String>>;
 }
 
+export interface AuthPayloadSubscriptionPayload {
+  mutation: MutationType;
+  node: AuthPayload;
+  updatedFields: String[];
+  previousValues: AuthPayloadPreviousValues;
+}
+
+export interface AuthPayloadSubscriptionPayloadPromise
+  extends Promise<AuthPayloadSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = AuthPayloadPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = AuthPayloadPreviousValuesPromise>() => T;
+}
+
+export interface AuthPayloadSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<AuthPayloadSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = AuthPayloadSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = AuthPayloadPreviousValuesSubscription>() => T;
+}
+
+export interface AuthPayloadPreviousValues {
+  token?: String;
+}
+
+export interface AuthPayloadPreviousValuesPromise
+  extends Promise<AuthPayloadPreviousValues>,
+    Fragmentable {
+  token: () => Promise<String>;
+}
+
+export interface AuthPayloadPreviousValuesSubscription
+  extends Promise<AsyncIterator<AuthPayloadPreviousValues>>,
+    Fragmentable {
+  token: () => Promise<AsyncIterator<String>>;
+}
+
 export interface StorySubscriptionPayload {
   mutation: MutationType;
   node: Story;
@@ -1487,6 +1691,10 @@ export const models: Model[] = [
   },
   {
     name: "Addition",
+    embedded: false
+  },
+  {
+    name: "AuthPayload",
     embedded: false
   },
   {

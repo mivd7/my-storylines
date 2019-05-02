@@ -1,7 +1,7 @@
 import { prisma } from '../generated/prisma-client'
 
 //OPTIONAL HARD-CODED DATA
-//ADD TO GRAPHQL-DB BY RUNNING $ ts-node data.ts INSIDE 'src' FOLDER
+//ADD TO GRAPHQL-DB BY RUNNING $ yarn generate inside 'server' folder
 const openingLines = ['It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife...',
 'There was no possibility of taking a walk that day...',`You don't know about me but...`, 'I write this sitting in the kitchen sink...',`It was a queer, sultry summer, the summer they electrocuted the Rosenbergs, and I didn't know what I was doing in New York.`, 
 `The snow in the mountains was melting and Bunny had been dead for several weeks before we came to understand the gravity of our situation.`,`The rest of these gentlemen have asked me to write down the whole particulars about Treasure Island.`, 
@@ -22,7 +22,7 @@ const lines = openingLines.map((line) => {
 async function generateData() {
   //ADDS NEW USER 'JOEP' WITH STORIES BASED ON OPENINGLINES ARRAY
   const newUserWithStory = await prisma.createUser({
-    name: 'Joep', 
+    name: 'Joep Meloen', 
     email:'joep.meloen@euronet.nl',
     password: 'joepie',
     accessRole: 'USER',
