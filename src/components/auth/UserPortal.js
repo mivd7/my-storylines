@@ -19,9 +19,9 @@ const LOGIN_MUTATION = gql`
   }
 `
 
-class Login extends Component {
+export default class UserPortal extends Component {
   state = {
-    login: true, // switch between Login and SignUp
+    login: false, // switch between Login and SignUp
     email: '',
     password: '',
     name: '',
@@ -31,7 +31,12 @@ class Login extends Component {
     const { login, email, password, name } = this.state
     return (
       <div>
-        <h4 className="mv3">{login ? 'Login' : 'Sign Up'}</h4>
+       {login ? 
+          <><iframe title="spongebob" src="https://giphy.com/embed/kCHmQ4YBBO2Zi" width="360" height="240" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+          <h4>Login</h4></> : <>
+                  <iframe title="simpson" src="https://giphy.com/embed/3o6Mbp8RPCrhrrFB6M" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+                  <h4>Signup</h4></>
+        }        
         <div className="flex flex-column">
           {!login && (
             <>
@@ -89,5 +94,3 @@ class Login extends Component {
     localStorage.setItem(AUTH_TOKEN, token)
   }
 }
-
-export default Login

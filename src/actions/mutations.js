@@ -21,4 +21,10 @@ export const ADD_TO_STORY = gql`mutation Addition($text: String!, $storyId:ID!) 
 }`
 
 //user
-// export const SIGNUP = gql`mutation User(())
+export const SIGNUP = gql`mutation signup($email: String!, 
+                                          $password: String!, 
+                                          $name: String!) {
+          signup(email: $email, password: $password, name: $name) {
+            token
+          }
+}`
