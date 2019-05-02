@@ -35,6 +35,7 @@ type Story {
   id: ID!
   title: String
   openingLine: String!
+  createdAt: DateTime!
   author: User
   additions: [Addition]
 }

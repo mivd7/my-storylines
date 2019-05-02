@@ -12,7 +12,7 @@ export const GET_STORY = gql`query Story ($id: ID!){
 }`
 
 export const GET_STORY_ADDITIONS = gql`query Story ($id: ID!){
-    story(where: {id: $id}) {
+    story(storyId: $id) {
         id
         openingLine
         additions {
@@ -24,7 +24,7 @@ export const GET_STORY_ADDITIONS = gql`query Story ($id: ID!){
 }`
 
 export const GET_STORIES = gql`query Story {
-    stories {
+    allStories {
       id
       title
       openingLine

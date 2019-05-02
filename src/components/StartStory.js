@@ -14,12 +14,12 @@ const startStory = () => (
       if (loading) return "Loading...";
       if (error) return `Error! ${error}`;
 
-      const {stories} = data
-      const threeStories = getRandomLines(stories, 3)
+      const {allStories} = data
+      const threeStories = getRandomLines(allStories, 3)
       
       return (
         <div>
-          {!stories && <div>wait for it...</div>}
+          {!allStories && <div>wait for it...</div>}
           <h2>CHOOSE AN OPENING LINE</h2>
           <iframe title="7dwarfs" src="https://giphy.com/embed/AOqKdtVvmMAI8" width="360" height="200" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
           <ul>{threeStories.map(story => <div>

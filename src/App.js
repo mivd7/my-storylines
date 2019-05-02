@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import StartStory from './components/StartStory';
 import StoryInProgress from './components/StoryInProgress';
-import Header from './layout/Header'
-import { Route } from 'react-router-dom'
+import Header from './layout/Header';
+import Login from './components/auth/Login';
+import { Route } from 'react-router-dom';
 import './App.css';
 
 class App extends Component {
@@ -12,6 +13,7 @@ class App extends Component {
           <div>
           <header className="App-header">
           <Route exact path="/" component={Header} />
+          <Route exact path="/login" component={Login}/>
           <Route exact path="/start" component={StartStory} />
           <Route exact path="/stories/:id" component={StoryInProgress} />
           </header>
