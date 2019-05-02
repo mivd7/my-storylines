@@ -7,3 +7,4 @@ function stories(root, args, context) {
     id: root.id
   }).stories()
 }
+

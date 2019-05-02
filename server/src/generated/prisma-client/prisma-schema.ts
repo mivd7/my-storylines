@@ -269,7 +269,6 @@ type AggregateUser {
 type AuthPayload {
   token: String
   user: User
-  name: String
 }
 
 type AuthPayloadConnection {
@@ -281,7 +280,6 @@ type AuthPayloadConnection {
 input AuthPayloadCreateInput {
   token: String
   user: UserCreateOneInput
-  name: String
 }
 
 type AuthPayloadEdge {
@@ -292,13 +290,10 @@ type AuthPayloadEdge {
 enum AuthPayloadOrderByInput {
   token_ASC
   token_DESC
-  name_ASC
-  name_DESC
 }
 
 type AuthPayloadPreviousValues {
   token: String
-  name: String
 }
 
 type AuthPayloadSubscriptionPayload {
@@ -321,7 +316,6 @@ input AuthPayloadSubscriptionWhereInput {
 
 input AuthPayloadUpdateManyMutationInput {
   token: String
-  name: String
 }
 
 input AuthPayloadWhereInput {
@@ -340,20 +334,6 @@ input AuthPayloadWhereInput {
   token_ends_with: String
   token_not_ends_with: String
   user: UserWhereInput
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
   AND: [AuthPayloadWhereInput!]
   OR: [AuthPayloadWhereInput!]
   NOT: [AuthPayloadWhereInput!]

@@ -7,7 +7,7 @@ export function getUserId(context) {
   const Authorization = context.request.get('Authorization')
   if (Authorization) {
     const token = Authorization.replace('Bearer ', '')
-    const { userId } = verify(token, APP_SECRET)
+    const userId = verify(token, APP_SECRET)
     return userId
   }
 
@@ -16,5 +16,4 @@ export function getUserId(context) {
 
 export interface Context {
   db: Prisma
-  request: any
 }

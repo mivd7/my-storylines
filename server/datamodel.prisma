@@ -26,6 +26,12 @@ type Addition {
   writtenBy: User
 }
 
+type AuthPayload {
+  token: String
+  user: User
+  name: String
+}
+
 enum AccessRole {
   USER
   ADMIN

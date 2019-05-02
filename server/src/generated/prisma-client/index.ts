@@ -231,11 +231,7 @@ export type StoryOrderByInput =
   | "openingLine_ASC"
   | "openingLine_DESC";
 
-export type AuthPayloadOrderByInput =
-  | "token_ASC"
-  | "token_DESC"
-  | "name_ASC"
-  | "name_DESC";
+export type AuthPayloadOrderByInput = "token_ASC" | "token_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -455,20 +451,6 @@ export interface AuthPayloadWhereInput {
   token_ends_with?: Maybe<String>;
   token_not_ends_with?: Maybe<String>;
   user?: Maybe<UserWhereInput>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
   AND?: Maybe<AuthPayloadWhereInput[] | AuthPayloadWhereInput>;
   OR?: Maybe<AuthPayloadWhereInput[] | AuthPayloadWhereInput>;
   NOT?: Maybe<AuthPayloadWhereInput[] | AuthPayloadWhereInput>;
@@ -882,7 +864,6 @@ export interface AdditionUpdateManyMutationInput {
 export interface AuthPayloadCreateInput {
   token?: Maybe<String>;
   user?: Maybe<UserCreateOneInput>;
-  name?: Maybe<String>;
 }
 
 export interface UserCreateOneInput {
@@ -901,7 +882,6 @@ export interface UserCreateInput {
 
 export interface AuthPayloadUpdateManyMutationInput {
   token?: Maybe<String>;
-  name?: Maybe<String>;
 }
 
 export interface StoryCreateInput {
@@ -1268,13 +1248,11 @@ export interface AggregateAdditionSubscription
 
 export interface AuthPayload {
   token?: String;
-  name?: String;
 }
 
 export interface AuthPayloadPromise extends Promise<AuthPayload>, Fragmentable {
   token: () => Promise<String>;
   user: <T = UserPromise>() => T;
-  name: () => Promise<String>;
 }
 
 export interface AuthPayloadSubscription
@@ -1282,7 +1260,6 @@ export interface AuthPayloadSubscription
     Fragmentable {
   token: () => Promise<AsyncIterator<String>>;
   user: <T = UserSubscription>() => T;
-  name: () => Promise<AsyncIterator<String>>;
 }
 
 export interface AuthPayloadNullablePromise
@@ -1290,7 +1267,6 @@ export interface AuthPayloadNullablePromise
     Fragmentable {
   token: () => Promise<String>;
   user: <T = UserPromise>() => T;
-  name: () => Promise<String>;
 }
 
 export interface AuthPayloadConnection {
@@ -1547,21 +1523,18 @@ export interface AuthPayloadSubscriptionPayloadSubscription
 
 export interface AuthPayloadPreviousValues {
   token?: String;
-  name?: String;
 }
 
 export interface AuthPayloadPreviousValuesPromise
   extends Promise<AuthPayloadPreviousValues>,
     Fragmentable {
   token: () => Promise<String>;
-  name: () => Promise<String>;
 }
 
 export interface AuthPayloadPreviousValuesSubscription
   extends Promise<AsyncIterator<AuthPayloadPreviousValues>>,
     Fragmentable {
   token: () => Promise<AsyncIterator<String>>;
-  name: () => Promise<AsyncIterator<String>>;
 }
 
 export interface StorySubscriptionPayload {
