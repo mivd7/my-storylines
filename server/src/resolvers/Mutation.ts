@@ -7,8 +7,9 @@ import { APP_SECRET, getUserId, Context } from '../utils'
 export default {
   createStory,
   createAddition,
-  signup,
   createAdmin,
+  signup,
+  login
 }
 
 //user mutations
@@ -26,6 +27,23 @@ async function signup(parent, args, context: Context, info) {
 
   return { token, user }
 }
+
+async function login(parent, { email, password }, context: Context, info) {
+  const user = await context.db.user({ email, password })
+  if (!user) {
+    throw new Error('Unknown user')
+  }
+
+  const valid = await compare(password, user.password)
+  if (!valid) {
+    throw new Error('Invalid password')
+  }
+
+  const token = sign({ userId: user.id }, APP_SECRET)
+
+  return { token, user }
+}
+
 function createAdmin(root, args, context) {
   return context.prisma.createUser(
     { name: args.name,
