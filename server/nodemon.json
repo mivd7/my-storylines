@@ -3,5 +3,5 @@
     "src"
   ],
   "ext": "ts",
-  "exec": "ts-node-dev --no-notify --respawn --transpileOnly ./src"
+  "exec": "ts-node ./src/index"
 }

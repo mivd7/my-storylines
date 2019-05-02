@@ -11,5 +11,4 @@ export default {
   Addition, 
   Story, 
   User, 
-  AuthPayload
 }

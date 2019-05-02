@@ -28,10 +28,6 @@ export interface NexusPrismaTypes {
       AdditionConnection: AdditionConnectionObject
       AdditionEdge: AdditionEdgeObject
       AggregateAddition: AggregateAdditionObject
-      AuthPayload: AuthPayloadObject
-      AuthPayloadConnection: AuthPayloadConnectionObject
-      AuthPayloadEdge: AuthPayloadEdgeObject
-      AggregateAuthPayload: AggregateAuthPayloadObject
       Mutation: MutationObject
       BatchPayload: BatchPayloadObject
       Subscription: SubscriptionObject
@@ -41,8 +37,6 @@ export interface NexusPrismaTypes {
       UserPreviousValues: UserPreviousValuesObject
       AdditionSubscriptionPayload: AdditionSubscriptionPayloadObject
       AdditionPreviousValues: AdditionPreviousValuesObject
-      AuthPayloadSubscriptionPayload: AuthPayloadSubscriptionPayloadObject
-      AuthPayloadPreviousValues: AuthPayloadPreviousValuesObject
     }
     fieldsDetails: {
       Query: QueryFieldDetails
@@ -59,10 +53,6 @@ export interface NexusPrismaTypes {
       AdditionConnection: AdditionConnectionFieldDetails
       AdditionEdge: AdditionEdgeFieldDetails
       AggregateAddition: AggregateAdditionFieldDetails
-      AuthPayload: AuthPayloadFieldDetails
-      AuthPayloadConnection: AuthPayloadConnectionFieldDetails
-      AuthPayloadEdge: AuthPayloadEdgeFieldDetails
-      AggregateAuthPayload: AggregateAuthPayloadFieldDetails
       Mutation: MutationFieldDetails
       BatchPayload: BatchPayloadFieldDetails
       Subscription: SubscriptionFieldDetails
@@ -72,8 +62,6 @@ export interface NexusPrismaTypes {
       UserPreviousValues: UserPreviousValuesFieldDetails
       AdditionSubscriptionPayload: AdditionSubscriptionPayloadFieldDetails
       AdditionPreviousValues: AdditionPreviousValuesFieldDetails
-      AuthPayloadSubscriptionPayload: AuthPayloadSubscriptionPayloadFieldDetails
-      AuthPayloadPreviousValues: AuthPayloadPreviousValuesFieldDetails
     }
   }
   inputTypes: {
@@ -84,7 +72,6 @@ export interface NexusPrismaTypes {
       UserWhereInput: UserWhereInputInputObject
       UserWhereUniqueInput: UserWhereUniqueInputInputObject
       AdditionWhereUniqueInput: AdditionWhereUniqueInputInputObject
-      AuthPayloadWhereInput: AuthPayloadWhereInputInputObject
       StoryCreateInput: StoryCreateInputInputObject
       AdditionCreateManyWithoutStoryInput: AdditionCreateManyWithoutStoryInputInputObject
       AdditionCreateWithoutStoryInput: AdditionCreateWithoutStoryInputInputObject
@@ -133,13 +120,9 @@ export interface NexusPrismaTypes {
       AdditionCreateInput: AdditionCreateInputInputObject
       AdditionUpdateInput: AdditionUpdateInputInputObject
       AdditionUpdateManyMutationInput: AdditionUpdateManyMutationInputInputObject
-      AuthPayloadCreateInput: AuthPayloadCreateInputInputObject
-      UserCreateOneInput: UserCreateOneInputInputObject
-      AuthPayloadUpdateManyMutationInput: AuthPayloadUpdateManyMutationInputInputObject
       StorySubscriptionWhereInput: StorySubscriptionWhereInputInputObject
       UserSubscriptionWhereInput: UserSubscriptionWhereInputInputObject
       AdditionSubscriptionWhereInput: AdditionSubscriptionWhereInputInputObject
-      AuthPayloadSubscriptionWhereInput: AuthPayloadSubscriptionWhereInputInputObject
     }
   }
   enumTypes: {
@@ -147,7 +130,6 @@ export interface NexusPrismaTypes {
     AdditionOrderByInput: AdditionOrderByInputValues,
     StoryOrderByInput: StoryOrderByInputValues,
     UserOrderByInput: UserOrderByInputValues,
-    AuthPayloadOrderByInput: AuthPayloadOrderByInputValues,
     MutationType: MutationTypeValues,
   }
 }
@@ -165,8 +147,6 @@ type QueryObject =
   | { name: 'addition', args?: QueryAdditionArgs[] | false, alias?: string  } 
   | { name: 'additions', args?: QueryAdditionsArgs[] | false, alias?: string  } 
   | { name: 'additionsConnection', args?: QueryAdditionsConnectionArgs[] | false, alias?: string  } 
-  | { name: 'authPayloads', args?: QueryAuthPayloadsArgs[] | false, alias?: string  } 
-  | { name: 'authPayloadsConnection', args?: QueryAuthPayloadsConnectionArgs[] | false, alias?: string  } 
 
 type QueryFields =
   | 'story'
@@ -178,8 +158,6 @@ type QueryFields =
   | 'addition'
   | 'additions'
   | 'additionsConnection'
-  | 'authPayloads'
-  | 'authPayloadsConnection'
 
 
 type QueryStoryArgs =
@@ -229,22 +207,6 @@ type QueryAdditionsArgs =
   | 'first'
   | 'last'
 type QueryAdditionsConnectionArgs =
-  | 'where'
-  | 'orderBy'
-  | 'skip'
-  | 'after'
-  | 'before'
-  | 'first'
-  | 'last'
-type QueryAuthPayloadsArgs =
-  | 'where'
-  | 'orderBy'
-  | 'skip'
-  | 'after'
-  | 'before'
-  | 'first'
-  | 'last'
-type QueryAuthPayloadsConnectionArgs =
   | 'where'
   | 'orderBy'
   | 'skip'
@@ -371,32 +333,6 @@ export interface QueryFieldDetails {
       context: core.GetGen<"context">,
       info?: GraphQLResolveInfo
     ) => Promise<prisma.AdditionConnection> | prisma.AdditionConnection
-  }
-  authPayloads: {
-    type: 'AuthPayload'
-    args: Record<QueryAuthPayloadsArgs, core.NexusArgDef<string>>
-    description: string
-    list: true
-    nullable: false
-    resolve: (
-      root: core.RootValue<"Query">,
-      args: { where?: AuthPayloadWhereInput | null, orderBy?: prisma.AuthPayloadOrderByInput | null, skip?: number | null, after?: string | null, before?: string | null, first?: number | null, last?: number | null }  ,
-      context: core.GetGen<"context">,
-      info?: GraphQLResolveInfo
-    ) => Promise<prisma.AuthPayload[]> | prisma.AuthPayload[]
-  }
-  authPayloadsConnection: {
-    type: 'AuthPayloadConnection'
-    args: Record<QueryAuthPayloadsConnectionArgs, core.NexusArgDef<string>>
-    description: string
-    list: undefined
-    nullable: false
-    resolve: (
-      root: core.RootValue<"Query">,
-      args: { where?: AuthPayloadWhereInput | null, orderBy?: prisma.AuthPayloadOrderByInput | null, skip?: number | null, after?: string | null, before?: string | null, first?: number | null, last?: number | null }  ,
-      context: core.GetGen<"context">,
-      info?: GraphQLResolveInfo
-    ) => Promise<prisma.AuthPayloadConnection> | prisma.AuthPayloadConnection
   }
 }
   
@@ -1123,181 +1059,6 @@ export interface AggregateAdditionFieldDetails {
 }
   
 
-// Types for AuthPayload
-
-type AuthPayloadObject =
-  | AuthPayloadFields
-  | { name: 'token', args?: [] | false, alias?: string  } 
-  | { name: 'user', args?: [] | false, alias?: string  } 
-  | { name: 'name', args?: [] | false, alias?: string  } 
-
-type AuthPayloadFields =
-  | 'token'
-  | 'user'
-  | 'name'
-
-
-
-  
-
-export interface AuthPayloadFieldDetails {
-  token: {
-    type: 'String'
-    args: {}
-    description: string
-    list: undefined
-    nullable: true
-    resolve: undefined
-  }
-  user: {
-    type: 'User'
-    args: {}
-    description: string
-    list: undefined
-    nullable: true
-    resolve: (
-      root: core.RootValue<"AuthPayload">,
-      args: {  }  ,
-      context: core.GetGen<"context">,
-      info?: GraphQLResolveInfo
-    ) => Promise<prisma.User | null> | prisma.User | null
-  }
-  name: {
-    type: 'String'
-    args: {}
-    description: string
-    list: undefined
-    nullable: true
-    resolve: undefined
-  }
-}
-  
-
-// Types for AuthPayloadConnection
-
-type AuthPayloadConnectionObject =
-  | AuthPayloadConnectionFields
-  | { name: 'pageInfo', args?: [] | false, alias?: string  } 
-  | { name: 'edges', args?: [] | false, alias?: string  } 
-  | { name: 'aggregate', args?: [] | false, alias?: string  } 
-
-type AuthPayloadConnectionFields =
-  | 'pageInfo'
-  | 'edges'
-  | 'aggregate'
-
-
-
-  
-
-export interface AuthPayloadConnectionFieldDetails {
-  pageInfo: {
-    type: 'PageInfo'
-    args: {}
-    description: string
-    list: undefined
-    nullable: false
-    resolve: (
-      root: core.RootValue<"AuthPayloadConnection">,
-      args: {  }  ,
-      context: core.GetGen<"context">,
-      info?: GraphQLResolveInfo
-    ) => Promise<prisma.PageInfo> | prisma.PageInfo
-  }
-  edges: {
-    type: 'AuthPayloadEdge'
-    args: {}
-    description: string
-    list: true
-    nullable: false
-    resolve: (
-      root: core.RootValue<"AuthPayloadConnection">,
-      args: {  }  ,
-      context: core.GetGen<"context">,
-      info?: GraphQLResolveInfo
-    ) => Promise<prisma.AuthPayloadEdge[]> | prisma.AuthPayloadEdge[]
-  }
-  aggregate: {
-    type: 'AggregateAuthPayload'
-    args: {}
-    description: string
-    list: undefined
-    nullable: false
-    resolve: (
-      root: core.RootValue<"AuthPayloadConnection">,
-      args: {  }  ,
-      context: core.GetGen<"context">,
-      info?: GraphQLResolveInfo
-    ) => Promise<prisma.AggregateAuthPayload> | prisma.AggregateAuthPayload
-  }
-}
-  
-
-// Types for AuthPayloadEdge
-
-type AuthPayloadEdgeObject =
-  | AuthPayloadEdgeFields
-  | { name: 'node', args?: [] | false, alias?: string  } 
-  | { name: 'cursor', args?: [] | false, alias?: string  } 
-
-type AuthPayloadEdgeFields =
-  | 'node'
-  | 'cursor'
-
-
-
-  
-
-export interface AuthPayloadEdgeFieldDetails {
-  node: {
-    type: 'AuthPayload'
-    args: {}
-    description: string
-    list: undefined
-    nullable: false
-    resolve: (
-      root: core.RootValue<"AuthPayloadEdge">,
-      args: {  }  ,
-      context: core.GetGen<"context">,
-      info?: GraphQLResolveInfo
-    ) => Promise<prisma.AuthPayload> | prisma.AuthPayload
-  }
-  cursor: {
-    type: 'String'
-    args: {}
-    description: string
-    list: undefined
-    nullable: false
-    resolve: undefined
-  }
-}
-  
-
-// Types for AggregateAuthPayload
-
-type AggregateAuthPayloadObject =
-  | AggregateAuthPayloadFields
-  | { name: 'count', args?: [] | false, alias?: string  } 
-
-type AggregateAuthPayloadFields =
-  | 'count'
-
-
-
-  
-
-export interface AggregateAuthPayloadFieldDetails {
-  count: {
-    type: 'Int'
-    args: {}
-    description: string
-    list: undefined
-    nullable: false
-    resolve: undefined
-  }
-}
-  
-
 // Types for Mutation
 
 type MutationObject =
@@ -1320,9 +1081,6 @@ type MutationObject =
   | { name: 'upsertAddition', args?: MutationUpsertAdditionArgs[] | false, alias?: string  } 
   | { name: 'deleteAddition', args?: MutationDeleteAdditionArgs[] | false, alias?: string  } 
   | { name: 'deleteManyAdditions', args?: MutationDeleteManyAdditionsArgs[] | false, alias?: string  } 
-  | { name: 'createAuthPayload', args?: MutationCreateAuthPayloadArgs[] | false, alias?: string  } 
-  | { name: 'updateManyAuthPayloads', args?: MutationUpdateManyAuthPayloadsArgs[] | false, alias?: string  } 
-  | { name: 'deleteManyAuthPayloads', args?: MutationDeleteManyAuthPayloadsArgs[] | false, alias?: string  } 
 
 type MutationFields =
   | 'createStory'
@@ -1343,9 +1101,6 @@ type MutationFields =
   | 'upsertAddition'
   | 'deleteAddition'
   | 'deleteManyAdditions'
-  | 'createAuthPayload'
-  | 'updateManyAuthPayloads'
-  | 'deleteManyAuthPayloads'
 
 
 type MutationCreateStoryArgs =
@@ -1395,13 +1150,6 @@ type MutationUpsertAdditionArgs =
 type MutationDeleteAdditionArgs =
   | 'where'
 type MutationDeleteManyAdditionsArgs =
-  | 'where'
-type MutationCreateAuthPayloadArgs =
-  | 'data'
-type MutationUpdateManyAuthPayloadsArgs =
-  | 'data'
-  | 'where'
-type MutationDeleteManyAuthPayloadsArgs =
   | 'where'
   
 
@@ -1640,45 +1388,6 @@ export interface MutationFieldDetails {
       info?: GraphQLResolveInfo
     ) => Promise<prisma.BatchPayload> | prisma.BatchPayload
   }
-  createAuthPayload: {
-    type: 'AuthPayload'
-    args: Record<MutationCreateAuthPayloadArgs, core.NexusArgDef<string>>
-    description: string
-    list: undefined
-    nullable: false
-    resolve: (
-      root: core.RootValue<"Mutation">,
-      args: { data: AuthPayloadCreateInput }  ,
-      context: core.GetGen<"context">,
-      info?: GraphQLResolveInfo
-    ) => Promise<prisma.AuthPayload> | prisma.AuthPayload
-  }
-  updateManyAuthPayloads: {
-    type: 'BatchPayload'
-    args: Record<MutationUpdateManyAuthPayloadsArgs, core.NexusArgDef<string>>
-    description: string
-    list: undefined
-    nullable: false
-    resolve: (
-      root: core.RootValue<"Mutation">,
-      args: { data: AuthPayloadUpdateManyMutationInput, where?: AuthPayloadWhereInput | null }  ,
-      context: core.GetGen<"context">,
-      info?: GraphQLResolveInfo
-    ) => Promise<prisma.BatchPayload> | prisma.BatchPayload
-  }
-  deleteManyAuthPayloads: {
-    type: 'BatchPayload'
-    args: Record<MutationDeleteManyAuthPayloadsArgs, core.NexusArgDef<string>>
-    description: string
-    list: undefined
-    nullable: false
-    resolve: (
-      root: core.RootValue<"Mutation">,
-      args: { where?: AuthPayloadWhereInput | null }  ,
-      context: core.GetGen<"context">,
-      info?: GraphQLResolveInfo
-    ) => Promise<prisma.BatchPayload> | prisma.BatchPayload
-  }
 }
   
 
@@ -1714,13 +1423,11 @@ type SubscriptionObject =
   | { name: 'story', args?: SubscriptionStoryArgs[] | false, alias?: string  } 
   | { name: 'user', args?: SubscriptionUserArgs[] | false, alias?: string  } 
   | { name: 'addition', args?: SubscriptionAdditionArgs[] | false, alias?: string  } 
-  | { name: 'authPayload', args?: SubscriptionAuthPayloadArgs[] | false, alias?: string  } 
 
 type SubscriptionFields =
   | 'story'
   | 'user'
   | 'addition'
-  | 'authPayload'
 
 
 type SubscriptionStoryArgs =
@@ -1728,8 +1435,6 @@ type SubscriptionStoryArgs =
 type SubscriptionUserArgs =
   | 'where'
 type SubscriptionAdditionArgs =
-  | 'where'
-type SubscriptionAuthPayloadArgs =
   | 'where'
   
 
@@ -1772,19 +1477,6 @@ export interface SubscriptionFieldDetails {
       context: core.GetGen<"context">,
       info?: GraphQLResolveInfo
     ) => Promise<prisma.AdditionSubscriptionPayload | null> | prisma.AdditionSubscriptionPayload | null
-  }
-  authPayload: {
-    type: 'AuthPayloadSubscriptionPayload'
-    args: Record<SubscriptionAuthPayloadArgs, core.NexusArgDef<string>>
-    description: string
-    list: undefined
-    nullable: true
-    resolve: (
-      root: core.RootValue<"Subscription">,
-      args: { where?: AuthPayloadSubscriptionWhereInput | null }  ,
-      context: core.GetGen<"context">,
-      info?: GraphQLResolveInfo
-    ) => Promise<prisma.AuthPayloadSubscriptionPayload | null> | prisma.AuthPayloadSubscriptionPayload | null
   }
 }
   
@@ -2174,111 +1866,6 @@ export interface AdditionPreviousValuesFieldDetails {
     description: string
     list: undefined
     nullable: false
-    resolve: undefined
-  }
-}
-  
-
-// Types for AuthPayloadSubscriptionPayload
-
-type AuthPayloadSubscriptionPayloadObject =
-  | AuthPayloadSubscriptionPayloadFields
-  | { name: 'mutation', args?: [] | false, alias?: string  } 
-  | { name: 'node', args?: [] | false, alias?: string  } 
-  | { name: 'updatedFields', args?: [] | false, alias?: string  } 
-  | { name: 'previousValues', args?: [] | false, alias?: string  } 
-
-type AuthPayloadSubscriptionPayloadFields =
-  | 'mutation'
-  | 'node'
-  | 'updatedFields'
-  | 'previousValues'
-
-
-
-  
-
-export interface AuthPayloadSubscriptionPayloadFieldDetails {
-  mutation: {
-    type: 'MutationType'
-    args: {}
-    description: string
-    list: undefined
-    nullable: false
-    resolve: (
-      root: core.RootValue<"AuthPayloadSubscriptionPayload">,
-      args: {  }  ,
-      context: core.GetGen<"context">,
-      info?: GraphQLResolveInfo
-    ) => Promise<prisma.MutationType> | prisma.MutationType
-  }
-  node: {
-    type: 'AuthPayload'
-    args: {}
-    description: string
-    list: undefined
-    nullable: true
-    resolve: (
-      root: core.RootValue<"AuthPayloadSubscriptionPayload">,
-      args: {  }  ,
-      context: core.GetGen<"context">,
-      info?: GraphQLResolveInfo
-    ) => Promise<prisma.AuthPayload | null> | prisma.AuthPayload | null
-  }
-  updatedFields: {
-    type: 'String'
-    args: {}
-    description: string
-    list: true
-    nullable: false
-    resolve: undefined
-  }
-  previousValues: {
-    type: 'AuthPayloadPreviousValues'
-    args: {}
-    description: string
-    list: undefined
-    nullable: true
-    resolve: (
-      root: core.RootValue<"AuthPayloadSubscriptionPayload">,
-      args: {  }  ,
-      context: core.GetGen<"context">,
-      info?: GraphQLResolveInfo
-    ) => Promise<prisma.AuthPayloadPreviousValues | null> | prisma.AuthPayloadPreviousValues | null
-  }
-}
-  
-
-// Types for AuthPayloadPreviousValues
-
-type AuthPayloadPreviousValuesObject =
-  | AuthPayloadPreviousValuesFields
-  | { name: 'token', args?: [] | false, alias?: string  } 
-  | { name: 'name', args?: [] | false, alias?: string  } 
-
-type AuthPayloadPreviousValuesFields =
-  | 'token'
-  | 'name'
-
-
-
-  
-
-export interface AuthPayloadPreviousValuesFieldDetails {
-  token: {
-    type: 'String'
-    args: {}
-    description: string
-    list: undefined
-    nullable: true
-    resolve: undefined
-  }
-  name: {
-    type: 'String'
-    args: {}
-    description: string
-    list: undefined
-    nullable: true
     resolve: undefined
   }
 }
@@ -2676,75 +2263,6 @@ export interface AdditionWhereUniqueInput {
 export type AdditionWhereUniqueInputInputObject =
   | Extract<keyof AdditionWhereUniqueInput, string>
   | { name: 'id', alias?: string  } 
-  
-export interface AuthPayloadWhereInput {
-  token?: string | null
-  token_not?: string | null
-  token_in?: string[]
-  token_not_in?: string[]
-  token_lt?: string | null
-  token_lte?: string | null
-  token_gt?: string | null
-  token_gte?: string | null
-  token_contains?: string | null
-  token_not_contains?: string | null
-  token_starts_with?: string | null
-  token_not_starts_with?: string | null
-  token_ends_with?: string | null
-  token_not_ends_with?: string | null
-  user?: UserWhereInput | null
-  name?: string | null
-  name_not?: string | null
-  name_in?: string[]
-  name_not_in?: string[]
-  name_lt?: string | null
-  name_lte?: string | null
-  name_gt?: string | null
-  name_gte?: string | null
-  name_contains?: string | null
-  name_not_contains?: string | null
-  name_starts_with?: string | null
-  name_not_starts_with?: string | null
-  name_ends_with?: string | null
-  name_not_ends_with?: string | null
-  AND?: AuthPayloadWhereInput[]
-  OR?: AuthPayloadWhereInput[]
-  NOT?: AuthPayloadWhereInput[]
-}
-export type AuthPayloadWhereInputInputObject =
-  | Extract<keyof AuthPayloadWhereInput, string>
-  | { name: 'token', alias?: string  } 
-  | { name: 'token_not', alias?: string  } 
-  | { name: 'token_in', alias?: string  } 
-  | { name: 'token_not_in', alias?: string  } 
-  | { name: 'token_lt', alias?: string  } 
-  | { name: 'token_lte', alias?: string  } 
-  | { name: 'token_gt', alias?: string  } 
-  | { name: 'token_gte', alias?: string  } 
-  | { name: 'token_contains', alias?: string  } 
-  | { name: 'token_not_contains', alias?: string  } 
-  | { name: 'token_starts_with', alias?: string  } 
-  | { name: 'token_not_starts_with', alias?: string  } 
-  | { name: 'token_ends_with', alias?: string  } 
-  | { name: 'token_not_ends_with', alias?: string  } 
-  | { name: 'user', alias?: string  } 
-  | { name: 'name', alias?: string  } 
-  | { name: 'name_not', alias?: string  } 
-  | { name: 'name_in', alias?: string  } 
-  | { name: 'name_not_in', alias?: string  } 
-  | { name: 'name_lt', alias?: string  } 
-  | { name: 'name_lte', alias?: string  } 
-  | { name: 'name_gt', alias?: string  } 
-  | { name: 'name_gte', alias?: string  } 
-  | { name: 'name_contains', alias?: string  } 
-  | { name: 'name_not_contains', alias?: string  } 
-  | { name: 'name_starts_with', alias?: string  } 
-  | { name: 'name_not_starts_with', alias?: string  } 
-  | { name: 'name_ends_with', alias?: string  } 
-  | { name: 'name_not_ends_with', alias?: string  } 
-  | { name: 'AND', alias?: string  } 
-  | { name: 'OR', alias?: string  } 
-  | { name: 'NOT', alias?: string  } 
   
 export interface StoryCreateInput {
   title?: string | null
@@ -3498,35 +3016,6 @@ export type AdditionUpdateManyMutationInputInputObject =
   | Extract<keyof AdditionUpdateManyMutationInput, string>
   | { name: 'text', alias?: string  } 
   
-export interface AuthPayloadCreateInput {
-  token?: string | null
-  user?: UserCreateOneInput | null
-  name?: string | null
-}
-export type AuthPayloadCreateInputInputObject =
-  | Extract<keyof AuthPayloadCreateInput, string>
-  | { name: 'token', alias?: string  } 
-  | { name: 'user', alias?: string  } 
-  | { name: 'name', alias?: string  } 
-  
-export interface UserCreateOneInput {
-  create?: UserCreateInput | null
-  connect?: UserWhereUniqueInput | null
-}
-export type UserCreateOneInputInputObject =
-  | Extract<keyof UserCreateOneInput, string>
-  | { name: 'create', alias?: string  } 
-  | { name: 'connect', alias?: string  } 
-  
-export interface AuthPayloadUpdateManyMutationInput {
-  token?: string | null
-  name?: string | null
-}
-export type AuthPayloadUpdateManyMutationInputInputObject =
-  | Extract<keyof AuthPayloadUpdateManyMutationInput, string>
-  | { name: 'token', alias?: string  } 
-  | { name: 'name', alias?: string  } 
-  
 export interface StorySubscriptionWhereInput {
   mutation_in?: prisma.MutationType[]
   updatedFields_contains?: string | null
@@ -3590,27 +3079,6 @@ export type AdditionSubscriptionWhereInputInputObject =
   | { name: 'OR', alias?: string  } 
   | { name: 'NOT', alias?: string  } 
   
-export interface AuthPayloadSubscriptionWhereInput {
-  mutation_in?: prisma.MutationType[]
-  updatedFields_contains?: string | null
-  updatedFields_contains_every?: string[]
-  updatedFields_contains_some?: string[]
-  node?: AuthPayloadWhereInput | null
-  AND?: AuthPayloadSubscriptionWhereInput[]
-  OR?: AuthPayloadSubscriptionWhereInput[]
-  NOT?: AuthPayloadSubscriptionWhereInput[]
-}
-export type AuthPayloadSubscriptionWhereInputInputObject =
-  | Extract<keyof AuthPayloadSubscriptionWhereInput, string>
-  | { name: 'mutation_in', alias?: string  } 
-  | { name: 'updatedFields_contains', alias?: string  } 
-  | { name: 'updatedFields_contains_every', alias?: string  } 
-  | { name: 'updatedFields_contains_some', alias?: string  } 
-  | { name: 'node', alias?: string  } 
-  | { name: 'AND', alias?: string  } 
-  | { name: 'OR', alias?: string  } 
-  | { name: 'NOT', alias?: string  } 
-  
 
 export type AccessRoleValues =
   | 'USER'
@@ -3649,18 +3117,6 @@ export type UserOrderByInputValues =
   | 'password_DESC'
   | 'accessRole_ASC'
   | 'accessRole_DESC'
-  | 'createdAt_ASC'
-  | 'createdAt_DESC'
-  | 'updatedAt_ASC'
-  | 'updatedAt_DESC'
-  
-export type AuthPayloadOrderByInputValues =
-  | 'token_ASC'
-  | 'token_DESC'
-  | 'name_ASC'
-  | 'name_DESC'
-  | 'id_ASC'
-  | 'id_DESC'
   | 'createdAt_ASC'
   | 'createdAt_DESC'
   | 'updatedAt_ASC'

@@ -9,6 +9,7 @@
     "graphql-yoga": "^1.16.9",
     "jsonwebtoken": "^8.5.1",
     "nexus": "^0.11.7",
+    "nexus-prisma": "^0.3.7",
     "nodemon": "^1.18.9",
     "prisma-binding": "^2.2.14",
     "prisma-client-lib": "^1.23.4",
@@ -17,7 +18,7 @@
     "typescript": "^3.2.2"
   },
   "scripts": {
-    "server": "ts-node-dev --no-notify --respawn --transpileOnly ./src",
+    "server": "ts-node-dev ./src",
     "generate": "ts-node src/data.ts"
   },
   "devDependencies": {

@@ -8,4 +8,3 @@ export const AuthPayload = objectType({
   },
 })
 
-console.log(AuthPayload)
