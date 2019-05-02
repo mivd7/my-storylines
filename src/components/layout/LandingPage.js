@@ -24,7 +24,7 @@ export default class LandingPage extends Component {
                </>) : (<>
                 <iframe className="gif" title="linesgif" src="https://giphy.com/embed/3o7qDNfxtNRtLVv8qs" width="480" height="270" frameBorder="0" allowFullScreen></iframe><br/>
               <h3>
-              <Link to="/userportal" className="ml1 no-underline black">
+              <Link to="/portal" className="ml1 no-underline black">
                 Make your own storylines
               </Link></h3></>              
             )

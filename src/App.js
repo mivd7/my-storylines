@@ -13,7 +13,7 @@ class App extends Component {
           <div>
           <header className="App-header">
           <Route exact path="/" component={LandingPage} />
-          <Route exact path="/userportal" component={UserPortal}/>
+          <Route exact path="/portal" component={UserPortal}/>
           <Route exact path="/start" component={StartStory} />
           <Route exact path="/stories/:id" component={StoryInProgress} />
           </header>
