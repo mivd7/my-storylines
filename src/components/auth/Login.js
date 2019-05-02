@@ -4,7 +4,7 @@ import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 
 const SIGNUP_MUTATION = gql`
-  mutation SignupMutation($email: String!, $password: String!, $name: String!) {
+  mutation signup($email: String!, $password: String!, $name: String!) {
     signup(email: $email, password: $password, name: $name) {
       token
     }
@@ -12,7 +12,7 @@ const SIGNUP_MUTATION = gql`
 `
 
 const LOGIN_MUTATION = gql`
-  mutation LoginMutation($email: String!, $password: String!) {
+  mutation login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       token
     }
@@ -34,25 +34,27 @@ class Login extends Component {
         <h4 className="mv3">{login ? 'Login' : 'Sign Up'}</h4>
         <div className="flex flex-column">
           {!login && (
+            <>
             <input
               value={name}
               onChange={e => this.setState({ name: e.target.value })}
               type="text"
               placeholder="Your name"
-            />
+            /><br/>
+            </>
           )}
           <input
             value={email}
             onChange={e => this.setState({ email: e.target.value })}
             type="text"
             placeholder="Your email address"
-          />
+          /><br/>
           <input
             value={password}
             onChange={e => this.setState({ password: e.target.value })}
             type="password"
             placeholder="Choose a safe password"
-          />
+          /><br/>
         </div>
         <div className="flex mt3">
           <Mutation
@@ -61,17 +63,17 @@ class Login extends Component {
             onCompleted={data => this._confirm(data)}
           >
             {mutation => (
-              <div className="pointer mr2 button" onClick={mutation}>
+              <button className="pointer mr2 button" onClick={mutation}>
                 {login ? 'login' : 'create account'}
-              </div>
+              </button>
             )}
           </Mutation>
-          <div
+          <button
             className="pointer button"
             onClick={() => this.setState({ login: !login })}
           >
-            {login ? 'need to create an account?' : 'already have an account?'}
-          </div>
+            {login ? 'signup?' : 'login?'}
+          </button>
         </div>
       </div>
     )

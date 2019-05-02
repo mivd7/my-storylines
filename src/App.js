@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import StartStory from './components/StartStory';
 import StoryInProgress from './components/StoryInProgress';
-import Header from './layout/Header';
+import Header from './components/layout/Header';
 import Login from './components/auth/Login';
 import { Route } from 'react-router-dom';
 import './App.css';

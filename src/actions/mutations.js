@@ -1,5 +1,6 @@
 import gql from 'graphql-tag';
 
+//story
 export const CREATE_STORY = gql`mutation Story($openingLine: String!, $userId: ID!) {
     createStory(openingLine: $openingLine, userId: $userId) {
       id
@@ -18,3 +19,6 @@ export const ADD_TO_STORY = gql`mutation Addition($text: String!, $storyId:ID!) 
    }
  }
 }`
+
+//user
+// export const SIGNUP = gql`mutation User(())
