@@ -1,8 +1,7 @@
-
 import { compare, hash } from 'bcryptjs'
 import { sign } from 'jsonwebtoken'
 
-import { APP_SECRET, getUserId, Context } from '../utils'
+import { APP_SECRET, Context } from '../utils'
 
 export default {
   createStory,
@@ -45,7 +44,7 @@ async function login(parent, { email, password }, context: Context, info) {
 }
 
 function createAdmin(root, args, context) {
-  return context.prisma.createUser(
+  return context.db.createUser(
     { name: args.name,
       email: args.email,
       password: args.password,
@@ -55,7 +54,7 @@ function createAdmin(root, args, context) {
 
 // story mutations
 async function createStory(root, args, context) {
-  const story = await context.prisma.createStory(
+  const story = await context.db.createStory(
     {
       title: args.title,
       content: args.content,
@@ -70,7 +69,7 @@ async function createStory(root, args, context) {
 
 // addition mutations
 async function createAddition(root, args, context) {
-  const addition = await context.prisma.createAddition(
+  const addition = await context.db.createAddition(
     {
       text: args.text,
       story: {

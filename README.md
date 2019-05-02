@@ -2,8 +2,9 @@ This is a small app where you can start a story, write one line and then ask a f
 
 Bootstrapped with Create-React-App.
 
-# HOW TO RUN CLIENT <br>
+# How to run Client <br>
 Clone this repo, run $ yarn install and $ yarn start <br>
+The frontend of the app is now running on localhost:3000<br>
 
-# HOW TO RUN SERVER <br>
+# How to run Server <br>
 Refer to README file in server folder.
