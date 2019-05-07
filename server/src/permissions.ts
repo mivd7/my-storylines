@@ -1,30 +1,28 @@
-import { rule, shield, and, not } from 'graphql-shield'
+import { rule, shield } from 'graphql-shield'
+import { getUserId } from './utils'
 
 // Rules
 
-const isAuthenticated = rule()(async (parent, args, ctx, info) => {
-  return ctx.user !== null
-})
-
-const isAdmin = rule()(async (parent, args, ctx, info) => {
-  return ctx.user.role === 'ADMIN'
-})
+const rules = {
+  isAuthenticated: rule()((parent, args, context) => {
+    const userId = getUserId(context)
+    return Boolean(userId)
+  }),
+// const isAdmin = rule()(async (parent, args, ctx, info) => {
+//   return ctx.user.role === 'ADMIN'
+}
 
 // Permissions
 
 export const permissions = shield({
   Query: {
-    allStories: not(isAuthenticated),
-    story: and(isAuthenticated),
-    allUsers: and(isAuthenticated, isAdmin),
-    storiesByUser: and(isAuthenticated, isAdmin),
+    story: rules.isAuthenticated,
+    storiesByUser: rules.isAuthenticated,
   },
   Mutation: {
-    signup: not(isAuthenticated),
-    login: not(isAuthenticated),
-    createStory: isAuthenticated,
-    createAddition: isAuthenticated,
-    createAdmin: isAdmin,
+    createStory: rules.isAuthenticated,
+    createAddition: rules.isAuthenticated,
+    // createAdmin: isAdmin,
   },
-  Addition: isAuthenticated,
+  // Addition: rules.isAuthenticated,
 })
