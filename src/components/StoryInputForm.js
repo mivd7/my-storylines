@@ -12,8 +12,6 @@ export default class StoryInputForm extends Component {
 
   render() {
     const { text, isWriting } = this.state
-    console.log(isWriting)
-    console.log(this.props.storyId)
     return (
       <div>
         <div className="flex flex-column">

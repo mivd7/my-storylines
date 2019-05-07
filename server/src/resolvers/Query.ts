@@ -14,7 +14,7 @@ function allUsers(root, args, context) {
 }
 
 function story(root, args, context) {
-    return context.db.story({ id: args.storyId })
+    return context.db.story({ id: args.id })
   }
 
 function storiesByUser(root, args, context) {

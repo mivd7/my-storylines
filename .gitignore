@@ -3,12 +3,13 @@
 # dependencies
 /node_modules
 /deploy
-/server/node_modules
 /.pnp
 .pnp.js
 
 # testing
 /coverage
+
+**/server/node_modules/
 
 # production
 /build
