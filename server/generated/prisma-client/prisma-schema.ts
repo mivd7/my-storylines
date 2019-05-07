@@ -254,6 +254,10 @@ type AggregateAddition {
   count: Int!
 }
 
+type AggregateMessage {
+  count: Int!
+}
+
 type AggregateStory {
   count: Int!
 }
@@ -270,6 +274,205 @@ scalar DateTime
 
 scalar Long
 
+type Message {
+  id: ID!
+  text: String!
+  createdAt: DateTime!
+  sentBy: User
+}
+
+type MessageConnection {
+  pageInfo: PageInfo!
+  edges: [MessageEdge]!
+  aggregate: AggregateMessage!
+}
+
+input MessageCreateInput {
+  text: String!
+  sentBy: UserCreateOneWithoutMessagesInput
+}
+
+input MessageCreateManyWithoutSentByInput {
+  create: [MessageCreateWithoutSentByInput!]
+  connect: [MessageWhereUniqueInput!]
+}
+
+input MessageCreateWithoutSentByInput {
+  text: String!
+}
+
+type MessageEdge {
+  node: Message!
+  cursor: String!
+}
+
+enum MessageOrderByInput {
+  id_ASC
+  id_DESC
+  text_ASC
+  text_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type MessagePreviousValues {
+  id: ID!
+  text: String!
+  createdAt: DateTime!
+}
+
+input MessageScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  text: String
+  text_not: String
+  text_in: [String!]
+  text_not_in: [String!]
+  text_lt: String
+  text_lte: String
+  text_gt: String
+  text_gte: String
+  text_contains: String
+  text_not_contains: String
+  text_starts_with: String
+  text_not_starts_with: String
+  text_ends_with: String
+  text_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [MessageScalarWhereInput!]
+  OR: [MessageScalarWhereInput!]
+  NOT: [MessageScalarWhereInput!]
+}
+
+type MessageSubscriptionPayload {
+  mutation: MutationType!
+  node: Message
+  updatedFields: [String!]
+  previousValues: MessagePreviousValues
+}
+
+input MessageSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: MessageWhereInput
+  AND: [MessageSubscriptionWhereInput!]
+  OR: [MessageSubscriptionWhereInput!]
+  NOT: [MessageSubscriptionWhereInput!]
+}
+
+input MessageUpdateInput {
+  text: String
+  sentBy: UserUpdateOneWithoutMessagesInput
+}
+
+input MessageUpdateManyDataInput {
+  text: String
+}
+
+input MessageUpdateManyMutationInput {
+  text: String
+}
+
+input MessageUpdateManyWithoutSentByInput {
+  create: [MessageCreateWithoutSentByInput!]
+  delete: [MessageWhereUniqueInput!]
+  connect: [MessageWhereUniqueInput!]
+  set: [MessageWhereUniqueInput!]
+  disconnect: [MessageWhereUniqueInput!]
+  update: [MessageUpdateWithWhereUniqueWithoutSentByInput!]
+  upsert: [MessageUpsertWithWhereUniqueWithoutSentByInput!]
+  deleteMany: [MessageScalarWhereInput!]
+  updateMany: [MessageUpdateManyWithWhereNestedInput!]
+}
+
+input MessageUpdateManyWithWhereNestedInput {
+  where: MessageScalarWhereInput!
+  data: MessageUpdateManyDataInput!
+}
+
+input MessageUpdateWithoutSentByDataInput {
+  text: String
+}
+
+input MessageUpdateWithWhereUniqueWithoutSentByInput {
+  where: MessageWhereUniqueInput!
+  data: MessageUpdateWithoutSentByDataInput!
+}
+
+input MessageUpsertWithWhereUniqueWithoutSentByInput {
+  where: MessageWhereUniqueInput!
+  update: MessageUpdateWithoutSentByDataInput!
+  create: MessageCreateWithoutSentByInput!
+}
+
+input MessageWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  text: String
+  text_not: String
+  text_in: [String!]
+  text_not_in: [String!]
+  text_lt: String
+  text_lte: String
+  text_gt: String
+  text_gte: String
+  text_contains: String
+  text_not_contains: String
+  text_starts_with: String
+  text_not_starts_with: String
+  text_ends_with: String
+  text_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  sentBy: UserWhereInput
+  AND: [MessageWhereInput!]
+  OR: [MessageWhereInput!]
+  NOT: [MessageWhereInput!]
+}
+
+input MessageWhereUniqueInput {
+  id: ID
+}
+
 type Mutation {
   createAddition(data: AdditionCreateInput!): Addition!
   updateAddition(data: AdditionUpdateInput!, where: AdditionWhereUniqueInput!): Addition
@@ -277,6 +480,12 @@ type Mutation {
   upsertAddition(where: AdditionWhereUniqueInput!, create: AdditionCreateInput!, update: AdditionUpdateInput!): Addition!
   deleteAddition(where: AdditionWhereUniqueInput!): Addition
   deleteManyAdditions(where: AdditionWhereInput): BatchPayload!
+  createMessage(data: MessageCreateInput!): Message!
+  updateMessage(data: MessageUpdateInput!, where: MessageWhereUniqueInput!): Message
+  updateManyMessages(data: MessageUpdateManyMutationInput!, where: MessageWhereInput): BatchPayload!
+  upsertMessage(where: MessageWhereUniqueInput!, create: MessageCreateInput!, update: MessageUpdateInput!): Message!
+  deleteMessage(where: MessageWhereUniqueInput!): Message
+  deleteManyMessages(where: MessageWhereInput): BatchPayload!
   createStory(data: StoryCreateInput!): Story!
   updateStory(data: StoryUpdateInput!, where: StoryWhereUniqueInput!): Story
   updateManyStories(data: StoryUpdateManyMutationInput!, where: StoryWhereInput): BatchPayload!
@@ -312,6 +521,9 @@ type Query {
   addition(where: AdditionWhereUniqueInput!): Addition
   additions(where: AdditionWhereInput, orderBy: AdditionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Addition]!
   additionsConnection(where: AdditionWhereInput, orderBy: AdditionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AdditionConnection!
+  message(where: MessageWhereUniqueInput!): Message
+  messages(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Message]!
+  messagesConnection(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MessageConnection!
   story(where: StoryWhereUniqueInput!): Story
   stories(where: StoryWhereInput, orderBy: StoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Story]!
   storiesConnection(where: StoryWhereInput, orderBy: StoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StoryConnection!
@@ -617,6 +829,7 @@ input StoryWhereUniqueInput {
 
 type Subscription {
   addition(where: AdditionSubscriptionWhereInput): AdditionSubscriptionPayload
+  message(where: MessageSubscriptionWhereInput): MessageSubscriptionPayload
   story(where: StorySubscriptionWhereInput): StorySubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
@@ -629,6 +842,7 @@ type User {
   accessRole: AccessRole!
   stories(where: StoryWhereInput, orderBy: StoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Story!]
   additions(where: AdditionWhereInput, orderBy: AdditionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Addition!]
+  messages(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Message!]
 }
 
 type UserConnection {
@@ -644,10 +858,16 @@ input UserCreateInput {
   accessRole: AccessRole!
   stories: StoryCreateManyWithoutAuthorInput
   additions: AdditionCreateManyWithoutWrittenByInput
+  messages: MessageCreateManyWithoutSentByInput
 }
 
 input UserCreateOneWithoutAdditionsInput {
   create: UserCreateWithoutAdditionsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutMessagesInput {
+  create: UserCreateWithoutMessagesInput
   connect: UserWhereUniqueInput
 }
 
@@ -662,6 +882,16 @@ input UserCreateWithoutAdditionsInput {
   password: String!
   accessRole: AccessRole!
   stories: StoryCreateManyWithoutAuthorInput
+  messages: MessageCreateManyWithoutSentByInput
+}
+
+input UserCreateWithoutMessagesInput {
+  name: String!
+  email: String!
+  password: String!
+  accessRole: AccessRole!
+  stories: StoryCreateManyWithoutAuthorInput
+  additions: AdditionCreateManyWithoutWrittenByInput
 }
 
 input UserCreateWithoutStoriesInput {
@@ -670,6 +900,7 @@ input UserCreateWithoutStoriesInput {
   password: String!
   accessRole: AccessRole!
   additions: AdditionCreateManyWithoutWrittenByInput
+  messages: MessageCreateManyWithoutSentByInput
 }
 
 type UserEdge {
@@ -723,6 +954,7 @@ input UserUpdateInput {
   accessRole: AccessRole
   stories: StoryUpdateManyWithoutAuthorInput
   additions: AdditionUpdateManyWithoutWrittenByInput
+  messages: MessageUpdateManyWithoutSentByInput
 }
 
 input UserUpdateManyMutationInput {
@@ -736,6 +968,15 @@ input UserUpdateOneWithoutAdditionsInput {
   create: UserCreateWithoutAdditionsInput
   update: UserUpdateWithoutAdditionsDataInput
   upsert: UserUpsertWithoutAdditionsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneWithoutMessagesInput {
+  create: UserCreateWithoutMessagesInput
+  update: UserUpdateWithoutMessagesDataInput
+  upsert: UserUpsertWithoutMessagesInput
   delete: Boolean
   disconnect: Boolean
   connect: UserWhereUniqueInput
@@ -756,6 +997,16 @@ input UserUpdateWithoutAdditionsDataInput {
   password: String
   accessRole: AccessRole
   stories: StoryUpdateManyWithoutAuthorInput
+  messages: MessageUpdateManyWithoutSentByInput
+}
+
+input UserUpdateWithoutMessagesDataInput {
+  name: String
+  email: String
+  password: String
+  accessRole: AccessRole
+  stories: StoryUpdateManyWithoutAuthorInput
+  additions: AdditionUpdateManyWithoutWrittenByInput
 }
 
 input UserUpdateWithoutStoriesDataInput {
@@ -764,11 +1015,17 @@ input UserUpdateWithoutStoriesDataInput {
   password: String
   accessRole: AccessRole
   additions: AdditionUpdateManyWithoutWrittenByInput
+  messages: MessageUpdateManyWithoutSentByInput
 }
 
 input UserUpsertWithoutAdditionsInput {
   update: UserUpdateWithoutAdditionsDataInput!
   create: UserCreateWithoutAdditionsInput!
+}
+
+input UserUpsertWithoutMessagesInput {
+  update: UserUpdateWithoutMessagesDataInput!
+  create: UserCreateWithoutMessagesInput!
 }
 
 input UserUpsertWithoutStoriesInput {
@@ -843,6 +1100,9 @@ input UserWhereInput {
   additions_every: AdditionWhereInput
   additions_some: AdditionWhereInput
   additions_none: AdditionWhereInput
+  messages_every: MessageWhereInput
+  messages_some: MessageWhereInput
+  messages_none: MessageWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

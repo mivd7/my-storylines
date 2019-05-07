@@ -17,6 +17,7 @@ export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
   addition: (where?: AdditionWhereInput) => Promise<boolean>;
+  message: (where?: MessageWhereInput) => Promise<boolean>;
   story: (where?: StoryWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
@@ -59,6 +60,25 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => AdditionConnectionPromise;
+  message: (where: MessageWhereUniqueInput) => MessageNullablePromise;
+  messages: (args?: {
+    where?: MessageWhereInput;
+    orderBy?: MessageOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Message>;
+  messagesConnection: (args?: {
+    where?: MessageWhereInput;
+    orderBy?: MessageOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => MessageConnectionPromise;
   story: (where: StoryWhereUniqueInput) => StoryNullablePromise;
   stories: (args?: {
     where?: StoryWhereInput;
@@ -119,6 +139,22 @@ export interface Prisma {
   }) => AdditionPromise;
   deleteAddition: (where: AdditionWhereUniqueInput) => AdditionPromise;
   deleteManyAdditions: (where?: AdditionWhereInput) => BatchPayloadPromise;
+  createMessage: (data: MessageCreateInput) => MessagePromise;
+  updateMessage: (args: {
+    data: MessageUpdateInput;
+    where: MessageWhereUniqueInput;
+  }) => MessagePromise;
+  updateManyMessages: (args: {
+    data: MessageUpdateManyMutationInput;
+    where?: MessageWhereInput;
+  }) => BatchPayloadPromise;
+  upsertMessage: (args: {
+    where: MessageWhereUniqueInput;
+    create: MessageCreateInput;
+    update: MessageUpdateInput;
+  }) => MessagePromise;
+  deleteMessage: (where: MessageWhereUniqueInput) => MessagePromise;
+  deleteManyMessages: (where?: MessageWhereInput) => BatchPayloadPromise;
   createStory: (data: StoryCreateInput) => StoryPromise;
   updateStory: (args: {
     data: StoryUpdateInput;
@@ -163,6 +199,9 @@ export interface Subscription {
   addition: (
     where?: AdditionSubscriptionWhereInput
   ) => AdditionSubscriptionPayloadSubscription;
+  message: (
+    where?: MessageSubscriptionWhereInput
+  ) => MessageSubscriptionPayloadSubscription;
   story: (
     where?: StorySubscriptionWhereInput
   ) => StorySubscriptionPayloadSubscription;
@@ -200,6 +239,14 @@ export type StoryOrderByInput =
   | "title_DESC"
   | "openingLine_ASC"
   | "openingLine_DESC";
+
+export type MessageOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "text_ASC"
+  | "text_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -398,10 +445,60 @@ export interface UserWhereInput {
   additions_every?: Maybe<AdditionWhereInput>;
   additions_some?: Maybe<AdditionWhereInput>;
   additions_none?: Maybe<AdditionWhereInput>;
+  messages_every?: Maybe<MessageWhereInput>;
+  messages_some?: Maybe<MessageWhereInput>;
+  messages_none?: Maybe<MessageWhereInput>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
   OR?: Maybe<UserWhereInput[] | UserWhereInput>;
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
+
+export interface MessageWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  text?: Maybe<String>;
+  text_not?: Maybe<String>;
+  text_in?: Maybe<String[] | String>;
+  text_not_in?: Maybe<String[] | String>;
+  text_lt?: Maybe<String>;
+  text_lte?: Maybe<String>;
+  text_gt?: Maybe<String>;
+  text_gte?: Maybe<String>;
+  text_contains?: Maybe<String>;
+  text_not_contains?: Maybe<String>;
+  text_starts_with?: Maybe<String>;
+  text_not_starts_with?: Maybe<String>;
+  text_ends_with?: Maybe<String>;
+  text_not_ends_with?: Maybe<String>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  sentBy?: Maybe<UserWhereInput>;
+  AND?: Maybe<MessageWhereInput[] | MessageWhereInput>;
+  OR?: Maybe<MessageWhereInput[] | MessageWhereInput>;
+  NOT?: Maybe<MessageWhereInput[] | MessageWhereInput>;
+}
+
+export type MessageWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
 
 export type StoryWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
@@ -442,6 +539,7 @@ export interface UserCreateWithoutStoriesInput {
   password: String;
   accessRole: AccessRole;
   additions?: Maybe<AdditionCreateManyWithoutWrittenByInput>;
+  messages?: Maybe<MessageCreateManyWithoutSentByInput>;
 }
 
 export interface AdditionCreateManyWithoutWrittenByInput {
@@ -456,6 +554,17 @@ export interface AdditionCreateWithoutWrittenByInput {
   story: StoryCreateOneWithoutAdditionsInput;
 }
 
+export interface MessageCreateManyWithoutSentByInput {
+  create?: Maybe<
+    MessageCreateWithoutSentByInput[] | MessageCreateWithoutSentByInput
+  >;
+  connect?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
+}
+
+export interface MessageCreateWithoutSentByInput {
+  text: String;
+}
+
 export interface UserCreateOneWithoutAdditionsInput {
   create?: Maybe<UserCreateWithoutAdditionsInput>;
   connect?: Maybe<UserWhereUniqueInput>;
@@ -467,6 +576,7 @@ export interface UserCreateWithoutAdditionsInput {
   password: String;
   accessRole: AccessRole;
   stories?: Maybe<StoryCreateManyWithoutAuthorInput>;
+  messages?: Maybe<MessageCreateManyWithoutSentByInput>;
 }
 
 export interface StoryCreateManyWithoutAuthorInput {
@@ -528,6 +638,7 @@ export interface UserUpdateWithoutStoriesDataInput {
   password?: Maybe<String>;
   accessRole?: Maybe<AccessRole>;
   additions?: Maybe<AdditionUpdateManyWithoutWrittenByInput>;
+  messages?: Maybe<MessageUpdateManyWithoutSentByInput>;
 }
 
 export interface AdditionUpdateManyWithoutWrittenByInput {
@@ -620,6 +731,95 @@ export interface AdditionUpdateManyDataInput {
   text?: Maybe<String>;
 }
 
+export interface MessageUpdateManyWithoutSentByInput {
+  create?: Maybe<
+    MessageCreateWithoutSentByInput[] | MessageCreateWithoutSentByInput
+  >;
+  delete?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
+  connect?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
+  set?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
+  disconnect?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
+  update?: Maybe<
+    | MessageUpdateWithWhereUniqueWithoutSentByInput[]
+    | MessageUpdateWithWhereUniqueWithoutSentByInput
+  >;
+  upsert?: Maybe<
+    | MessageUpsertWithWhereUniqueWithoutSentByInput[]
+    | MessageUpsertWithWhereUniqueWithoutSentByInput
+  >;
+  deleteMany?: Maybe<MessageScalarWhereInput[] | MessageScalarWhereInput>;
+  updateMany?: Maybe<
+    | MessageUpdateManyWithWhereNestedInput[]
+    | MessageUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface MessageUpdateWithWhereUniqueWithoutSentByInput {
+  where: MessageWhereUniqueInput;
+  data: MessageUpdateWithoutSentByDataInput;
+}
+
+export interface MessageUpdateWithoutSentByDataInput {
+  text?: Maybe<String>;
+}
+
+export interface MessageUpsertWithWhereUniqueWithoutSentByInput {
+  where: MessageWhereUniqueInput;
+  update: MessageUpdateWithoutSentByDataInput;
+  create: MessageCreateWithoutSentByInput;
+}
+
+export interface MessageScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  text?: Maybe<String>;
+  text_not?: Maybe<String>;
+  text_in?: Maybe<String[] | String>;
+  text_not_in?: Maybe<String[] | String>;
+  text_lt?: Maybe<String>;
+  text_lte?: Maybe<String>;
+  text_gt?: Maybe<String>;
+  text_gte?: Maybe<String>;
+  text_contains?: Maybe<String>;
+  text_not_contains?: Maybe<String>;
+  text_starts_with?: Maybe<String>;
+  text_not_starts_with?: Maybe<String>;
+  text_ends_with?: Maybe<String>;
+  text_not_ends_with?: Maybe<String>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<MessageScalarWhereInput[] | MessageScalarWhereInput>;
+  OR?: Maybe<MessageScalarWhereInput[] | MessageScalarWhereInput>;
+  NOT?: Maybe<MessageScalarWhereInput[] | MessageScalarWhereInput>;
+}
+
+export interface MessageUpdateManyWithWhereNestedInput {
+  where: MessageScalarWhereInput;
+  data: MessageUpdateManyDataInput;
+}
+
+export interface MessageUpdateManyDataInput {
+  text?: Maybe<String>;
+}
+
 export interface UserUpsertWithoutStoriesInput {
   update: UserUpdateWithoutStoriesDataInput;
   create: UserCreateWithoutStoriesInput;
@@ -645,6 +845,7 @@ export interface UserUpdateWithoutAdditionsDataInput {
   password?: Maybe<String>;
   accessRole?: Maybe<AccessRole>;
   stories?: Maybe<StoryUpdateManyWithoutAuthorInput>;
+  messages?: Maybe<MessageUpdateManyWithoutSentByInput>;
 }
 
 export interface StoryUpdateManyWithoutAuthorInput {
@@ -808,6 +1009,57 @@ export interface AdditionUpdateManyMutationInput {
   text?: Maybe<String>;
 }
 
+export interface MessageCreateInput {
+  text: String;
+  sentBy?: Maybe<UserCreateOneWithoutMessagesInput>;
+}
+
+export interface UserCreateOneWithoutMessagesInput {
+  create?: Maybe<UserCreateWithoutMessagesInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserCreateWithoutMessagesInput {
+  name: String;
+  email: String;
+  password: String;
+  accessRole: AccessRole;
+  stories?: Maybe<StoryCreateManyWithoutAuthorInput>;
+  additions?: Maybe<AdditionCreateManyWithoutWrittenByInput>;
+}
+
+export interface MessageUpdateInput {
+  text?: Maybe<String>;
+  sentBy?: Maybe<UserUpdateOneWithoutMessagesInput>;
+}
+
+export interface UserUpdateOneWithoutMessagesInput {
+  create?: Maybe<UserCreateWithoutMessagesInput>;
+  update?: Maybe<UserUpdateWithoutMessagesDataInput>;
+  upsert?: Maybe<UserUpsertWithoutMessagesInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateWithoutMessagesDataInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  accessRole?: Maybe<AccessRole>;
+  stories?: Maybe<StoryUpdateManyWithoutAuthorInput>;
+  additions?: Maybe<AdditionUpdateManyWithoutWrittenByInput>;
+}
+
+export interface UserUpsertWithoutMessagesInput {
+  update: UserUpdateWithoutMessagesDataInput;
+  create: UserCreateWithoutMessagesInput;
+}
+
+export interface MessageUpdateManyMutationInput {
+  text?: Maybe<String>;
+}
+
 export interface StoryCreateInput {
   title?: Maybe<String>;
   openingLine: String;
@@ -834,6 +1086,7 @@ export interface UserCreateInput {
   accessRole: AccessRole;
   stories?: Maybe<StoryCreateManyWithoutAuthorInput>;
   additions?: Maybe<AdditionCreateManyWithoutWrittenByInput>;
+  messages?: Maybe<MessageCreateManyWithoutSentByInput>;
 }
 
 export interface UserUpdateInput {
@@ -843,6 +1096,7 @@ export interface UserUpdateInput {
   accessRole?: Maybe<AccessRole>;
   stories?: Maybe<StoryUpdateManyWithoutAuthorInput>;
   additions?: Maybe<AdditionUpdateManyWithoutWrittenByInput>;
+  messages?: Maybe<MessageUpdateManyWithoutSentByInput>;
 }
 
 export interface UserUpdateManyMutationInput {
@@ -865,6 +1119,17 @@ export interface AdditionSubscriptionWhereInput {
   NOT?: Maybe<
     AdditionSubscriptionWhereInput[] | AdditionSubscriptionWhereInput
   >;
+}
+
+export interface MessageSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<MessageWhereInput>;
+  AND?: Maybe<MessageSubscriptionWhereInput[] | MessageSubscriptionWhereInput>;
+  OR?: Maybe<MessageSubscriptionWhereInput[] | MessageSubscriptionWhereInput>;
+  NOT?: Maybe<MessageSubscriptionWhereInput[] | MessageSubscriptionWhereInput>;
 }
 
 export interface StorySubscriptionWhereInput {
@@ -1025,6 +1290,15 @@ export interface UserPromise extends Promise<User>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  messages: <T = FragmentableArray<Message>>(args?: {
+    where?: MessageWhereInput;
+    orderBy?: MessageOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface UserSubscription
@@ -1047,6 +1321,15 @@ export interface UserSubscription
   additions: <T = Promise<AsyncIterator<AdditionSubscription>>>(args?: {
     where?: AdditionWhereInput;
     orderBy?: AdditionOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  messages: <T = Promise<AsyncIterator<MessageSubscription>>>(args?: {
+    where?: MessageWhereInput;
+    orderBy?: MessageOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -1081,6 +1364,46 @@ export interface UserNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
+  messages: <T = FragmentableArray<Message>>(args?: {
+    where?: MessageWhereInput;
+    orderBy?: MessageOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface Message {
+  id: ID_Output;
+  text: String;
+  createdAt: DateTimeOutput;
+}
+
+export interface MessagePromise extends Promise<Message>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  text: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  sentBy: <T = UserPromise>() => T;
+}
+
+export interface MessageSubscription
+  extends Promise<AsyncIterator<Message>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  text: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  sentBy: <T = UserSubscription>() => T;
+}
+
+export interface MessageNullablePromise
+  extends Promise<Message | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  text: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  sentBy: <T = UserPromise>() => T;
 }
 
 export interface AdditionConnection {
@@ -1158,6 +1481,60 @@ export interface AggregateAdditionPromise
 
 export interface AggregateAdditionSubscription
   extends Promise<AsyncIterator<AggregateAddition>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface MessageConnection {
+  pageInfo: PageInfo;
+  edges: MessageEdge[];
+}
+
+export interface MessageConnectionPromise
+  extends Promise<MessageConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<MessageEdge>>() => T;
+  aggregate: <T = AggregateMessagePromise>() => T;
+}
+
+export interface MessageConnectionSubscription
+  extends Promise<AsyncIterator<MessageConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<MessageEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateMessageSubscription>() => T;
+}
+
+export interface MessageEdge {
+  node: Message;
+  cursor: String;
+}
+
+export interface MessageEdgePromise extends Promise<MessageEdge>, Fragmentable {
+  node: <T = MessagePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface MessageEdgeSubscription
+  extends Promise<AsyncIterator<MessageEdge>>,
+    Fragmentable {
+  node: <T = MessageSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateMessage {
+  count: Int;
+}
+
+export interface AggregateMessagePromise
+  extends Promise<AggregateMessage>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateMessageSubscription
+  extends Promise<AsyncIterator<AggregateMessage>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -1333,6 +1710,53 @@ export interface AdditionPreviousValuesSubscription
   text: () => Promise<AsyncIterator<String>>;
 }
 
+export interface MessageSubscriptionPayload {
+  mutation: MutationType;
+  node: Message;
+  updatedFields: String[];
+  previousValues: MessagePreviousValues;
+}
+
+export interface MessageSubscriptionPayloadPromise
+  extends Promise<MessageSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = MessagePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = MessagePreviousValuesPromise>() => T;
+}
+
+export interface MessageSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<MessageSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = MessageSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = MessagePreviousValuesSubscription>() => T;
+}
+
+export interface MessagePreviousValues {
+  id: ID_Output;
+  text: String;
+  createdAt: DateTimeOutput;
+}
+
+export interface MessagePreviousValuesPromise
+  extends Promise<MessagePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  text: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface MessagePreviousValuesSubscription
+  extends Promise<AsyncIterator<MessagePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  text: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
 export interface StorySubscriptionPayload {
   mutation: MutationType;
   node: Story;
@@ -1487,6 +1911,10 @@ export const models: Model[] = [
   },
   {
     name: "Addition",
+    embedded: false
+  },
+  {
+    name: "Message",
     embedded: false
   },
   {
