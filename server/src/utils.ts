@@ -4,8 +4,8 @@ import { verify } from 'jsonwebtoken'
 export const APP_SECRET = 'GraphQL-is-aw3some'
 
 export function getUserId(context) {
-  console.log('REQUEST:')
-  console.log(context.request)
+  // console.log('REQUEST:')
+  // console.log(context.request)
   const Authorization = context.request.get('Authorization')
   if (Authorization) {
     const token = Authorization.replace('Bearer ', '')

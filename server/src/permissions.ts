@@ -6,7 +6,9 @@ import { getUserId } from './utils'
 const rules = {
   isAuthenticated: rule()((parent, args, context) => {
     const userId = getUserId(context)
-    return Boolean(userId)
+    const res = Boolean(userId)
+    console.log(res)
+    return res
   }),
 // const isAdmin = rule()(async (parent, args, ctx, info) => {
 //   return ctx.user.role === 'ADMIN'

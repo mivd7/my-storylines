@@ -17,7 +17,7 @@ const storyInProgress = (props) => {
         const noTitle = ''
         console.log(data)
         if (loading) return "Loading...";
-        if (error) return "An error occured while loading story..." + console.log(error.message);
+        if (error) return `${error.message}`;
         
         return (
           <div>
