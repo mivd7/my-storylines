@@ -1,9 +1,10 @@
 import gql from 'graphql-tag';
 
 //story
-export const CREATE_STORY = gql`mutation Story($openingLine: String!, $userId: ID!) {
-    createStory(openingLine: $openingLine, userId: $userId) {
+export const CREATE_STORY = gql`mutation Story($title: String! $openingLine: String!, $userId: ID!) {
+    createStory(title: $title, openingLine: $openingLine, userId: $userId) {
       id
+      title
       openingLine
     }
   }

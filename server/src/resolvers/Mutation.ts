@@ -56,10 +56,10 @@ async function createStory(root, args, context) {
   const story = await context.db.createStory(
     {
       title: args.title,
-      content: args.content,
+      openingLine: args.openingLine,
       author: {
         //later null weghalen
-        connect: { id: args.userId || null }
+        connect: { id: args.userId }
       }
     }
   )

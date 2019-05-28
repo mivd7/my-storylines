@@ -12,7 +12,7 @@ export default class CreateStory extends Component {
   render() {
     const { openingLine, title } = this.state
     //user ID naar create story component als prop?
-    const dummyUser = "cjv11rs7k00180798hpglqlj9"
+    const dummyUser = "cjv75kcoy005m0780v0426s82"
     return (
       <div>
         <div className="flex flex-column">
@@ -32,7 +32,7 @@ export default class CreateStory extends Component {
           <br/>
         </div>
           <Mutation mutation={CREATE_STORY}
-                    variables={{ title, openingLine, userId: `${dummyUser}`, }} >
+                    variables={{ title, openingLine, userId: dummyUser }} >
             {storyMutation => <div><button onClick={storyMutation}>Submit</button></div>}
           </Mutation>
       </div>
