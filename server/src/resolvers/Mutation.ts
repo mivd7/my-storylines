@@ -6,6 +6,7 @@ export default {
   createStory,
   createAddition,
   createAdmin,
+  adminLogin,
   signup,
   login
 }
@@ -50,6 +51,27 @@ function createAdmin(root, args, context) {
       accessRole: "ADMIN" },
   )
 }
+
+
+async function adminLogin(parent, { email, password }, context: Context, info) {
+  const user = await context.db.user({ email, password })
+
+  if (!user) {
+    throw new Error('User unknown')
+  }
+  if (user.accessRole !== 'ADMIN') {
+    throw new Error('Not an admin')
+  }
+
+  const valid = await compare(password, user.password)
+    if (!valid) {
+      throw new Error('Invalid password')
+    }
+    const token = sign({ userId: user.id }, APP_SECRET)
+    return { token, user }
+  }
+
+
 
 // story mutations
 async function createStory(root, args, context) {

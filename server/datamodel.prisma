@@ -16,6 +16,7 @@ type User {
   accessRole: AccessRole!
   stories: [Story!]!
   additions: [Addition!]
+  messages: [Message!]
 }
 
 type Addition {
@@ -24,6 +25,13 @@ type Addition {
   text: String!
   story: Story!
   writtenBy: User
+}
+
+type Message {
+  id: ID! @unique
+  text: String! 
+  createdAt: DateTime!
+  sentBy: User
 }
 
 enum AccessRole {
