@@ -1,27 +1,14 @@
-const Subscription = {
-  //stories subscriptions
-  newStory: {
-    subscribe: async (parent, args, context) => {
-      return context.prisma.$subscribe
-        .story({
-          mutation_in: ['CREATED'],
-        })
-        .node()
-    },
-  newAddition: {
-    subscribe: async (parent, args, context) => {
-      return context.prisma.$subscribe
-        .addition({
-          mutation_in: ['CREATED'],
-        })
-        .node()
-        // .next(console.log('addition was created!!'))
-    }
-  },
+function newStorySubscribe(parent, args, context, info) {
+  return context.db.$subscribe.story({ mutation_in: ['CREATED'] }).node()
+}
+
+const newStory = {
+  subscribe: newStorySubscribe,
   resolve: payload => {
-      return payload
-    },
+    return payload
   },
 }
 
-export default Subscription
+export {
+  newStory
+}
