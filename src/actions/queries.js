@@ -23,6 +23,17 @@ export const GET_STORY_ADDITIONS = gql`query Story ($id: ID!){
     }
 }`
 
+export const GET_USER_BY_STORY = gql`query Story ($id: ID!){
+  story(storyId: $id) {
+      id
+      createdAt
+      author {
+        id
+        name
+      }
+  }
+}`
+
 export const GET_STORIES = gql`query Story {
     allStories {
       id

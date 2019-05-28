@@ -14,8 +14,8 @@ const storyInProgress = (props) => {
   return (
     <Query query={query.story} variables={query.variables}>
       {({ loading, error, data }) => {
-        const noTitle = ''
-        console.log(data)
+        const noTitle = 'Once upon a time...'
+    
         if (loading) return "Loading...";
         if (error) return "An error occured while loading story..." + console.log(error.message);
         

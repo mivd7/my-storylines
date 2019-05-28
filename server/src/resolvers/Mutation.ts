@@ -1,6 +1,5 @@
 import { compare, hash } from 'bcryptjs'
 import { sign } from 'jsonwebtoken'
-
 import { APP_SECRET, Context } from '../utils'
 
 export default {

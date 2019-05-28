@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import StartStory from './components/StartStory';
+import ChooseStory from './components/ChooseStory';
 import StoryInProgress from './components/StoryInProgress';
 import LandingPage from './components/layout/LandingPage';
 import UserPortal from './components/auth/UserPortal';
 import { Route, Link } from 'react-router-dom';
 import './App.css';
+import CreateStory from './components/CreateStory';
 
 class App extends Component {
   render() {
@@ -15,7 +16,8 @@ class App extends Component {
           <header className="App-header">
           <Route exact path="/" component={LandingPage} />
           <Route exact path="/portal" component={UserPortal}/>
-          <Route exact path="/start" component={StartStory} />
+          <Route exact path="/add" component={CreateStory} />
+          <Route exact path="/stories" component={ChooseStory} />
           <Route exact path="/stories/:id" component={StoryInProgress} />
           </header>
           </div>

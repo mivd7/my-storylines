@@ -2,17 +2,16 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import { Query } from "react-apollo"
 
-import {getRandomLines} from '../lib/randomLines'
+import {getRandomLines} from '../lib/generateLines'
 import {formatDate} from '../lib/dateFormats'
 import {GET_STORIES} from '../actions/queries'
-import AddOpeningLine from './AddOpeningLine'
 
-const startStory = () => (
+const ChooseStory = () => (
   <Query query={GET_STORIES}>
     {({ loading, error, data }) => {
       console.log(data)
       if (loading) return "Loading...";
-      if (error) return `Error! ${error}`;
+      if (error) return 'Well something went wrong. Check if the server is running on localhost:4000';
 
       const {allStories} = data
       const threeStories = getRandomLines(allStories, 3)
@@ -26,11 +25,10 @@ const startStory = () => (
           <li><Link to={`/stories/${story.id}`} >{story.openingLine}</Link></li>
           <p>Started by {story.author.name} on {formatDate(story.createdAt)} </p></div>)}
           </ul>
-          <AddOpeningLine />
         </div>
       )
     }}
   </Query>
 );
 
-export default startStory
+export default ChooseStory

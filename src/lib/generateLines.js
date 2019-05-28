@@ -1,3 +1,5 @@
+var array = [1,2,3,4,5]
+
 export function getRandomLines(arr, n) {
   var result = new Array(n),
       len = arr.length,
@@ -10,4 +12,9 @@ export function getRandomLines(arr, n) {
       taken[x] = --len in taken ? taken[len] : len;
   }
   return result;
+}
+
+export function getLastThree(arr) {
+  var copyArr = [...arr]
+  return copyArr.slice(Math.max(arr.length - 3, 1))
 }

@@ -27,6 +27,12 @@ export default class UserPortal extends Component {
     name: '',
   }
 
+  handleError(error) {
+    const errorMessage = error.split(':')
+                              .slice(-1)[0]
+    return window.alert(errorMessage)
+  }
+
   render() {
     const { login, email, password, name } = this.state
     return (
@@ -66,6 +72,7 @@ export default class UserPortal extends Component {
             mutation={login ? LOGIN_MUTATION : SIGNUP_MUTATION}
             variables={{ email, password, name }}
             onCompleted={data => this._confirm(data)}
+            onError={e => this.handleError(e.toString())}
           >
             {mutation => (
               <button className="pointer mr2 button" onClick={mutation}>
