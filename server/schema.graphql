@@ -20,6 +20,7 @@ type Mutation {
 type Subscription {
   newStory: Story
   newAddition: Addition
+  newLogin: AuthPayload
 }
 
 type AuthPayload {
