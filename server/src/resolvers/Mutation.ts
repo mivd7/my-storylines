@@ -46,7 +46,7 @@ async function login(parent, { email, password }, context: Context, info) {
 }
 
 function createAdmin(root, args, context) {
-  return context.db.createUser(
+  return context.db.mutation.createUser(
     { name: args.name,
       email: args.email,
       password: args.password,
@@ -77,7 +77,7 @@ function createAdmin(root, args, context) {
 
 // story mutations
 async function createStory(root, args, context) {
-  const story = await context.db.createStory(
+  const story = await context.db.mutation.createStory(
     {
       title: args.title,
       openingLine: args.openingLine,
@@ -92,7 +92,7 @@ async function createStory(root, args, context) {
 
 // addition mutations
 async function createAddition(root, args, context) {
-  const addition = await context.db.createAddition(
+  const addition = await context.db.mutation.createAddition(
     {
       text: args.text,
       story: {

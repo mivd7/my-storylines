@@ -9,25 +9,24 @@ export default {
 }
 
 function allStories(root, args, context) {
-    return context.db.stories()
+    return context.db.query.stories()
   }
 
 function allUsers(root, args, context) {
-  return context.db.users()
+  return context.db.query.users()
 }
 
 function story(root, args, context) {
-    return context.db.story({ id: args.storyId })
+    return context.db.query.story({ id: args.storyId })
   }
 
 function storiesByUser(root, args, context) {
-    return context.db.user({
+    return context.db.query.user({
       id: args.userId
     }).stories()
   }
 
 function me(parent, args, ctx: Context, info) {
     const id = getUserId(ctx)
-    console.log(id)
     return ctx.db.query.user({ where: { id } }, info)
   }
