@@ -1,20 +1,19 @@
-import * as jwt from "jsonwebtoken";
-import { Prisma } from "./generated/prisma";
+import { Prisma } from '../generated/prisma-client'
+import { verify } from 'jsonwebtoken'
 
-export interface Context {
-  db: Prisma;
-  request: any;
-}
+export const APP_SECRET = 'GraphQL-is-aw3some'
 
 export function getUserId(context) {
-  if (context.request.session.userId) {
-    return context.request.session.userId;
+  const Authorization = context.request.get('Authorization')
+  if (Authorization) {
+    const token = Authorization.replace('Bearer ', '')
+    const userId = verify(token, APP_SECRET)
+    return userId
   }
-  throw new AuthError
+
+  throw new Error('Not authenticated')
 }
 
-export class AuthError extends Error {
-  constructor() {
-    super("Login Error: Not authorized");
-  }
+export interface Context {
+  db: Prisma
 }
