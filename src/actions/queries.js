@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export const GET_STORY = gql`query Story ($id: ID!){
-  story(where: {id: $id}) {
+  story(id: $id) {
       id
       openingLine
       createdAt
@@ -24,7 +24,7 @@ export const GET_STORY_ADDITIONS = gql`query Story ($id: ID!){
 }`
 
 export const GET_USER_BY_STORY = gql`query Story ($id: ID!){
-  story(storyId: $id) {
+  story(id: $id) {
       id
       createdAt
       author {
@@ -41,6 +41,7 @@ export const GET_STORIES = gql`query Story {
       openingLine
       createdAt
       author {
+        id
         name
       }
     }

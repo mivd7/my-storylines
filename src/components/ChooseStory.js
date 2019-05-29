@@ -11,7 +11,7 @@ const ChooseStory = () => (
     {({ loading, error, data }) => {
       console.log(data)
       if (loading) return "Loading...";
-      if (error) return 'Well something went wrong. Check if the server is running on localhost:4000';
+      if (error) return `error! ${error}`
 
       const {allStories} = data
       const threeStories = getRandomLines(allStories, 3)
@@ -23,7 +23,8 @@ const ChooseStory = () => (
           <iframe title="7dwarfs" src="https://giphy.com/embed/AOqKdtVvmMAI8" width="360" height="200" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
           <ul>{threeStories.map(story => <div>
           <li><Link to={`/stories/${story.id}`} >{story.openingLine}</Link></li>
-          <p>Started by {story.author.name} on {formatDate(story.createdAt)} </p></div>)}
+          <p>Started by {story.author.name} on {formatDate(story.createdAt)} </p>
+          </div>)}
           </ul>
         </div>
       )
