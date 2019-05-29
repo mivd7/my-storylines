@@ -1,46 +1,48 @@
-import { compare, hash } from 'bcryptjs'
-import { sign } from 'jsonwebtoken'
-import { APP_SECRET, Context } from '../utils'
+import * as bcrypt from 'bcryptjs'
+import * as jwt from 'jsonwebtoken'
+import { Context } from '../utils'
 
 export default {
   createStory,
   createAddition,
   createAdmin,
-  adminLogin,
+  // adminLogin,
   signup,
   login
 }
 
 //user mutations
 async function signup(parent, args, context: Context, info) {
-  console.log(context.db)
-  const encryptedPassword = await hash(args.password, 10)
-  const user = await context.db.createUser({
-    email: args.email, 
-    password: encryptedPassword, 
-    name: args.name, 
-    accessRole: 'USER',
-  })
+  const password = await bcrypt.hash(args.password, 10);
+    const user = await context.db.mutation.createUser({
+      data: { ...args, password }
+    });
 
-  const token = sign({ userId: user.id }, APP_SECRET)
+    context.request.session.userId = user.id;
 
-  return { token, user }
+    return {
+      user
+    };
 }
 
 async function login(parent, { email, password }, context: Context, info) {
-  const user = await context.db.user({ email, password })
+  const user = await context.db.query.user({ where: { email } });
   if (!user) {
-    throw new Error('Unknown user')
-  }
+    throw new Error(`No such user found for email: ${email}`);
+  } 
 
-  const valid = await compare(password, user.password)
+  const valid = await bcrypt.compare(password, user.password);
   if (!valid) {
-    throw new Error('Invalid password')
+    throw new Error("Invalid password");
   }
 
-  const token = sign({ userId: user.id }, APP_SECRET)
+  context.request.session.userId = user.id
 
-  return { token, user }
+  console.log(`THIS IS REQUEST SESSION: ${context.request.session}`)
+  console.log(`USER WITH ID ${user.id} LOGGED IN`)
+  return {
+    user
+  };
 }
 
 function createAdmin(root, args, context) {
@@ -53,23 +55,23 @@ function createAdmin(root, args, context) {
 }
 
 
-async function adminLogin(parent, { email, password }, context: Context, info) {
-  const user = await context.db.user({ email, password })
+// async function adminLogin(parent, { email, password }, context: Context, info) {
+//   const user = await context.db.user({ email, password })
 
-  if (!user) {
-    throw new Error('User unknown')
-  }
-  if (user.accessRole !== 'ADMIN') {
-    throw new Error('Not an admin')
-  }
+//   if (!user) {
+//     throw new Error('User unknown')
+//   }
+//   if (user.accessRole !== 'ADMIN') {
+//     throw new Error('Not an admin')
+//   }
 
-  const valid = await compare(password, user.password)
-    if (!valid) {
-      throw new Error('Invalid password')
-    }
-    const token = sign({ userId: user.id }, APP_SECRET)
-    return { token, user }
-  }
+//   const valid = await compare(password, user.password)
+//     if (!valid) {
+//       throw new Error('Invalid password')
+//     }
+//     const token = sign({ userId: user.id }, APP_SECRET)
+//     return { token, user }
+//   }
 
 
 
