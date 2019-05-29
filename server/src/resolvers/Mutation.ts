@@ -1,52 +1,50 @@
-import * as bcrypt from 'bcryptjs'
-import * as jwt from 'jsonwebtoken'
-import { Context } from '../utils'
+import { compare, hash } from 'bcryptjs'
+import { sign } from 'jsonwebtoken'
+import { APP_SECRET, Context } from '../utils'
 
 export default {
   createStory,
   createAddition,
   createAdmin,
-  // adminLogin,
+  adminLogin,
   signup,
   login
 }
 
 //user mutations
 async function signup(parent, args, context: Context, info) {
-  const password = await bcrypt.hash(args.password, 10);
-    const user = await context.db.mutation.createUser({
-      data: { ...args, password }
-    });
+  console.log(context.db)
+  const encryptedPassword = await hash(args.password, 10)
+  const user = await context.db.createUser({
+    email: args.email, 
+    password: encryptedPassword, 
+    name: args.name, 
+    accessRole: 'USER',
+  })
 
-    context.request.session.userId = user.id;
+  const token = sign({ userId: user.id }, APP_SECRET)
 
-    return {
-      user
-    };
+  return { token, user }
 }
 
 async function login(parent, { email, password }, context: Context, info) {
-  const user = await context.db.query.user({ where: { email } });
+  const user = await context.db.user({ email, password })
   if (!user) {
-    throw new Error(`No such user found for email: ${email}`);
-  } 
-
-  const valid = await bcrypt.compare(password, user.password);
-  if (!valid) {
-    throw new Error("Invalid password");
+    throw new Error('Unknown user')
   }
 
-  context.request.session.userId = user.id
+  const valid = await compare(password, user.password)
+  if (!valid) {
+    throw new Error('Invalid password')
+  }
 
-  console.log(`THIS IS REQUEST SESSION: ${context.request.session}`)
-  console.log(`USER WITH ID ${user.id} LOGGED IN`)
-  return {
-    user
-  };
+  const token = sign({ userId: user.id }, APP_SECRET)
+
+  return { token, user }
 }
 
 function createAdmin(root, args, context) {
-  return context.db.mutation.createUser(
+  return context.db.createUser(
     { name: args.name,
       email: args.email,
       password: args.password,
@@ -55,29 +53,29 @@ function createAdmin(root, args, context) {
 }
 
 
-// async function adminLogin(parent, { email, password }, context: Context, info) {
-//   const user = await context.db.user({ email, password })
+async function adminLogin(parent, { email, password }, context: Context, info) {
+  const user = await context.db.user({ email, password })
 
-//   if (!user) {
-//     throw new Error('User unknown')
-//   }
-//   if (user.accessRole !== 'ADMIN') {
-//     throw new Error('Not an admin')
-//   }
+  if (!user) {
+    throw new Error('User unknown')
+  }
+  if (user.accessRole !== 'ADMIN') {
+    throw new Error('Not an admin')
+  }
 
-//   const valid = await compare(password, user.password)
-//     if (!valid) {
-//       throw new Error('Invalid password')
-//     }
-//     const token = sign({ userId: user.id }, APP_SECRET)
-//     return { token, user }
-//   }
+  const valid = await compare(password, user.password)
+    if (!valid) {
+      throw new Error('Invalid password')
+    }
+    const token = sign({ userId: user.id }, APP_SECRET)
+    return { token, user }
+  }
 
 
 
 // story mutations
 async function createStory(root, args, context) {
-  const story = await context.db.mutation.createStory(
+  const story = await context.db.createStory(
     {
       title: args.title,
       openingLine: args.openingLine,
@@ -92,7 +90,7 @@ async function createStory(root, args, context) {
 
 // addition mutations
 async function createAddition(root, args, context) {
-  const addition = await context.db.mutation.createAddition(
+  const addition = await context.db.createAddition(
     {
       text: args.text,
       story: {

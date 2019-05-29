@@ -4,7 +4,6 @@ type Query {
   allAdditions: [Addition!]!
   story(storyId: ID!): Story
   storiesByUser(userId: ID!): [Story!]!
-  me: User
 }
 
 type Mutation {
@@ -25,7 +24,9 @@ type Subscription {
 }
 
 type AuthPayload {
-  user: User!
+  token: String
+  user: User
+  name: String
 }
 
 type User {

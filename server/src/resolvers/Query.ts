@@ -1,32 +1,24 @@
-import {Context, getUserId} from '../utils'
-
 export default {
   allUsers,
   allStories,
   story,
-  storiesByUser,
-  me
+  storiesByUser
 }
 
 function allStories(root, args, context) {
-    return context.db.query.stories()
+    return context.db.stories()
   }
 
 function allUsers(root, args, context) {
-  return context.db.query.users()
+  return context.db.users()
 }
 
 function story(root, args, context) {
-    return context.db.query.story({ id: args.storyId })
+    return context.db.story({ id: args.storyId })
   }
 
 function storiesByUser(root, args, context) {
-    return context.db.query.user({
+    return context.db.user({
       id: args.userId
     }).stories()
-  }
-
-function me(parent, args, ctx: Context, info) {
-    const id = getUserId(ctx)
-    return ctx.db.query.user({ where: { id } }, info)
   }
