@@ -2,16 +2,18 @@ import { GraphQLServer } from "graphql-yoga";
 import * as session from "express-session";
 import { Prisma } from "./generated/prisma";
 import resolvers from "./resolvers";
+import { prisma } from "../generated/prisma-client";
 
 const server = new GraphQLServer({
   typeDefs: './schema.graphql',
   resolvers,
   context: req => ({
     ...req,
-    db: new Prisma({
-      endpoint: process.env.PRISMA_ENDPOINT || 'http://localhost:4466', // the endpoint of the Prisma DB service (value is set in .env)
-      debug: true // log all GraphQL queries & mutations
-    })
+    db: prisma
+    // db: new Prisma({
+    //   endpoint: process.env.PRISMA_ENDPOINT || 'http://localhost:4466', // the endpoint of the Prisma DB service (value is set in .env)
+    //   debug: false // log all GraphQL queries & mutations
+    // })
   })
 });
 
